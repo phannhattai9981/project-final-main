@@ -68,28 +68,28 @@ public class SignUpController {
         accountEntity.setRegistration_date(new Date());
         accountService.save(accountEntity);
 
-//
-//       int id = accountEntity.getId();
-//
-//      String email = accountEntity.getEmail();
-//      sendEmail(email, "kích hoạt mail","bam vô");
-//        model.addAttribute("accountEntity", accountEntity);
+
+       int id = accountEntity.getId();
+
+      String email = accountEntity.getEmail();
+      sendEmail(email, "kích hoạt mail","bam vô");
+        model.addAttribute("accountEntity", accountEntity);
         return "login";
     }
 
-//    @GetMapping("/activate")
-//    public String activate(@RequestParam("id") int id, Model model) {
-//        AccountEntity accountEntity = accountService.findById(id);
-//        if (accountEntity != null) {
-//            accountEntity.setStatus(UserStatus.ACTIVE);
-//            accountService.save(accountEntity);
-//            // add any necessary attributes to the model
-//            return "login";
-//        } else {
-//            // add any necessary attributes to the model
-//            return "signup";
-//        }
-//    }
+    @GetMapping("/activate")
+    public String activate(@RequestParam("id") int id, Model model) {
+        AccountEntity accountEntity = accountService.findById(id);
+        if (accountEntity != null) {
+            accountEntity.setStatus(UserStatus.ACTIVE);
+            accountService.save(accountEntity);
+            // add any necessary attributes to the model
+            return "login";
+        } else {
+            // add any necessary attributes to the model
+            return "signup";
+        }
+    }
 
     public void sendEmail(String to, String subject, String content) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
