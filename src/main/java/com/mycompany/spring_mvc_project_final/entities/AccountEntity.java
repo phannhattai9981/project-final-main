@@ -6,11 +6,15 @@
 package com.mycompany.spring_mvc_project_final.entities;
 
 import com.mycompany.spring_mvc_project_final.enums.UserStatus;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Entity
 @Table(name = "account")
@@ -25,7 +29,11 @@ public class AccountEntity implements Serializable {
     @Column (name = "phone")
     private String phone;
 
-    @Column(unique = true, length = 100)
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    private Date Registration_date;
+
+    @Column(unique = true )
     private String email;
     private String password;
 
@@ -52,9 +60,6 @@ public class AccountEntity implements Serializable {
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     private Cart cart;
 
-    public AccountEntity() {
-    }
-
     public int getId() {
         return id;
     }
@@ -77,6 +82,14 @@ public class AccountEntity implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Date getRegistration_date() {
+        return Registration_date;
+    }
+
+    public void setRegistration_date(Date registration_date) {
+        Registration_date = registration_date;
     }
 
     public String getEmail() {

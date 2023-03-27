@@ -8,9 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +43,7 @@ public class CartController {
         double total = cartItemService.getAmount();
         model.addAttribute("total", total);
         model.addAttribute("cartItem", cartItemService.findAll());
-        return "jsp/cart";
+        return "cart";
     }
 
     @RequestMapping(value = "/addToCart/{id}", method = RequestMethod.GET)
@@ -96,7 +93,7 @@ public class CartController {
     public String checkOut(Model model) {
         model.addAttribute("order", new Order());
 
-        return "jsp/checkout";
+        return "checkout";
     }
 
     @PostMapping(value = "/checkout")

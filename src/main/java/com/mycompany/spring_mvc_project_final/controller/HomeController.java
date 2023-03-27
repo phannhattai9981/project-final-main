@@ -40,7 +40,7 @@ public class HomeController {
         model.addAttribute("ListTop1", top1Product);
         List<Product> top4Product = productService.showTop4();
         model.addAttribute("ListTop4", top4Product);
-        return "jsp/home";
+        return "home";
     }
 
 

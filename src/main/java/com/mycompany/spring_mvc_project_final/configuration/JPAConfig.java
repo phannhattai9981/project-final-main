@@ -5,9 +5,6 @@
  */
 package com.mycompany.spring_mvc_project_final.configuration;
 
-import java.util.Properties;
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -21,9 +18,13 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+import java.util.Properties;
+
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "com.mycompany.spring_mvc_project_final.repository")
+@EnableJpaRepositories(basePackages = "com.mycompany.spring_mvc_project_final")
 public class JPAConfig {
 
     @Bean
@@ -32,7 +33,7 @@ public class JPAConfig {
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/tpshop?characterEncoding=UTF-8");
         dataSource.setUsername("root");
-        dataSource.setPassword("tykaka0122");
+        dataSource.setPassword("Nhattai1996");
 
         return dataSource;
     }
@@ -80,8 +81,8 @@ public class JPAConfig {
         //Using gmail
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-        mailSender.setUsername("loannguyen1501@gmail.com");
-        mailSender.setPassword("ooehxjdtqdxiqfmk");
+        mailSender.setUsername("ngothanhtam98@gmail.com");
+        mailSender.setPassword("bxubnwaczgzmbeml");
 
         Properties javaMailProperties = new Properties();
         javaMailProperties.put("mail.smtp.starttls.enable", "true");
@@ -89,11 +90,11 @@ public class JPAConfig {
         javaMailProperties.put("mail.smtp.ssl.protocols", "TLSv1.2");
         javaMailProperties.put("mail.debug", "true");
         javaMailProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        
+
         mailSender.setJavaMailProperties(javaMailProperties);
         return mailSender;
 
     }
-    
-    
+
+
 }

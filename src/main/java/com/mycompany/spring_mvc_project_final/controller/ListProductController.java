@@ -9,11 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class ListProductController {
@@ -75,7 +72,7 @@ public class ListProductController {
         }
         model.addAttribute("previous", previous);
         model.addAttribute("next", next);
-        return "jsp/product-list";
+        return "product-list";
     }
 
 }
