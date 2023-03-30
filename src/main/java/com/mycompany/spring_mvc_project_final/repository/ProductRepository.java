@@ -31,7 +31,6 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
     @Query(value = "SELECT * from products where categoryId =?1", nativeQuery = true)
     List<Product> getProductByCategoryId(int id);
 
-    List<Product> findAllById(int id);
 
     @Query(value = "SELECT products.* FROM products where categoryId = ?1 LIMIT 10 OFFSET ?2", nativeQuery = true)
     List<Product> findProductByCategoryId(int id,int pageOut);

@@ -17,4 +17,6 @@ public interface CartRepository extends CrudRepository<Cart, Integer> {
 //    Cart findByProductId(int id);
 
     Cart findById(int id);
+
+    void deleteAllById(int id);
 }

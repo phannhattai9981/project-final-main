@@ -2,10 +2,12 @@ package com.mycompany.spring_mvc_project_final.controller;
 
 
 import com.mycompany.spring_mvc_project_final.entities.AccountEntity;
+import com.mycompany.spring_mvc_project_final.entities.Cart;
 import com.mycompany.spring_mvc_project_final.entities.RoleEntity;
 import com.mycompany.spring_mvc_project_final.enums.UserStatus;
 import com.mycompany.spring_mvc_project_final.repository.RoleRepository;
 import com.mycompany.spring_mvc_project_final.service.AccountService;
+import com.mycompany.spring_mvc_project_final.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +37,11 @@ public class SignUpController {
     AccountService accountService;
     @Autowired
     RoleRepository roleRepository;
-  @Autowired
+    @Autowired
+    CartService cartService;
+    @Autowired
     MailSender mailSender;
+
     @GetMapping("/signup")
     public String signUpPage(Model model, @RequestParam(value = "error", required = false) boolean error) {
         if (error) {
@@ -59,44 +64,46 @@ public class SignUpController {
         RoleEntity role = new RoleEntity();
         role.setRole(ROLE_USER);
         role.setId(2);
-//        RoleEntity role = roleRepository.getRoleUser();
 
         Set<RoleEntity> roles = new HashSet<>();
         roles.add(role);
         accountEntity.setUserRoles(roles);
-        accountEntity.setStatus(UserStatus.UNACTIVE);
+        accountEntity.setStatus(UserStatus.ACTIVE);
         accountEntity.setRegistration_date(new Date());
         accountService.save(accountEntity);
 
-
-       int id = accountEntity.getId();
+        Cart cart = new Cart();
+        cart.setId(1);
+        cart.setAccount(accountEntity);
+        cartService.save(cart);
 
       String email = accountEntity.getEmail();
-      sendEmail(email, "kích hoạt mail","bam vô");
-        model.addAttribute("accountEntity", accountEntity);
+      sendEmail(email, "kích hoạt mail","ĐĂNG KÍ THÀNH CÔNG");
         return "login";
     }
 
-    @GetMapping("/activate")
-    public String activate(@RequestParam("id") int id, Model model) {
-        AccountEntity accountEntity = accountService.findById(id);
-        if (accountEntity != null) {
-            accountEntity.setStatus(UserStatus.ACTIVE);
-            accountService.save(accountEntity);
-            // add any necessary attributes to the model
-            return "login";
-        } else {
-            // add any necessary attributes to the model
-            return "signup";
-        }
-    }
+//    @GetMapping("/activate")
+//    public String activate(@RequestParam("id") int id, Model model) {
+//        AccountEntity accountEntity = accountService.findById(id);
+//        if (accountEntity != null) {
+//            accountEntity.setStatus(UserStatus.ACTIVE);
+//            accountService.save(accountEntity);
+//            // add any necessary attributes to the model
+//            return "login";
+//        } else {
+//            // add any necessary attributes to the model
+//            return "signup";
+//        }
+//    }
 
-    public void sendEmail(String to, String subject, String content) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(to);
-        mailMessage.setSubject(subject);
-        mailMessage.setText(content);
-        mailSender.send(mailMessage);
-        System.out.println(mailMessage);
-    }
+        public void sendEmail(String to, String subject, String content) {
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setFrom("phannhattai14071996@gmail.com");
+            mailMessage.setTo(to);
+            mailMessage.setSubject(subject);
+            mailMessage.setText(content);
+            System.out.println(mailSender);
+            mailSender.send(mailMessage);
+            System.out.println(mailMessage);
+        }
 }

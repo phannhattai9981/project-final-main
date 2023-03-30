@@ -55,12 +55,12 @@ public class ProductService {
         return productRepository.findByNameContaining(searchInput);
     }
 
-    public List<Product> findAllById (int id) {
-        return productRepository.findAllById(id);
-    }
 
     public List<Product> findProductByCategoryId(int id,int pageOut) {
         return productRepository.findProductByCategoryId(id, pageOut);
     }
 
+    public void deleteById(int id) {
+        productRepository.deleteById(id);
+    }
 }

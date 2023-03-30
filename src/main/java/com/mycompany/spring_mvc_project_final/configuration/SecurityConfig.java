@@ -53,11 +53,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().and().formLogin()
                 .loginProcessingUrl("/j_spring_security_check")
                 .loginPage("/login")
-                .defaultSuccessUrl("/user/home") // page after login
+                .defaultSuccessUrl("/") // page after login
                 .failureUrl("/login?error=true")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout().logoutUrl("/logout")
-                .logoutSuccessUrl("/home").deleteCookies("JSESSIONID");
+                .logoutSuccessUrl("/").deleteCookies("JSESSIONID");
     }
 }

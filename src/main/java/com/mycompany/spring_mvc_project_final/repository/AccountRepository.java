@@ -7,8 +7,11 @@ package com.mycompany.spring_mvc_project_final.repository;
 
 import com.mycompany.spring_mvc_project_final.entities.AccountEntity;
 import com.mycompany.spring_mvc_project_final.enums.UserStatus;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface AccountRepository extends CrudRepository<AccountEntity, Long> {
@@ -17,4 +20,9 @@ public interface AccountRepository extends CrudRepository<AccountEntity, Long> {
             UserStatus status);
 
     AccountEntity findById(int id);
+
+    AccountEntity findByEmail(String username);
+
+
+
 }

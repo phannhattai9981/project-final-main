@@ -48,11 +48,8 @@ public class CartItemService {
     }
 
 
-    public void deleteAllCartItem() { cartItemRepository.deleteAll();
-    }
-
     public List<CartItem> findAllByCartId(int id) { return cartItemRepository.findByCartId(id);
     }
-}
 
+}
 

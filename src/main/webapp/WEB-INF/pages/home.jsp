@@ -10,6 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <link rel="icon" href="img/fev.png" type="image/png"/>
   <title>Home</title>
+
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="<c:url value="/resources/css/css/bootstrap.css"/>">
   <link rel="stylesheet" href="<c:url value="/resources/css/vendors/liner/style.css"/>">
@@ -31,6 +32,7 @@
 </head>
 
 <body>
+<jsp:include page="header.jsp" />
   <header class="header_area">
     <div class="main_menu">
       <div class="container">
@@ -76,27 +78,6 @@
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="contact.html">Contact</a>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="col-lg-5 pr-0">
-                <ul class="nav navbar-nav navbar-right right_nav pull-right">
-
-                  <li class="nav-item">
-                    <a href="cart" class="icons">
-                      <i class="ti-shopping-cart">Giỏ Hàng</i>
-                    </a>
-                  </li>
-
-                  <li class="nav-items">
-                      <li><a style="color: black;" href="#"><i class="fa fa-user"></i> Đăng Nhập</a></li>
-                    </a>
-                  </li>
-
-                  <li class="nav-items">
-                      <li><a style="color: black;" href="#"><i class="fa fa-user"></i> Đăng Ký</a></li>
-                    </a>
                   </li>
                 </ul>
               </div>

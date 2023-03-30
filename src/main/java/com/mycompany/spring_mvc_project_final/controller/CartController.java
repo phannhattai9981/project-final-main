@@ -4,10 +4,16 @@ package com.mycompany.spring_mvc_project_final.controller;
 import com.mycompany.spring_mvc_project_final.entities.*;
 import com.mycompany.spring_mvc_project_final.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +42,9 @@ public class CartController {
 
     @Autowired
     PaymentService paymentService;
+    @Autowired
+    MailSender mailSender;
+
 
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
@@ -97,58 +106,101 @@ public class CartController {
     }
 
     @PostMapping(value = "/checkout")
-    public String checkOut(Model model, Order order, @RequestParam(name = "payment_method") String payment_method) {
-        AccountBanking accountBanking = accountBankingService.getAccountBankingByAccountId();
+    public String checkOut(Model model, HttpSession session , Order order, @RequestParam(name = "payment_method") String payment_method) {
+        AccountEntity account = (AccountEntity) session.getAttribute("account");
+        List<AccountBanking>  accountBankingList = (List<AccountBanking>) accountBankingService.getAccountBankingByAccountId(account.getId());
         Payment payment = new Payment();
-        if(accountBanking == null ){
-            return "redirect:/";
-        }
         if (payment_method.equals("COD")) {
-            AccountEntity account = accountService.findById(1);
-            if (accountBanking.getBalance() < cartItemService.getAmount()) {
+            if (accountBankingList == null || accountBankingList.isEmpty()) {
+                return "redirect:/";
+            } else if (accountBankingList.get(0).getBalance() < cartItemService.getAmount()) {
                 model.addAttribute("msg", "khong du tien");
                 return "redirect:/";
             } else {
-                order.setOrderDate(new Date());
-                accountBanking.setBalance(accountBanking.getBalance() - cartItemService.getAmount());
-                order.setAccount(account);
-                orderService.save(order);
-                payment.setOrder(order);
-                payment.setAccountBanking(accountBanking);
-                paymentService.save(payment);
-
-
+                AccountBanking accountBanking = accountBankingList.get(0);
                 List<CartItem> cartItems = (List<CartItem>) cartItemService.findAllByCartId(account.getCart().getId());
                 for (CartItem cart : cartItems) {
+                    Product product = productService.findById(cart.getProduct().getId());
+                    if (product.getQuantity() < cart.getQuantity()) {
+                        model.addAttribute("mss", "số lượng k đủ");
+                        return "redirect:/";
+                    } else {
+                        accountBanking.setBalance(accountBanking.getBalance() - cartItemService.getAmount());
+                        accountBankingService.save(accountBanking);
+                        order.setOrderDate(new Date());
+                        order.setAccount(account);
+                        orderService.save(order);
+
+                        product.setQuantity(product.getQuantity()-cart.getQuantity());
+                        productService.save(product);
+                        OrderDetail orderDetail = new OrderDetail();
+                        orderDetail.setQuantity(cart.getQuantity());
+                        orderDetail.setPrice(cart.getProduct().getPrice());
+                        orderDetail.setProduct(cart.getProduct());
+                        orderDetail.setOrder(order);
+                        orderDetailService.save(orderDetail);
+
+                        payment.setOrder(order);
+                        payment.setAccountBanking(accountBanking);
+                        payment.setPayment_date(new Date());
+                        payment.setAmount(cartItemService.getAmount());
+                        paymentService.save(payment);
+                    }
+                }
+            }
+            List<CartItem> cartItems = (List<CartItem>) cartItemService.findAllByCartId(account.getCart().getId());
+            for (CartItem cart : cartItems) {
+                cartItemService.deleteById(cart.getId());
+            }
+        }else if (payment_method.equals("CASH")) {
+            List<CartItem> cartItems = (List<CartItem>) cartItemService.findAllByCartId(account.getCart().getId());
+            for (CartItem cart : cartItems) {
+                Product product = productService.findById(cart.getProduct().getId());
+                if (product.getQuantity() < cart.getQuantity()) {
+                    model.addAttribute("mss", "số lượng k đủ");
+                    return "redirect:/";
+                } else {
+                    order.setOrderDate(new Date());
+                    order.setAccount(account);
+                    orderService.save(order);
+
+                    product.setQuantity(product.getQuantity()-cart.getQuantity());
+                    productService.save(product);
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.setQuantity(cart.getQuantity());
                     orderDetail.setPrice(cart.getProduct().getPrice());
                     orderDetail.setProduct(cart.getProduct());
                     orderDetail.setOrder(order);
                     orderDetailService.save(orderDetail);
+
+                    payment.setOrder(order);
+                    payment.setPayment_date(new Date());
+                    payment.setAmount(cartItemService.getAmount());
+                    paymentService.save(payment);
                 }
-            }   cartItemService.deleteAllCartItem();
-        }
-        if (payment_method.equals("CASH")) {
-            AccountEntity account = accountService.findById(1);
-            order.setOrderDate(new Date());
-            order.setAccount(account);
-            orderService.save(order);
-            payment.setOrder(order);
-            payment.setAccountBanking(accountBanking);
-            paymentService.save(payment);
-            List<CartItem> cartItems = (List<CartItem>) cartItemService.findAllByCartId(account.getCart().getId());
-            for (CartItem cart : cartItems) {
-                OrderDetail orderDetail = new OrderDetail();
-                orderDetail.setQuantity(cart.getQuantity());
-                orderDetail.setPrice(cart.getProduct().getPrice());
-                orderDetail.setProduct(cart.getProduct());
-                orderDetail.setOrder(order);
-                orderDetailService.save(orderDetail);
             }
-        }   cartItemService.deleteAllCartItem();
+        }
+        List<CartItem> cartItems = (List<CartItem>) cartItemService.findAllByCartId(account.getCart().getId());
+        for (CartItem cart : cartItems) {
+            cartItemService.deleteById(cart.getId());
+        }
+
+//        String email = accountEntity.getEmail();
+//        sendEmail(email, "kích hoạt mail","ĐĂNG KÍ THÀNH CÔNG");
+//        return "login";
+
         return "redirect:/";
     }
 
-}
+    public void sendEmail(String to, String subject, String content) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("phannhattai14071996@gmail.com");
+        mailMessage.setTo(to);
+        mailMessage.setSubject(subject);
+        mailMessage.setText(content);
+        System.out.println(mailSender);
+        mailSender.send(mailMessage);
+        System.out.println(mailMessage);
+    }
 
+}

@@ -10,6 +10,8 @@ import com.mycompany.spring_mvc_project_final.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  *
  * @author Admin
@@ -29,4 +31,14 @@ public class AccountService {
 
     public void save(AccountEntity accountEntity) { accountRepository.save(accountEntity);
     }
+
+    public AccountEntity findByEmail(String username) {
+        return accountRepository.findByEmail(username);
+    }
+
+
+//    public List<AccountEntity> findByAccountId(int id) {
+//        return accountRepository.findByAccountId(id);
+//
+//    }
 }

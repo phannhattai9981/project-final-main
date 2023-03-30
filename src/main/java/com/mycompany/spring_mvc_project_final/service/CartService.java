@@ -24,8 +24,8 @@ public class CartService {
         return cartRepository.findAll();
     }
 
-    public void deleteById(int id) {
-        cartRepository.deleteById(id);
+    public void deleteAllById(int id) {
+        cartRepository.deleteAllById(id);
     }
 
 //
@@ -42,6 +42,9 @@ public class CartService {
     public Cart findById(int id) {
         return cartRepository.findById(id);
     }
-}
 
+    public Cart save(Cart cart) {
+       return cartRepository.save(cart);
+    }
+}
 

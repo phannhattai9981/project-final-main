@@ -1,14 +1,19 @@
 package com.mycompany.spring_mvc_project_final.controller;
 
+import com.mycompany.spring_mvc_project_final.entities.AccountEntity;
 import com.mycompany.spring_mvc_project_final.entities.Category;
 import com.mycompany.spring_mvc_project_final.entities.Product;
+import com.mycompany.spring_mvc_project_final.service.AccountService;
 import com.mycompany.spring_mvc_project_final.service.CategoryService;
 import com.mycompany.spring_mvc_project_final.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -19,13 +24,28 @@ public class HomeController {
     @Autowired
     ProductService productService;
     @Autowired
+    AccountService accountService;
+    @Autowired
     CategoryService categoryService;
 //    @Autowired
 //    SearchController searchController;
 
 
     @RequestMapping(method = GET)
-    public String showProduct(Model model) {
+    public String showProduct(Model model, HttpSession session) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      String username = principal.toString();
+
+     if (principal instanceof UserDetails) {
+
+            username = ((UserDetails) principal).getUsername();
+            session.setAttribute("username", username);
+        }
+        AccountEntity account = accountService.findByEmail(username);
+        session.setAttribute("account",account);
+
+
+
         List<Product> productListTopPhone = (List<Product>) productService.showTopPhone();
         model.addAttribute("productListTopPhone", productListTopPhone);
         List<Product> showTopTapLet = (List<Product>) productService.showTopTapLet();

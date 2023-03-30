@@ -12,5 +12,8 @@ import java.util.List;
 public interface OrderRepository extends CrudRepository<Order, Integer> {
     @Query(value = " select * from orders where id = ?1", nativeQuery = true)
     Order getByIdOrder(int  id);
+    @Query(value="SELECT * FROM orders WHERE accountId = ?1", nativeQuery = true)
+    List<Order> findByAccountId(int id);
+
 
 }

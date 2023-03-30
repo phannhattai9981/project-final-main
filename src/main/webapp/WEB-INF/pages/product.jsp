@@ -174,7 +174,7 @@
                             class="active"
                           >
                             <img
-                              src="img/product1.webp"
+                              src="getProductPhoto/<c:out value='${single.id}'/>"
                               alt=""
                             />
                           </li>
@@ -183,7 +183,7 @@
                             data-slide-to="1"
                           >
                             <img
-                              src="img/product2.webp"
+                              src="getProductPhoto/<c:out value='${single.id}'/>"
                               alt=""
                             />
                           </li>
@@ -191,28 +191,31 @@
                             data-target="#carouselExampleIndicators"
                             data-slide-to="2"
                           >
-                          <img class="img-fluid" src="getProductPhoto/<c:out value='${single.id}'/>"/>
+                          <img
+                            src="getProductPhoto/<c:out value='${single.id}'/>"
+                            alt=""
+                          >
                           </li>
                         </ol>
                         <div class="carousel-inner">
                           <div class="carousel-item active">
                             <img
                               class="d-block w-100"
-                              src="img/product_dt_Home1.webp"
+                              src="getProductPhoto/<c:out value='${single.id}'/>"
                               alt="First slide"
                             />
                           </div>
                           <div class="carousel-item">
                             <img
                               class="d-block w-100"
-                              src="img/product_dt_Home2.webp"
+                              src="getProductPhoto/<c:out value='${single.id}'/>"
                               alt="Second slide"
                             />
                           </div>
                           <div class="carousel-item">
                             <img
                               class="d-block w-100"
-                              src="img/product_dt_Home3.webp"
+                              src="getProductPhoto/<c:out value='${single.id}'/>"
                               alt="Third slide"
                             />
                           </div>
@@ -233,36 +236,11 @@
                     ${single.description}
                   </p>
                   <div class="product_count">
-                    <label for="qty">Số Lượng:</label>
-                    <input
-                      type="text"
-                      name="qty"
-                      id="sst"
-                      maxlength="12"
-                      value="1"
-                      title="Quantity:"
-                      class="input-text qty"
-                    />
-                    <button
-                      onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                      class="increase items-count"
-                      type="button"
-                    >
-                      <i class="lnr lnr-chevron-up"></i>
-                    </button>
-                    <button
-                      onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                      class="reduced items-count"
-                      type="button"
-                    >
-                      <i class="lnr lnr-chevron-down"></i>
-                    </button>
+                    <label for="qty">Còn lại</label>
+                      <h3>${single.quantity}</h3>
                   </div>
                   <div class="card_area">
                     <a class="main_btn" href="#">Thêm Vào Giỏ <i class="fa-solid fa-cart-plus"></i></a>
-                    <div class="checkout">
-                      <a class="main_btn" href="#">Mua Ngay</a>
-                    </div>
                   </div>
 
                 </div>
