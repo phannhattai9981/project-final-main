@@ -21,6 +21,9 @@ public class CartItem {
     @Column(name = "quantity")
     private int quantity;
 
+   
+
+
     public CartItem() {
     }
 

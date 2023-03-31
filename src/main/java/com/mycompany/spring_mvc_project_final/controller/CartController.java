@@ -48,7 +48,8 @@ public class CartController {
 
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
-    public String showCart(Model model) {
+    public String showCart(Model model,HttpSession session) {
+        AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
         double total = cartItemService.getAmount();
         model.addAttribute("total", total);
         model.addAttribute("cartItem", cartItemService.findAll());
@@ -56,11 +57,12 @@ public class CartController {
     }
 
     @RequestMapping(value = "/addToCart/{id}", method = RequestMethod.GET)
-    public String addToCart(@PathVariable int id) {
-        Cart cart = cartService.findById(1);
+    public String addToCart(@PathVariable int id,HttpSession session) {
+        AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
+        Cart cart = cartService.findById(accountEntity.getId());
         Product product = productService.findById(id);
 
-        List<CartItem> cartItemList = cartItemService.findByCartId(1);
+        List<CartItem> cartItemList = cartItemService.findByCartId(cart.getId());
 
         if (cartItemList.isEmpty()) {
             CartItem cartItem = new CartItem();
@@ -184,23 +186,21 @@ public class CartController {
         for (CartItem cart : cartItems) {
             cartItemService.deleteById(cart.getId());
         }
-
+//        AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
 //        String email = accountEntity.getEmail();
-//        sendEmail(email, "kích hoạt mail","ĐĂNG KÍ THÀNH CÔNG");
-//        return "login";
-
+//        sendEmail(email, "kích hoạt mail","CÁM ƠN ĐÃ MUA HÀNG");
         return "redirect:/";
     }
 
-    public void sendEmail(String to, String subject, String content) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom("phannhattai14071996@gmail.com");
-        mailMessage.setTo(to);
-        mailMessage.setSubject(subject);
-        mailMessage.setText(content);
-        System.out.println(mailSender);
-        mailSender.send(mailMessage);
-        System.out.println(mailMessage);
-    }
+//    public void sendEmail(String to, String subject, String content) {
+//        SimpleMailMessage mailMessage = new SimpleMailMessage();
+//        mailMessage.setFrom("phannhattai14071996@gmail.com");
+//        mailMessage.setTo(to);
+//        mailMessage.setSubject(subject);
+//        mailMessage.setText(content);
+//        System.out.println(mailSender);
+//        mailSender.send(mailMessage);
+//        System.out.println(mailMessage);
+//    }
 
 }
