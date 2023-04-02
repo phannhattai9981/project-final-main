@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface CartItemRepository extends CrudRepository<CartItem, Integer> {
 
     CartItem findByProductId(int id);
+
     @Query(value = "select * from cartitem where cartId = ?1", nativeQuery = true)
     List<CartItem> findByCartId(int id);
 

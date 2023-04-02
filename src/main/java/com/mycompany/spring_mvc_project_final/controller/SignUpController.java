@@ -72,10 +72,12 @@ public class SignUpController {
         accountEntity.setRegistration_date(new Date());
         accountService.save(accountEntity);
 
-        Cart cart = new Cart();
-        cart.setId(1);
-        cart.setAccount(accountEntity);
-        cartService.save(cart);
+
+
+
+        Cart cart1 = new Cart();
+        cart1.setAccount(accountEntity);
+        cartService.save(cart1);
 
       String email = accountEntity.getEmail();
       sendEmail(email, "kích hoạt mail","ĐĂNG KÍ THÀNH CÔNG");

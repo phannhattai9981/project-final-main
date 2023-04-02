@@ -46,5 +46,9 @@ public class CartService {
     public Cart save(Cart cart) {
        return cartRepository.save(cart);
     }
+
+    public Cart findByAccountID(int id) {
+        return cartRepository.findByAccountID(id);
+    }
 }
 

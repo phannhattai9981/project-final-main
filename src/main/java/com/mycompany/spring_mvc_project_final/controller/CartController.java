@@ -51,8 +51,9 @@ public class CartController {
     public String showCart(Model model,HttpSession session) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
         double total = cartItemService.getAmount();
+        Cart cart = cartService.findByAccountID(accountEntity.getId());
         model.addAttribute("total", total);
-        model.addAttribute("cartItem", cartItemService.findAll());
+        model.addAttribute("cartItem", cartItemService.findByCartId(cart.getId()));
         return "cart";
     }
 
@@ -76,6 +77,7 @@ public class CartController {
             for (CartItem cartItem : cartItemList) {
                 if (product.getId() == cartItem.getProduct().getId()) {
                     cartItemCheck = true;
+                    cartItem.setCart(cart);
                     cartItem.setQuantity(cartItem.getQuantity() + 1);
                     cartItemService.save(cartItem);
                     break;
@@ -186,21 +188,21 @@ public class CartController {
         for (CartItem cart : cartItems) {
             cartItemService.deleteById(cart.getId());
         }
-//        AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
-//        String email = accountEntity.getEmail();
-//        sendEmail(email, "kích hoạt mail","CÁM ƠN ĐÃ MUA HÀNG");
+        AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
+        String email = accountEntity.getEmail();
+        sendEmail(email, "kích hoạt mail","CÁM ƠN ĐÃ MUA HÀNG");
         return "redirect:/";
     }
 
-//    public void sendEmail(String to, String subject, String content) {
-//        SimpleMailMessage mailMessage = new SimpleMailMessage();
-//        mailMessage.setFrom("phannhattai14071996@gmail.com");
-//        mailMessage.setTo(to);
-//        mailMessage.setSubject(subject);
-//        mailMessage.setText(content);
-//        System.out.println(mailSender);
-//        mailSender.send(mailMessage);
-//        System.out.println(mailMessage);
-//    }
+    public void sendEmail(String to, String subject, String content) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("phannhattai14071996@gmail.com");
+        mailMessage.setTo(to);
+        mailMessage.setSubject(subject);
+        mailMessage.setText(content);
+        System.out.println(mailSender);
+        mailSender.send(mailMessage);
+        System.out.println(mailMessage);
+    }
 
 }
