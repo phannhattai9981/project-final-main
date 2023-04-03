@@ -15,5 +15,7 @@ public interface OrderRepository extends CrudRepository<Order, Integer> {
     @Query(value="SELECT * FROM orders WHERE accountId = ?1", nativeQuery = true)
     List<Order> findByAccountId(int id);
 
+    Order findById(int id);
+
 
 }

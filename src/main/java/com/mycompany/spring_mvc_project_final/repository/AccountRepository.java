@@ -17,12 +17,14 @@ import java.util.List;
 public interface AccountRepository extends CrudRepository<AccountEntity, Long> {
 
     AccountEntity findByEmailLikeAndStatusLike(String email,
-            UserStatus status);
+                                               UserStatus status);
 
     AccountEntity findById(int id);
 
     AccountEntity findByEmail(String username);
-
-
-
 }
+
+
+
+//    void getAccountById(int accountId);
+//}

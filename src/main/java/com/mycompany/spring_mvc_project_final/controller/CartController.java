@@ -17,6 +17,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import static com.mycompany.spring_mvc_project_final.enums.OrderStatus.PROCESSING;
+
 
 @Controller
 @RequestMapping(value = "/")
@@ -44,6 +46,7 @@ public class CartController {
     PaymentService paymentService;
     @Autowired
     MailSender mailSender;
+
 
 
 
@@ -116,7 +119,7 @@ public class CartController {
         Payment payment = new Payment();
         if (payment_method.equals("COD")) {
             if (accountBankingList == null || accountBankingList.isEmpty()) {
-                return "redirect:/";
+                return "banking";
             } else if (accountBankingList.get(0).getBalance() < cartItemService.getAmount()) {
                 model.addAttribute("msg", "khong du tien");
                 return "redirect:/";
@@ -132,6 +135,7 @@ public class CartController {
                         accountBanking.setBalance(accountBanking.getBalance() - cartItemService.getAmount());
                         accountBankingService.save(accountBanking);
                         order.setOrderDate(new Date());
+                        order.setStatus(PROCESSING);
                         order.setAccount(account);
                         orderService.save(order);
 
@@ -166,6 +170,7 @@ public class CartController {
                 } else {
                     order.setOrderDate(new Date());
                     order.setAccount(account);
+                    order.setStatus(PROCESSING);
                     orderService.save(order);
 
                     product.setQuantity(product.getQuantity()-cart.getQuantity());

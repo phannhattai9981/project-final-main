@@ -43,11 +43,10 @@
 									<table class="table">
 										<thead class="thead-primary">
 											<tr>
-												<th>Người Đặt</th>
-												<th>Địa Chỉ Nhận Hàng</th>
-												<th>Ngày Đặt</th>
+												<th>Tên Người Dùng</th>
 												<th>Số Điện Thoại</th>
-												<th>Trang Thái Đơn Hàng</th>
+												<th>Email</th>
+												<th>Trạng Thái</th>
 												<th>Tùy Chọn</th>
 
 
@@ -55,15 +54,15 @@
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="ordersList" items="${ordersList}">
+											<c:forEach var="accountEntityList" items="${accountEntityList}">
 												<tr class="alert" role="alert">
 
-													<th scope="row" style="padding-top:15px;">${ordersList.customerName}
+													<th scope="row" style="padding-top:15px;">${accountEntityList.fullName}
 													</th>
-													<td style="padding-top:15px;">${ordersList.customerAddress}</td>
-													<th scope="row" style="padding-top:15px;">${ordersList.orderDate}
-													<th scope="row" style="padding-top:15px;">${account.phone}
-													<th scope="row" style="padding-top:15px;">${ordersList.status}
+													<td style="padding-top:15px;">${accountEntityList.phone}</td>
+
+													<th scope="row" style="padding-top:15px;">${accountEntityList.email}
+													<th scope="row" style="padding-top:15px;">${accountEntityList.status}
                                                     <th
                                                      <td>
                                                             <button class="btn btn-sm btn-primary"
@@ -100,11 +99,6 @@
                                                             </div>
                                                         </div>
                                                     </th>
-
-
-
-
-
 												</tr>
 											</c:forEach>
 										</tbody>

@@ -1,5 +1,7 @@
 package com.mycompany.spring_mvc_project_final.entities;
 
+import com.mycompany.spring_mvc_project_final.enums.OrderStatus;
+import org.hibernate.engine.spi.Status;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -34,9 +36,9 @@ public class Order {
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Payment payment;
 
-
-    public Order() {
-    }
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
     public int getId() {
         return id;
@@ -92,5 +94,13 @@ public class Order {
 
     public void setPayment(Payment payment) {
         this.payment = payment;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 }

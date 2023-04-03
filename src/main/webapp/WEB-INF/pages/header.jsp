@@ -21,7 +21,7 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                 </sec:authorize>
                 <sec:authorize access="hasRole('ROLE_USER')">
                   <li class="nav-item">
-                    <a href="<c:url value="/user/account_orderList" />">My Order</a>
+                    <a href="<c:url value="/user/orderList" />">My Order</a>
                    </li>
 
                 </sec:authorize>
@@ -39,11 +39,9 @@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                 <li class="nav-item ">
 
                  </li>
+
                 <li class="nav-item">
-                  <a href="<c:url value="/login" />" class="nav-link">Login</a>
-                </li>
-                <li class="nav-item">
-                   <a href="<c:url value="/signup" />" class="nav-link">SignUp</a>
+                   <a href="<c:url value="/signup" />" class="nav-link">Bạn Đã Có Tài Khoản Chưa ?</a>
                  </li>
             </sec:authorize>
           </ul>

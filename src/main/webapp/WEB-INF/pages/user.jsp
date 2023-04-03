@@ -3,70 +3,100 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
-
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <link rel="icon" href="img/fev.png" type="image/png"/>
-  <title>Home</title>
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="<c:url value="/resources/css/css/bootstrap.css"/>">
-  <link rel="stylesheet" href="<c:url value="/resources/css/vendors/liner/style.css"/>">
-  <link rel="stylesheet" href="<c:url value="/resources/css/css/font-awesome.min.css"/>">
-  <link rel="stylesheet" href="<c:url value="/resources/css/css/them-icons.css"/>">
-  <link rel="stylesheet" href="<c:url value="/resources/css/css/flat.css"/>">
-  <link rel="stylesheet" href="<c:url value="/resources/css/vendors/owl-carousel/owl.carousel.min.css"/>">
-  <link rel="stylesheet" href="<c:url value="/resources/css/vendors/lightbox/simpleLightbox.css"/>">
-  <link rel="stylesheet" href="<c:url value="/resources/css/vendors/nice-select/css/nice-select.css"/>">
-  <link rel="stylesheet" href="<c:url value="/resources/css/vendors/animate-css/animate.css"/>">
-  <link rel="stylesheet" href="<c:url value="/resources/css/vendors/jquery-ui/jquery-ui.css"/>">
-  <!-- main css -->
-  <link rel="stylesheet" href="<c:url value="/resources/css/css/style.css"/>"/>
-  <link rel="stylesheet" href="<c:url value="/resources/css/css/responsive.css"/>"/>
-  <link rel="stylesheet" href="<c:url value="/resources/css/font-free-6.1.2-web/css/solid.css"/>">
-  <link rel="stylesheet" href="<c:url value="/resources/css/user.css"/>">
-
-
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="stylesheet" href="<c:url value="/resources/css/css/bootstrap.css"/>">
 </head>
 
-<body>
-<jsp:include page="header.jsp" />
-<section class="bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 mb-4 mb-sm-5">
-                    <div class="card card-style1 border-0">
-                        <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
-                            <div class="row align-items-center">
-                                <div class="col-lg-6 mb-4 mb-lg-0">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="...">
-                                </div>
-                                <div class="col-lg-6 px-xl-10">
-                                    <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
-                                        <h2 class="h2 text-white mb-0">Name: ${account.fullName}</h2>
-                                    </div>
-                                    <ul class="list-unstyled mb-1-9">
-                                        <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">My Email :</span> ${account.email}</li>
-                                        <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Your Phone :</span>${account.phone}</li>
-                                         <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Status :</span>${account.status}</li>
-                                    </ul>
-                                    <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
-                                        <h2 class="h2 text-white mb-0">CARD INFORMATION: </h2>
-                                    </div>
-                                    <ul class="list-unstyled mb-1-9">
-                                        <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Full Name :</span> ${accountBanking.fullName}</li>
-                                        <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">CardNumber :</span>${accountBanking.cardNumber}</li>
-                                        <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Balance :</span>${accountBanking.balance}</li>
-                                        <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Cvc :</span>${accountBanking.cvc}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-    </section>
+<body>
+
+	<link href="<c:url value="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<div class="container bootdey flex-grow-1 container-p-y"/>
+
+            <div class="media align-items-center py-3 mb-3">
+              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="d-block ui-w-100 rounded-circle">
+              <div class="media-body ml-4">
+                <h4 class="font-weight-bold mb-0">John Doe <span class="text-muted font-weight-normal">@johndoe</span></h4>
+                <div class="text-muted mb-2">ID: 3425433</div>
+                <a href="javascript:void(0)" class="btn btn-primary btn-sm">Edit</a>&nbsp;
+                <a href="javascript:void(0)" class="btn btn-default btn-sm">Profile</a>&nbsp;
+                <a href="javascript:void(0)" class="btn btn-default btn-sm icon-btn"><i class="fa fa-mail"></i></a>
+              </div>
+            </div>
+
+            <div class="card mb-4">
+              <div class="card-body">
+                <table class="table user-view-table m-0">
+                  <tbody>
+                    <tr>
+                      <td>Registered:</td>
+                      <td>01/23/2017</td>
+                    </tr>
+                    <tr>
+                      <td>Latest activity:</td>
+                      <td>01/23/2018 (14 days ago)</td>
+                    </tr>
+                    <tr>
+                      <td>Verified:</td>
+                      <td><span class="fa fa-check text-primary"></span>&nbsp; Yes</td>
+                    </tr>
+                    <tr>
+                      <td>Role:</td>
+                      <td>User</td>
+                    </tr>
+                    <tr>
+                      <td>Status:</td>
+                      <td><span class="badge badge-outline-success">Active</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <hr class="border-light m-0">
+              <div class="table-responsive">
+                <table class="table card-table m-0">
+                  <tbody>
+                    <tr>
+                      <th>Module Permission</th>
+                      <th>Read</th>
+                      <th>Write</th>
+                      <th>Create</th>
+                      <th>Delete</th>
+                    </tr>
+                    <tr>
+                      <td>Users</td>
+                      <td><span class="fa fa-check text-primary"></span></td>
+                      <td><span class="fa fa-times text-light"></span></td>
+                      <td><span class="fa fa-times text-light"></span></td>
+                      <td><span class="fa fa-times text-light"></span></td>
+                    </tr>
+                    <tr>
+                      <td>Articles</td>
+                      <td><span class="fa fa-check text-primary"></span></td>
+                      <td><span class="fa fa-check text-primary"></span></td>
+                      <td><span class="fa fa-check text-primary"></span></td>
+                      <td><span class="fa fa-times text-light"></span></td>
+                    </tr>
+                    <tr>
+                      <td>Staff</td>
+                      <td><span class="fa fa-times text-light"></span></td>
+                      <td><span class="fa fa-times text-light"></span></td>
+                      <td><span class="fa fa-times text-light"></span></td>
+                      <td><span class="fa fa-times text-light"></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+
+
+          </div>
 </body>
+
 </html>

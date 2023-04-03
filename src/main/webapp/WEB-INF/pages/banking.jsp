@@ -31,87 +31,37 @@
 
 </head>
 <body>
-    <jsp:include page="header.jsp" />
-    <form:form action="addBanking" method="post" modelAttribute="accountBanking">
-        <div class="row">
-            <div class="col-lg-6 mx-auto">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
-                            <!-- Credit card form tabs -->
-                            <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3">
-                                <li class="nav-item">
-                                    <a data-toggle="pill" href="#credit-card" class="nav-link active"
-                                        style="background-color: red;"> <i class="fas fa-credit-card mr-2"></i> Credit
-                                        Card </a>
-                                </li>
-                        </div>
-                        <!-- End -->
-                        <!-- Credit card form content -->
-                        <div class="tab-content">
-                            <!-- credit card info-->
-                            <div id="credit-card" class="tab-pane fade show active pt-3">
-                                    <div class="form-group">
-                                        <label for="username">
-                                            <h6>Card Owner</h6>
-                                        </label>
-                                        <input type="text" name="fullName"
-                                            class="form-control" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="cardNumber">
-                                            <h6>Card number</h6>
-                                        </label>
-                                        <div class="input-group">
-                                            <input type="number" name="cardNumber" placeholder="Valid card number"
-                                                class="form-control"/>
-
-                                        </div>
-
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="cardNumber">
-                                            <h6>Card balance</h6>
-                                        </label>
-
-                                        <div class="input-group">
-                                            <input type="number" name="balance" placeholder="balance" class="form-control"/>
-
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-8">
-                                            <div class="form-group">
-                                                <label>
-                                                    <span class="hidden-xs">
-                                                        <h6>Expiration Date</h6>
-                                                    </span>
-                                                </label>
-                                                <div class="input-group"><input type="Date"
-                                                        name="expired_date" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="form-group mb-4">
-                                                <label data-toggle="tooltip"
-                                                    title="Three digit CV code on the back of your card">
-                                                    <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
-                                                </label>
-                                                <input type="number" name="cvc" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer"><button type="submit"
-                                            class="subscribe btn btn-primary btn-block shadow-sm">Confirm
-                                            Payment</button></div>
-                            </div>
-                            <!-- End -->
-
-                            <!-- End -->
-                        </div>
-                    </div>
+    <form:form action="addBanking" method="POST" modelAttribute="accountBanking">
+        <div class="form-group">
+                    <label class="control-label">Full Name (*)</label>
+                    <input name="fullName" type="text" class="form-control"
+                        placeholder="cardNumber" />
                 </div>
-            </div>
+        <div class="form-group">
+            <label class="control-label">Full Name (*)</label>
+            <input name="cardNumber" type="text" class="form-control"
+                placeholder="cardNumber" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">cardNumber (*)</label>
+            <input name="balance" type="number" class="form-control"
+                placeholder="balance" required="true" />
+        </div>
+        <div class="form-group">
+            <label class="control-label">expired_date (*)</label>
+            <form:input path="expired_date" type="date" id="myDate" class="form-control"
+                />
+        </div>
+        <div class="form-group">
+            <label class="control-label">cvc (*)</label>
+            <input name="cvc" type="number" id="myDate" class="form-control"
+                />
+        </div>
+        <br>
+        <div class="footer" style="display:flex; justify-content: center;">
+            <button class="btn btn-primary" type="submit" style="width: 100%">Submit</button>
+        </div>
     </form:form>
+
 </body>
 </html>

@@ -4,6 +4,7 @@
  */
 package com.mycompany.spring_mvc_project_final.service;
 
+import com.mycompany.spring_mvc_project_final.entities.AccountBanking;
 import com.mycompany.spring_mvc_project_final.entities.AccountEntity;
 import com.mycompany.spring_mvc_project_final.enums.UserStatus;
 import com.mycompany.spring_mvc_project_final.repository.AccountRepository;
@@ -35,6 +36,19 @@ public class AccountService {
     public AccountEntity findByEmail(String username) {
         return accountRepository.findByEmail(username);
     }
+
+    public Object findAll() {
+        return accountRepository.findAll();
+    }
+
+
+
+//    public List<AccountEntity> getAllAccounts() {
+//    }
+
+//    public AccountEntity getAccountById(int accountId) {
+//        accountRepository.getAccountById(accountId);
+//    }
 
 
 //    public List<AccountEntity> findByAccountId(int id) {

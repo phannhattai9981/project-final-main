@@ -26,6 +26,7 @@ public class AccountBanking {
     private int cvc;
 
     @Column (name="expired_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expired_date;
 
     @ManyToOne(fetch = FetchType.EAGER)
