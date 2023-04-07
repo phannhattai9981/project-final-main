@@ -19,7 +19,7 @@
                     </script>
                     <script type="text/javascript" src="webjars/popper.js/2.9.3/umd/popper.min.js" />
                     </script>
-                    <link href='<c:url value="/resources/images/tamlogo.png" />' rel='icon'>
+
                     <title>Order</title>
                     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
                     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -29,6 +29,7 @@
 			</head>
 
 			<body>
+			<jsp:include page="header.jsp"/>
 				<section class="ftco-section">
 					<div class="container">
 						<div class="row justify-content-center">
@@ -100,11 +101,6 @@
                                                             </div>
                                                         </div>
                                                     </th>
-
-
-
-
-
 												</tr>
 											</c:forEach>
 										</tbody>

@@ -29,7 +29,7 @@
 </head>
 
     <body>
-   <jsp:include page="hearder.jsp"/>
+
       <section class="banner_area1">
         <div class="container">
           <div class="banner_content d-md-flex justify-content-between align-items-center">
@@ -40,7 +40,7 @@
           <td>
               <div class="active">
                   <div class="cupon_text">
-                  <a class="main_btn" href="add">Thêm sản phẩm</a>
+                  <a class="main_btn" href="../add">Thêm sản phẩm</a>
               </div>
           </td>
         </div>
@@ -66,7 +66,7 @@
                                       <div class="media">
                                         <div class="d-flex">
 
-                                          <img width="100" height="100" src="getProductPhoto/<c:out value='${list.id}'/>"/>
+                                          <img width="100" height="100" src="../getProductPhoto/<c:out value='${list.id}'/>"/>
                                         </div>
                                         <div class="media-body">
                                           <p>${list.name}</p>
@@ -85,10 +85,10 @@
                                     <td>
                                       <div class="active">
                                           <div class="cupon_text1">
-                                              <a class="main_btn" href="update/${list.id}">Sửa</a>
+                                              <a class="main_btn" href="../update/${list.id}">Sửa</a>
                                           </div>
                                           <div  class="cupon_text2">
-                                              <a style="margin-left: 10px;" class="main_btn" href="deleteProduct/${list.id}">Xóa</a>
+                                              <a style="margin-left: 10px;" class="main_btn" href="./deleteProduct/${list.id}">Xóa</a>
                                           </div>
                                       </div>
                                     </td>

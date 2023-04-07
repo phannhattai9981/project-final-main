@@ -22,6 +22,15 @@ public interface AccountRepository extends CrudRepository<AccountEntity, Long> {
     AccountEntity findById(int id);
 
     AccountEntity findByEmail(String username);
+
+    List<AccountEntity> findByEmailNot(String email);
+
+
+
+
+
+//    @Query(value = "SELECT * FROM account WHERE email = ?1 AND password = ?2", n)
+//    AccountEntity findByEmailAndPassword(String email, String password);
 }
 
 

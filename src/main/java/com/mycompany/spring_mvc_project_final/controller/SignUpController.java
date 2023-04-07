@@ -72,9 +72,6 @@ public class SignUpController {
         accountEntity.setRegistration_date(new Date());
         accountService.save(accountEntity);
 
-
-
-
         Cart cart1 = new Cart();
         cart1.setAccount(accountEntity);
         cartService.save(cart1);

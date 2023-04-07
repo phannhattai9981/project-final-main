@@ -5,16 +5,13 @@
  */
 package com.mycompany.spring_mvc_project_final.controller;
 
-import com.mycompany.spring_mvc_project_final.entities.AccountEntity;
 import com.mycompany.spring_mvc_project_final.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,15 +19,50 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
     @Autowired
     AccountService accountService;
+//    @RequestMapping("/login")
+//    public String loginPage(Model model, @RequestParam(value = "error", required = false) boolean error) {
+//
+//        if (error) {
+//            model.addAttribute("message", "Login Fail!!!");
+//        }
+//        return "login";
+//    }
 
-    @RequestMapping("/login")
-    public String loginPage(Model model, @RequestParam(value = "error", required = false) boolean error) {
-
-        if (error) {
-            model.addAttribute("message", "Login Fail!!!");
+    @GetMapping("/login")
+    public String LoginPage(@RequestParam(value = "error", required = false) String error,
+                                @RequestParam(value = "BLOCK", required = false) String BLOCK,
+                                @RequestParam(value = "UNACTIVE", required = false) String UNACTIVE,
+                                Model model) {
+        if (error != null) {
+            model.addAttribute("message", "Tài khoản hoặc mật khẩu không đúng");
+        } else if (BLOCK != null) {
+            model.addAttribute("message", "Tài khoản đã bị khóa");
+        } else if (UNACTIVE != null) {
+            model.addAttribute("message", "Tài khoản chưa được kích hoạt");
         }
         return "login";
     }
+//    @PostMapping("/login")
+//    public String login(@RequestParam("email") String email, @RequestParam("password") String password, Model model) {
+//        // tìm kiếm người dùng theo email và mật khẩu
+//        AccountEntity account = accountService.findByEmailAndPassword(email, password);
+//
+//        if (account != null) {
+//            // kiểm tra trạng thái của người dùng
+//            if (account.getStatus() == UserStatus.BLOCK) {
+//                // nếu tài khoản của người dùng bị khóa, chuyển hướng đến trang báo lỗi
+//                return "login";
+//            } else {
+//                // nếu tài khoản của người dùng không bị khóa, đăng nhập thành công và chuyển hướng đến trang chính
+//                return "home";
+//            }
+//        } else {
+//            // nếu không tìm thấy người dùng, hiển thị thông báo lỗi và yêu cầu đăng nhập lại
+//            model.addAttribute("errorMessage", "Invalid email or password");
+//            return "login";
+//        }
+//    }
+
     @RequestMapping("/admin/home")
     public String viewHome(Model model) {
 

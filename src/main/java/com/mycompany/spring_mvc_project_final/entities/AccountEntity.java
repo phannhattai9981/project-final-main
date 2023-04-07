@@ -41,11 +41,16 @@ public class AccountEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
+    @Lob
+    @Column (name = "avatar")
+    private byte [] avatar;
+
+
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<Order> orders;
 
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "account_role",
             joinColumns = @JoinColumn(name = "user_id",
                     referencedColumnName = "id"),
@@ -114,6 +119,14 @@ public class AccountEntity implements Serializable {
 
     public void setStatus(UserStatus status) {
         this.status = status;
+    }
+
+    public byte[] getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(byte[] avatar) {
+        this.avatar = avatar;
     }
 
     public List<Order> getOrders() {

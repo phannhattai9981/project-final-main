@@ -2,101 +2,171 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <html>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<link rel="stylesheet" href="<c:url value="/resources/css/css/bootstrap.css"/>">
+	 <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap.css"/>">
+	  <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap.css.map"/>">
+	   <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap.min.css"/>">
+	    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap.min.css.map"/>">
+	     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap-grid.css"/>">
+	     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap-grid.min.css"/>">
+	     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap-grid.min.css.map"/>">
+	     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap-reboot.css.map"/>">
+	     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap-reboot.min.css"/>">
+	     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap-reboot.min.css.map"/>">
+	      <link rel="stylesheet" href="<c:url value="/resources/css/user.css"/>">
+	      <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
 </head>
 
+<style>
+    body {
+        background: #eee;
+    }
+
+    .card {
+        border: none;
+
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .card:before {
+
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        background-color: #E1BEE7;
+        transform: scaleY(1);
+        transition: all 0.5s;
+        transform-origin: bottom
+    }
+
+    .card:after {
+
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 4px;
+        height: 100%;
+        background-color: #8E24AA;
+        transform: scaleY(0);
+        transition: all 0.5s;
+        transform-origin: bottom
+    }
+
+    .card:hover::after {
+        transform: scaleY(1);
+    }
+
+
+    .fonts {
+        font-size: 11px;
+    }
+
+    .social-list {
+        display: flex;
+        list-style: none;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .social-list li {
+        padding: 10px;
+        color: #8E24AA;
+        font-size: 19px;
+    }
+
+
+    .buttons button:nth-child(1) {
+        border: 1px solid #8E24AA !important;
+        color: #8E24AA;
+        height: 40px;
+    }
+
+    .buttons button:nth-child(1):hover {
+        border: 1px solid #8E24AA !important;
+        color: #fff;
+        height: 40px;
+        background-color: #8E24AA;
+    }
+
+    .buttons button:nth-child(2) {
+        border: 1px solid #8E24AA !important;
+        background-color: #8E24AA;
+        color: #fff;
+        height: 40px;
+    }
+</style>
 
 <body>
-
-	<link href="<c:url value="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-<div class="container bootdey flex-grow-1 container-p-y"/>
-
-            <div class="media align-items-center py-3 mb-3">
-              <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="d-block ui-w-100 rounded-circle">
-              <div class="media-body ml-4">
-                <h4 class="font-weight-bold mb-0">John Doe <span class="text-muted font-weight-normal">@johndoe</span></h4>
-                <div class="text-muted mb-2">ID: 3425433</div>
-                <a href="javascript:void(0)" class="btn btn-primary btn-sm">Edit</a>&nbsp;
-                <a href="javascript:void(0)" class="btn btn-default btn-sm">Profile</a>&nbsp;
-                <a href="javascript:void(0)" class="btn btn-default btn-sm icon-btn"><i class="fa fa-mail"></i></a>
-              </div>
+<jsp:include page="header.jsp"/>
+    <div class="container mt-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-7">
+                <div class="card p-3 py-4">
+                <c:if test="${type.equals('update')}">
+                  <div class="text-center">
+                      <td style="padding-top:15px;"><img class="img-fluid" style="max-width: 300px;"  w-100" src="../getPhotoAccount/<c:out value='${account.id}'/>"/>
+                  </div>
+                </c:if>
+                <c:if test="${type.equals('user')}">
+                    <div class="text-center">
+                        <td style="padding-top:15px;"><img class="img-fluid" style="max-width: 300px;"  w-100" src="./getPhotoAccount/<c:out value='${account.id}'/>"/>
+                    </div>
+                 </c:if>
+                    <div class="text-center mt-3">
+                        <h1 class="mt-2 mb-0">${account.fullName}</h1>
+                        <div class="px-4 mt-1">
+                            <div class="form-group">
+                                <label class="form-label">Số Điện Thoại :</label>
+                                    <th scope="row" style="padding-top:15px;">${account.phone}                                       													</th>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">E-mail : </label>
+                                <th scope="row" style="padding-top:15px;">${account.email}
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Trạng Thái</label>
+                                <th scope="row" style="padding-top:15px;">${account.status}
+                            </div>
+                        </div>
+                        <div class="buttons">
+                         <a  href="update/profile${account.id}" href="orderList" class="btn btn-outline-primary px-4">chỉnh sửa</a>
+                           <a  href="orderList" href="orderList" class="btn btn-outline-primary px-4">Đơn Hàng </a>
+                          <a href="showAccountBanking" class="btn btn-primary px-4 ms-3"> Thẻ VISA </a>
+                        </div>
+                    </div>
+             </div>
             </div>
-
-            <div class="card mb-4">
-              <div class="card-body">
-                <table class="table user-view-table m-0">
-                  <tbody>
-                    <tr>
-                      <td>Registered:</td>
-                      <td>01/23/2017</td>
-                    </tr>
-                    <tr>
-                      <td>Latest activity:</td>
-                      <td>01/23/2018 (14 days ago)</td>
-                    </tr>
-                    <tr>
-                      <td>Verified:</td>
-                      <td><span class="fa fa-check text-primary"></span>&nbsp; Yes</td>
-                    </tr>
-                    <tr>
-                      <td>Role:</td>
-                      <td>User</td>
-                    </tr>
-                    <tr>
-                      <td>Status:</td>
-                      <td><span class="badge badge-outline-success">Active</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <hr class="border-light m-0">
-              <div class="table-responsive">
-                <table class="table card-table m-0">
-                  <tbody>
-                    <tr>
-                      <th>Module Permission</th>
-                      <th>Read</th>
-                      <th>Write</th>
-                      <th>Create</th>
-                      <th>Delete</th>
-                    </tr>
-                    <tr>
-                      <td>Users</td>
-                      <td><span class="fa fa-check text-primary"></span></td>
-                      <td><span class="fa fa-times text-light"></span></td>
-                      <td><span class="fa fa-times text-light"></span></td>
-                      <td><span class="fa fa-times text-light"></span></td>
-                    </tr>
-                    <tr>
-                      <td>Articles</td>
-                      <td><span class="fa fa-check text-primary"></span></td>
-                      <td><span class="fa fa-check text-primary"></span></td>
-                      <td><span class="fa fa-check text-primary"></span></td>
-                      <td><span class="fa fa-times text-light"></span></td>
-                    </tr>
-                    <tr>
-                      <td>Staff</td>
-                      <td><span class="fa fa-times text-light"></span></td>
-                      <td><span class="fa fa-times text-light"></span></td>
-                      <td><span class="fa fa-times text-light"></span></td>
-                      <td><span class="fa fa-times text-light"></span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+        </div>
+    </div>
 
 
 
-          </div>
+
+        <script src="<c:url value="/resources/css/bootstrap/js/bootstrap.js"/>"></script>
+	     <script src="<c:url value="/resources/css/bootstrap/js/bootstrap.bundle.js"/>"></script>
+	    <script src="<c:url value="/resources/css/bootstrap/js/bootstrap.bundle.js.map"/>"></script>
+	     <script src="<c:url value="/resources/css/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
+	        <script src="<c:url value="/resources/css/bootstrap/js/bootstrap.bundle.min.js.map"/>"></script>
+	        <script src="<c:url value="/resources/css/bootstrap/js/bootstrap.min.js"/>"></script>
+	        <script src="<c:url value="/resources/css/bootstrap/js/bootstrap.min.js.map"/>"></script>
 </body>
+
+
+
 
 </html>

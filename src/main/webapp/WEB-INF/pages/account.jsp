@@ -19,7 +19,7 @@
                     </script>
                     <script type="text/javascript" src="webjars/popper.js/2.9.3/umd/popper.min.js" />
                     </script>
-                    <link href='<c:url value="/resources/images/tamlogo.png" />' rel='icon'>
+
                     <title>Order</title>
                     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
                     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -29,6 +29,7 @@
 			</head>
 
 			<body>
+			<jsp:include page="header.jsp"/>
 				<section class="ftco-section">
 					<div class="container">
 						<div class="row justify-content-center">
@@ -47,13 +48,14 @@
 												<th>Số Điện Thoại</th>
 												<th>Email</th>
 												<th>Trạng Thái</th>
-												<th>Tùy Chọn</th>
+												<th>Quyền</th>
 
 
 
 											</tr>
 										</thead>
 										<tbody>
+
 											<c:forEach var="accountEntityList" items="${accountEntityList}">
 												<tr class="alert" role="alert">
 
@@ -63,43 +65,44 @@
 
 													<th scope="row" style="padding-top:15px;">${accountEntityList.email}
 													<th scope="row" style="padding-top:15px;">${accountEntityList.status}
-                                                    <th
-                                                     <td>
+                                                         <td> <c:if test="${accountEntityList.status ne 'ACTIVE'}">
                                                             <button class="btn btn-sm btn-primary"
-                                                                onclick="location.href='orderdetaile/${ordersList.id}'">Chi Tiết Đơn Hàng</button>
-                                                    <c:if test="${ordersList.status ne 'CANCEL'}">
-                                                            <a class="btn btn-sm btn-danger" href="#modalDelete${ordersList.id}"
-                                                                class="trigger-btn" data-toggle="modal" data-id="${ordersList.id}?">Hủy Đơn</a>
-                                                     </c:if>
+                                                             onclick="location.href='../admin/unBlockAccount${accountEntityList.id}'">Mở Khóa</button>
+                                                            </c:if>
+                                                           <c:if test="${accountEntityList.status ne 'BLOCK'}">
+                                                            <a class="btn btn-sm btn-danger" href="#modalDelete${accountEntityList.id}"
+                                                                class="trigger-btn" data-toggle="modal" data-id="${accountEntityList.id}?">Khóa</a>
+                                                            </c:if>
 
                                                       </td>
-
-                                                        <div id="modalDelete${ordersList.id}" class="modal fade">
+                                                        <div id="modalDelete${accountEntityList.id}" class="modal fade">
                                                             <div class="modal-dialog modal-confirm">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header flex-column">
                                                                         <div class="icon-box">
                                                                             <i class="fal fa-times">&#128557;</i>
                                                                         </div>
-                                                                            <h4 class="modal-title w-100">Hủy Đơn ?</h4>
+                                                                            <h4 class="modal-title w-100">BLOCK</h4>
                                                                         <button type="button" class="close" data-dismiss="modal"
                                                                             aria-hidden="true">&times;</button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <p>Bạn Muốn Hủy Đơn à
-                                                                            "${ordersList.customerName}" Chắc Chưa ?</p>
+                                                                        <p>Bạn có muốn khóa tài khỏa
+                                                                            "${accountEntityList.fullName}" không ?</p>
                                                                     </div>
                                                                     <div class="modal-footer justify-content-center">
                                                                         <button type="button" class="btn btn-secondary"
-                                                                            data-dismiss="modal">Giỡn Đó</button>
+                                                                            data-dismiss="modal">Không</button>
                                                                         <button type="button" class="btn btn-danger"
-                                                                            onclick="location.href='removeOrder${ordersList.id}'">Chắc Rồi</button>
+                                                                            onclick="location.href='../admin/removeAccount${accountEntityList.id}'">Có</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </th>
-												</tr>
+
+
+
 											</c:forEach>
 										</tbody>
 									</table>

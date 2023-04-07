@@ -40,7 +40,28 @@ public class AccountService {
     public Object findAll() {
         return accountRepository.findAll();
     }
+    public List<AccountEntity> getAllAccountsExceptAdmin() {
+        String adminEmail = "admin@gmail.com";
+        return accountRepository.findByEmailNot(adminEmail);
+    }
+}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    public AccountEntity findByEmailAndPassword(String email, String password) {
+//        return accountRepository.findByEmailAndPassword(email,password);
+//    }
 
 
 //    public List<AccountEntity> getAllAccounts() {
@@ -55,4 +76,4 @@ public class AccountService {
 //        return accountRepository.findByAccountId(id);
 //
 //    }
-}
+

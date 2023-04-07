@@ -50,7 +50,7 @@ public class CartController {
 
 
 
-    @RequestMapping(value = "/cart", method = RequestMethod.GET)
+    @RequestMapping(value = "/cart", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     public String showCart(Model model,HttpSession session) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
         double total = cartItemService.getAmount();
@@ -60,44 +60,48 @@ public class CartController {
         return "cart";
     }
 
-    @RequestMapping(value = "/addToCart/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/addToCart/{id}", method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
     public String addToCart(@PathVariable int id,HttpSession session) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
-        Cart cart = cartService.findById(accountEntity.getId());
-        Product product = productService.findById(id);
-
-        List<CartItem> cartItemList = cartItemService.findByCartId(cart.getId());
-
-        if (cartItemList.isEmpty()) {
-            CartItem cartItem = new CartItem();
-            cartItem.setProduct(product);
-
-            cartItem.setCart(cart);
-            cartItem.setQuantity(1);
-            cartItemService.save(cartItem);
+        if (accountEntity == null) {
+            return "redirect:/login";
         } else {
-            boolean cartItemCheck = false;
-            for (CartItem cartItem : cartItemList) {
-                if (product.getId() == cartItem.getProduct().getId()) {
-                    cartItemCheck = true;
-                    cartItem.setCart(cart);
-                    cartItem.setQuantity(cartItem.getQuantity() + 1);
-                    cartItemService.save(cartItem);
-                    break;
+            Cart cart = cartService.findById(accountEntity.getId());
+            Product product = productService.findById(id);
+
+            List<CartItem> cartItemList = cartItemService.findByCartId(cart.getId());
+            if (cartItemList.isEmpty()) {
+                CartItem cartItem = new CartItem();
+                cartItem.setProduct(product);
+
+                cartItem.setCart(cart);
+                cartItem.setQuantity(1);
+                cartItemService.save(cartItem);
+            } else {
+                boolean cartItemCheck = false;
+                for (CartItem cartItem : cartItemList) {
+                    if (product.getId() == cartItem.getProduct().getId()) {
+                        cartItemCheck = true;
+                        cartItem.setCart(cart);
+                        cartItem.setQuantity(cartItem.getQuantity() + 1);
+                        cartItemService.save(cartItem);
+                        break;
+                    }
+                }
+                if (cartItemCheck == false) {
+                    CartItem cartItem1 = new CartItem();
+                    cartItem1.setQuantity(1);
+                    cartItem1.setProduct(product);
+                    cartItem1.setCart(cart);
+                    cartItemService.save(cartItem1);
                 }
             }
-            if (cartItemCheck == false) {
-                CartItem cartItem1 = new CartItem();
-                cartItem1.setQuantity(1);
-                cartItem1.setProduct(product);
-                cartItem1.setCart(cart);
-                cartItemService.save(cartItem1);
-            }
+            return "redirect:/cart";
         }
-        return "redirect:/cart";
+
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
     public String deleteCart(@PathVariable int id) {
         cartItemService.deleteById(id);
         return "redirect:/cart";
@@ -112,25 +116,33 @@ public class CartController {
         return "checkout";
     }
 
-    @PostMapping(value = "/checkout")
+    @PostMapping(value = "/checkout",produces = "text/plain;charset=UTF-8")
     public String checkOut(Model model, HttpSession session , Order order, @RequestParam(name = "payment_method") String payment_method) {
         AccountEntity account = (AccountEntity) session.getAttribute("account");
-        List<AccountBanking>  accountBankingList = (List<AccountBanking>) accountBankingService.getAccountBankingByAccountId(account.getId());
+        List<AccountBanking> accountBankingList = (List<AccountBanking>) accountBankingService.getAccountBankingByAccountId(account.getId());
         Payment payment = new Payment();
         if (payment_method.equals("COD")) {
             if (accountBankingList == null || accountBankingList.isEmpty()) {
-                return "banking";
+                model.addAttribute("accountBanking", new AccountBanking());
+                return "bankingCart";
+
+
+                //tiền không đủ
             } else if (accountBankingList.get(0).getBalance() < cartItemService.getAmount()) {
-                model.addAttribute("msg", "khong du tien");
-                return "redirect:/";
+                model.addAttribute("accountBanking",accountBankingList);
+                model.addAttribute("account", account);
+
+                return "fail";
             } else {
                 AccountBanking accountBanking = accountBankingList.get(0);
                 List<CartItem> cartItems = (List<CartItem>) cartItemService.findAllByCartId(account.getCart().getId());
                 for (CartItem cart : cartItems) {
                     Product product = productService.findById(cart.getProduct().getId());
                     if (product.getQuantity() < cart.getQuantity()) {
+                        model.addAttribute("cart",cartItems);
                         model.addAttribute("mss", "số lượng k đủ");
-                        return "redirect:/";
+                        model.addAttribute("product",product);
+                        return "failorder";
                     } else {
                         accountBanking.setBalance(accountBanking.getBalance() - cartItemService.getAmount());
                         accountBankingService.save(accountBanking);
@@ -139,7 +151,7 @@ public class CartController {
                         order.setAccount(account);
                         orderService.save(order);
 
-                        product.setQuantity(product.getQuantity()-cart.getQuantity());
+                        product.setQuantity(product.getQuantity() - cart.getQuantity());
                         productService.save(product);
                         OrderDetail orderDetail = new OrderDetail();
                         orderDetail.setQuantity(cart.getQuantity());
@@ -160,20 +172,23 @@ public class CartController {
             for (CartItem cart : cartItems) {
                 cartItemService.deleteById(cart.getId());
             }
-        }else if (payment_method.equals("CASH")) {
+        } else if (payment_method.equals("CASH")) {
             List<CartItem> cartItems = (List<CartItem>) cartItemService.findAllByCartId(account.getCart().getId());
             for (CartItem cart : cartItems) {
                 Product product = productService.findById(cart.getProduct().getId());
                 if (product.getQuantity() < cart.getQuantity()) {
+
+                    model.addAttribute("cartItems",cartItems);
                     model.addAttribute("mss", "số lượng k đủ");
-                    return "redirect:/";
+                    model.addAttribute("product",product);
+                    return "failorder";
                 } else {
                     order.setOrderDate(new Date());
                     order.setAccount(account);
                     order.setStatus(PROCESSING);
                     orderService.save(order);
 
-                    product.setQuantity(product.getQuantity()-cart.getQuantity());
+                    product.setQuantity(product.getQuantity() - cart.getQuantity());
                     productService.save(product);
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.setQuantity(cart.getQuantity());
@@ -195,9 +210,22 @@ public class CartController {
         }
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
         String email = accountEntity.getEmail();
-        sendEmail(email, "kích hoạt mail","CÁM ƠN ĐÃ MUA HÀNG");
-        return "redirect:/";
+        sendEmail(email, "TP TECHNOLOGY", "CÁM ƠN ĐÃ MUA HÀNG");
+
+
+        List<OrderDetail> orderDetails = orderDetailService.findByOrderDetailByOrderId(order.getId());
+        double total = calculateTotal(orderDetails);
+        model.addAttribute("total", total);
+        model.addAttribute("account", account);
+        model.addAttribute("orderDetails", orderDetails);
+        model.addAttribute("order", order);
+        model.addAttribute("payment",payment);
+
+
+        return "success";
     }
+
+
 
     public void sendEmail(String to, String subject, String content) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -208,6 +236,13 @@ public class CartController {
         System.out.println(mailSender);
         mailSender.send(mailMessage);
         System.out.println(mailMessage);
+    }
+    public double calculateTotal(List<OrderDetail> orderDetails) {
+        double total = 0;
+        for (OrderDetail orderDetail : orderDetails) {
+            total += orderDetail.getQuantity() * orderDetail.getPrice();
+        }
+        return total;
     }
 
 }
