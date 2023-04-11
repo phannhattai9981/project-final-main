@@ -12,5 +12,9 @@ public interface OrderDetailRepository extends CrudRepository<OrderDetail, Integ
     @Query(value = "select * from orderdetails where orderid = ?1", nativeQuery = true)
     List<OrderDetail> findByOrderDetailByOrderId(int id);
 
+    @Query(value ="SELECT od.* FROM orderdetails od JOIN orders o ON od.orderid = o.id WHERE o.status = 'SUCCESSFULL'",nativeQuery = true)
+    List<OrderDetail> findSuccessfulOrderDetails();
+
+
 
 }

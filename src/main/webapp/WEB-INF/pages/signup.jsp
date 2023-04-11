@@ -18,6 +18,9 @@
         <div class="form-container sign-up-container">
             <form id="regForm" name="regForm" th:action="@{/process-login}"
                 method="POST">
+                 <c:if test="${message != null && message != ''}">
+                    <p style="color: red">${message}</p>
+                </c:if>
                 <h1>ĐĂNG KÍ MỚI</h1>
                 <div class="social-container">
 
@@ -26,8 +29,8 @@
                 <input type="fullName" placeholder="Tên" name="fullName" />
                 <input type="email" placeholder="E-mail" name="email" />
                 <input type="text" placeholder="Số điện thoại" name="phone" />
-                <input type="password" placeholder="Password" name="password" />
-                <input type="password" placeholder="Verify Password" name="password_two" />
+                <input type="password" placeholder="Mật khẩu" name="password" />
+                <input type="password" placeholder="Nhập lại mật khẩu" name="password_two" />
                 <button>Đăng Ký</button>
             </form>
         </div>
@@ -40,9 +43,9 @@
             <div class="social-container">
 
             </div>
-            <input type="email" placeholder="Username" name="username"/>
-            <input type="password" placeholder="Password" name="password" />
-            <a href="#"></a>
+            <input type="email" placeholder="E- mail" name="username"/>
+            <input type="password" placeholder="Mật khẩu" name="password" />
+
             <button  type="submit" value="Sign in" > Đăng Nhập</button>
             </form>
         </div>

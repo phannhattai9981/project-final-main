@@ -39,7 +39,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12">
-								<h3 class="h5 mb-4 text-center">Đơn Hàng Của Bạn</h3>
+								<h3 class="h5 mb-4 text-center">Quản lý User</h3>
 								<div class="table-wrap">
 									<table class="table">
 										<thead class="thead-primary">

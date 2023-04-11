@@ -114,29 +114,23 @@
 <body>
 <jsp:include page="header.jsp"/>
     <div class="container mt-5">
-
         <div class="row d-flex justify-content-center">
-
             <div class="col-md-7">
-
                 <div class="card p-3 py-4">
-
-                   <c:if test="${type.equals('update')}">
-                                     <div class="text-center">
-                                         <td style="padding-top:15px;"><img class="img-fluid" style="max-width: 300px;"  w-100" src="../admin/getPhotoAccount/<c:out value='${account.id}'/>"/>
-                                     </div>
-                                   </c:if>
-                                   <c:if test="${type.equals('user')}">
-                                       <div class="text-center">
-                                           <td style="padding-top:15px;"><img class="img-fluid" style="max-width: 300px;"  w-100" src="./update/admin/getPhotoAccount/<c:out value='${account.id}'/>"/>
-                                       </div>
-                                    </c:if>
+                <c:if test="${type.equals('update')}">
+                  <div class="text-center">
+                      <td style="padding-top:15px;"><img class="img-fluid" style="max-width: 300px;"  w-100" src="../getPhotoAccount/<c:out value='${account.id}'/>"/>
+                  </div>
+                </c:if>
+                <c:if test="${type.equals('user')}">
+                  <label for="avatar-input">
+                    <td style="padding-top:15px;"><img class="img-fluid" style="max-width: 100px"  w-100" src="./getPhotoAccount/<c:out value='${account.id}'/>"/>
+                  </label>
+                <input id="avatar-input" name="photo" style="display: none;" type="file" class="btn button border avatar-input"/>
+                 </c:if>
 
                     <div class="text-center mt-3">
-
                         <h1 class="mt-2 mb-0">${account.fullName}</h1>
-
-
                         <div class="px-4 mt-1">
                             <div class="form-group">
                                 <label class="form-label">Số Điện Thoại :</label>
@@ -144,31 +138,25 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">E-mail : </label>
-
                                 <th scope="row" style="padding-top:15px;">${account.email}
-
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Trạng Thái</label>
                                 <th scope="row" style="padding-top:15px;">${account.status}
                             </div>
                         </div>
-                        <div class="buttons">
-                         <a  href="update/admin/profile${account.id}" href="orderList" class="btn btn-outline-primary px-4">chỉnh sửa</a>
-                         <a href="/project-final-main/admin/full_account" class="btn btn-primary px-4 ms-3"> User Manager </a>
-                         <a href="/project-final-main/admin/listFullOrder" class="btn btn-primary px-4 ms-3"> Order Manager </a>
-                          <a href="/project-final-main/admin/manager" class="btn btn-primary px-4 ms-3"> Product Manager </a>
-
-
-                        </div>
+                          <div class="buttons">
+                          <a  href="update/admin/profile${account.id}" href="orderList" class="btn btn-outline-primary px-4">chỉnh sửa</a>
+                          <a href="/project-final-main/admin/full_account" class="btn btn-primary px-4 ms-3"> User Manager </a>
+                          <a href="/project-final-main/admin/listFullOrder" class="btn btn-primary px-4 ms-3"> Order Manager </a>
+                           <a href="/project-final-main/admin/manager" class="btn btn-primary px-4 ms-3"> Product Manager </a>
+                         </div>
                     </div>
              </div>
-
             </div>
-
         </div>
-
     </div>
+
 
 
 
@@ -179,6 +167,7 @@
 	        <script src="<c:url value="/resources/css/bootstrap/js/bootstrap.bundle.min.js.map"/>"></script>
 	        <script src="<c:url value="/resources/css/bootstrap/js/bootstrap.min.js"/>"></script>
 	        <script src="<c:url value="/resources/css/bootstrap/js/bootstrap.min.js.map"/>"></script>
+	        <script src="<c:url value="/resources/js/user.js"/>"></script>
 </body>
 
 

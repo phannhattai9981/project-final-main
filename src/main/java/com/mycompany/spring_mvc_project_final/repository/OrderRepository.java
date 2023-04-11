@@ -16,6 +16,9 @@ public interface OrderRepository extends CrudRepository<Order, Integer> {
 
     Order findById(int id);
 
+    @Query(value="SELECT * FROM orders WHERE status = 'SUCCESSFULL'", nativeQuery = true)
+    List<Order> findBySuccessful();
+
 
 
 }

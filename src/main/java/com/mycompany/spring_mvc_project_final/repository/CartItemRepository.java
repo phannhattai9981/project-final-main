@@ -17,7 +17,7 @@ public interface CartItemRepository extends CrudRepository<CartItem, Integer> {
     @Query(value = "select * from cartitem where cartId = ?1", nativeQuery = true)
     List<CartItem> findByCartId(int id);
 
-    @Query(value = "select * from cartitem;", nativeQuery = true)
+    @Query(value = "select * from cartitem", nativeQuery = true)
     List<CartItem> getAllCartItem();
 
 

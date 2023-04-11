@@ -123,10 +123,12 @@
                   </div>
                 </c:if>
                 <c:if test="${type.equals('user')}">
-                    <div class="text-center">
-                        <td style="padding-top:15px;"><img class="img-fluid" style="max-width: 300px;"  w-100" src="./getPhotoAccount/<c:out value='${account.id}'/>"/>
-                    </div>
+                  <label for="avatar-input">
+                    <td style="padding-top:15px;"><img class="img-fluid" style="max-width: 100px"  w-100" src="./getPhotoAccount/<c:out value='${account.id}'/>"/>
+                  </label>
+                <input id="avatar-input" name="photo" style="display: none;" type="file" class="btn button border avatar-input"/>
                  </c:if>
+
                     <div class="text-center mt-3">
                         <h1 class="mt-2 mb-0">${account.fullName}</h1>
                         <div class="px-4 mt-1">
@@ -164,6 +166,7 @@
 	        <script src="<c:url value="/resources/css/bootstrap/js/bootstrap.bundle.min.js.map"/>"></script>
 	        <script src="<c:url value="/resources/css/bootstrap/js/bootstrap.min.js"/>"></script>
 	        <script src="<c:url value="/resources/css/bootstrap/js/bootstrap.min.js.map"/>"></script>
+	        <script src="<c:url value="/resources/js/user.js"/>"></script>
 </body>
 
 

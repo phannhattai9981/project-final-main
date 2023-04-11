@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -138,6 +139,16 @@ public class UserController {
         model.addAttribute("ordersList",ordersList);
         return "orderlist";
     }
+
+    @RequestMapping(value = "/update/avatar", method = POST)
+    public @ResponseBody String updateAvatar(HttpSession session,
+                               @RequestParam("image")MultipartFile file) throws IOException {
+        AccountEntity editProfile = (AccountEntity) session.getAttribute("account");
+        editProfile.setAvatar(file.getBytes());
+        accountService.save(editProfile);
+        return "success";
+    }
+
     @RequestMapping(value = "update/profile{id}",method = GET)
     public String showEditProfile(@PathVariable int id, Model model, HttpSession session){
         AccountEntity editProfile = (AccountEntity) session.getAttribute("account");
@@ -145,24 +156,29 @@ public class UserController {
 
         return "profile";
     }
+
     @RequestMapping(value = "update/updateProfile", method = POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, "text/plain;charset=UTF-8"} )
-
     public String save (@RequestParam("id") int id, Model model,
                         @RequestParam("fullName") String name,
-                        @RequestPart("photo") MultipartFile photo,
+//                        @RequestPart("photo") MultipartFile photo,
                         @RequestParam("phone") String phone,
-                        @RequestParam("email") String email, HttpSession session) throws IOException {
+                        @RequestParam("email") String email, HttpSession session,
+                        RedirectAttributes redirectAttributes) throws IOException {
         AccountEntity account = accountService.findById(id);
-        account.setAvatar(photo.getBytes());
         account.setFullName(name);
         account.setPhone(phone);
+        session.setAttribute("account", account);
         accountService.save(account);
-        model.addAttribute("editProfile", account);
-        model.addAttribute("type", "update");
-        return "user";
+//        model.addAttribute("editProfile", account);
+//        model.addAttribute("type", "update");
+        redirectAttributes.addFlashAttribute("account", account);
+        redirectAttributes.addFlashAttribute("type", "update");
+
+        return "redirect:/user/account_InfoView";
     }
+
     public double calculateTotal(List<OrderDetail> orderDetails) {
         double total = 0;
         for (OrderDetail orderDetail : orderDetails) {

@@ -93,7 +93,7 @@
 
         <div class="row">
           <c:forEach var="top1" items="${ListTop1}" varStatus="index">
-            <div  class="col-lg-5">
+            <div  class="col-lg-6">
               <div style="margin-top:-120px"; class="new_product">
                 <h3 class="text-uppercase">${top1.name}</h3>
                 <div class="product-img">
@@ -114,7 +114,7 @@
                         <div  class="col-lg-6">
                           <div class="single-product">
                             <div class="product-img">
-                              <img class="img-fluid" w-100 h-100" src="getProductPhoto/<c:out value='${top4.id}'/>"/>
+                              <img style="height: 250px"; class="img-fluid"" src="getProductPhoto/<c:out value='${top4.id}'/>"/>
                               <div class="p_icon">
                                 <a href="product/${top4.id}">
                                   <i class="ti-eye"></i>
@@ -141,7 +141,6 @@
       </div>
     </div>
   </section>
-
   <section class="inspired_product_area section_gap_bottom_custom">
     <div  class="main_title">
       <div class="img-logohome1">
@@ -150,13 +149,13 @@
         </div>
       </div>
     </div>
-    <div style="background-color: #ff685f; border-radius: 10px; padding-top: 20px; height: 75%"; class="container">
+    <div style="background-color: #ff685f; border-radius: 10px; padding-top: 20px; height: 70%"; class="container">
       <div class="row">
           <c:forEach var="product" items="${productListTopPhone}" varStatus="index">
             <div class="col-lg-3 col-md-6">
-              <div  style="background-color: #ffff; padding: 10px 0px; border-radius: 10px"; class="single-product">
+              <div  style="background-color: #ffff; padding: 10px 0px; border-radius: 10px; height: 97%"; class="single-product">
                 <div class="product-img">
-                <img class="img-fluid" w-100" src="getProductPhoto/<c:out value='${product.id}'/>"/>
+                <img style="height: 280px"; class="img-fluid" src="getProductPhoto/<c:out value='${product.id}'/>"/>
                   <div class="p_icon">
                     <a href="product/${product.id}">
                       <i class="ti-eye"></i>
@@ -184,6 +183,7 @@
     </div>
   </section>
 
+
   <section class="inspired_product_area section_gap_bottom_custom">
       <div  class="main_title">
         <div class="img-logohome1">
@@ -192,13 +192,13 @@
           </div>
         </div>
       </div>
-      <div style="background-color: #fedd38; border-radius: 10px; padding-top: 20px; height: 75%"; class="container">
+      <div style="background-color: #fedd38; border-radius: 10px; padding-top: 20px; height: 70%"; class="container">
         <div class="row">
             <c:forEach var="product" items="${productListTopTablet}" varStatus="index">
               <div class="col-lg-3 col-md-6">
-                <div  style="background-color: #ffff; padding: 10px 0px; border-radius: 10px"; class="single-product">
+                <div  style="background-color: #ffff; padding: 10px 0px; border-radius: 10px; height: 97%"; class="single-product">
                   <div class="product-img">
-                  <img class="img-fluid" w-100" src="getProductPhoto/<c:out value='${product.id}'/>"/>
+                  <img style="height: 270px"; class="img-fluid" src="getProductPhoto/<c:out value='${product.id}'/>"/>
                     <div class="p_icon">
                       <a href="product/${product.id}">
                         <i class="ti-eye"></i>
@@ -210,7 +210,7 @@
                   </div>
                   <div class="product-btm">
                     <a href="product/${product.id}" class="d-block">
-                      <h4>${product.name}</h4>
+                      <h4 style="max-height: 35px">${product.name}</h4>
                     </a>
                     <div class="mt-3">
                       <span class="mr-4"><fmt:formatNumber value="${product.price}" pattern="#,##0" /></span>
@@ -229,17 +229,17 @@
          <div  class="main_title">
            <div class="img-logohome1">
              <div class="img-logo1">
-               <img style=" height: 33%"; src="<c:url value='/resources/img/banner/banner3.png'/>"/>
+               <img style=" height: 52%"; src="<c:url value='/resources/img/banner/banner3.png'/>"/>
              </div>
            </div>
          </div>
-         <div style="background-color: #c62301; border-radius: 10px; padding-top: 20px; height: 75%"; class="container">
+         <div style="background-color: #c62301; border-radius: 10px; padding-top: 20px; height: 70%"; class="container">
            <div class="row">
                <c:forEach var="product" items="${productListTopLaptop}" varStatus="index">
                  <div class="col-lg-3 col-md-6">
-                   <div  style="background-color: #ffff; padding: 10px 0px; border-radius: 10px"; class="single-product">
+                   <div  style="background-color: #ffff; padding: 10px 0px; border-radius: 10px; height: 98%"; class="single-product">
                      <div class="product-img">
-                     <img class="img-fluid" w-100" src="getProductPhoto/<c:out value='${product.id}'/>"/>
+                     <img style=" height: 270px; class="img-fluid src="getProductPhoto/<c:out value='${product.id}'/>"/>
                        <div class="p_icon">
                          <a href="product/${product.id}">
                            <i class="ti-eye"></i>
@@ -270,17 +270,17 @@
          <div  class="main_title">
            <div class="img-logohome1">
              <div class="img-logo1">
-               <img style=" height: 33%"; src="<c:url value='/resources/img/banner/banner4.png'/>"/>
+               <img style=" height: 35%"; src="<c:url value='/resources/img/banner/banner4.png'/>"/>
              </div>
            </div>
          </div>
-         <div style="background-color: #092dc6; border-radius: 10px; padding-top: 20px; height: 75%"; class="container">
+         <div style="background-color: #092dc6; border-radius: 10px; padding-top: 20px; height: 70%"; class="container">
            <div class="row">
                <c:forEach var="product" items="${productListTopDH}" varStatus="index">
                  <div class="col-lg-3 col-md-6">
-                   <div  style="background-color: #ffff; padding: 10px 0px; border-radius: 10px"; class="single-product">
+                   <div style="background-color: #ffff; padding: 10px 0px; border-radius: 10px; height: 97%"; class="single-product">
                      <div class="product-img">
-                     <img class="img-fluid" w-100" src="getProductPhoto/<c:out value='${product.id}'/>"/>
+                     <img style=" height: 270px; class="img-fluid" src="getProductPhoto/<c:out value='${product.id}'/>"/>
                        <div class="p_icon">
                          <a href="product/${product.id}">
                            <i class="ti-eye"></i>
@@ -324,6 +324,6 @@
         <script src="<c:url value="/resources/css/vendors/counter-up/jquery.counterup.js"/>"></script>
         <script src="<c:url value="/resources/css/js/theme.js"/>"></script>
 
-
+<jsp:include page="footer.jsp"/>
 </body>
 </html>

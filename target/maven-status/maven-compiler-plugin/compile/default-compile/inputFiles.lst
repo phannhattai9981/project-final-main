@@ -4,7 +4,6 @@ E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\repository\ProductRepository.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\controller\CartController.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\controller\UserController.java
-E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\controller\ManagerController.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\service\CartService.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\entities\Product.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\repository\OrderRepository.java
@@ -35,10 +34,10 @@ E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\entities\Order.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\repository\AccountBankingRepository.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\controller\SignUpController.java
-E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\controller\updateAdminController.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\service\ProductDetailService.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\controller\UpdateProductController.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\repository\CartItemRepository.java
+E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\entities\User.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\entities\Cart.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\repository\PaymentRepository.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\enums\OrderStatus.java
@@ -53,5 +52,4 @@ E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\repository\CartRepository.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\entities\RoleEntity.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\repository\OrderDetailRepository.java
-E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\controller\SearchController.java
 E:\hocIT\DO_AN\project-final-main\src\main\java\com\mycompany\spring_mvc_project_final\service\CartItemService.java

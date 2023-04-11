@@ -5,16 +5,21 @@ import com.mycompany.spring_mvc_project_final.entities.Product;
 import com.mycompany.spring_mvc_project_final.service.AccountService;
 import com.mycompany.spring_mvc_project_final.service.CategoryService;
 import com.mycompany.spring_mvc_project_final.service.ProductService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -55,6 +60,10 @@ public class HomeController {
 
         return "home";
     }
+    @RequestMapping(value = "/bh", method = RequestMethod.GET)
+    public String showBh () {
+        return "pagebh";
+    }
 
     @RequestMapping(value = "/search1", method = RequestMethod.GET)
     public String search(@RequestParam("searchInput") String searchInput, Model model) {
@@ -68,6 +77,14 @@ public class HomeController {
         return "product-list";
     }
 
+    @RequestMapping(value = "/getPhotoAccount/{id}")
+    public void getStudentPhoto(HttpServletResponse response, @PathVariable("id") int id) throws Exception {
+        response.setContentType("image/jpeg");
 
+        AccountEntity p = accountService.findById(id);
+        byte[] ph = p.getAvatar();
+        InputStream inputStream = new ByteArrayInputStream(ph);
+        IOUtils.copy(inputStream, response.getOutputStream());
+    }
 
 }

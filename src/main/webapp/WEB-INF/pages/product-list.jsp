@@ -42,20 +42,20 @@
       </div>
       <div class="row">
            <c:forEach var="list" items="${List}" varStatus="index">
-              <div class="col-lg-3 col-md-6">
+              <div  class="col-lg-3 col-md-6">
                 <div class="single-product">
                   <div class="product-img">
-                    <img class="img-fluid w-100" src="./getProductPhoto/<c:out value='${list.id}'/>"/>
+                    <img style="height: 280px" class="img-fluid w-100" src="./getProductPhoto/<c:out value='${list.id}'/>"/>
                     <div class="p_icon">
-                      <a href="product/${list.id}">
+                      <a href="../product/${list.id}">
                         <i class="ti-eye"></i>
                       </a>
-                      <a href="./addToCart/${list.id}">
+                      <a href="../addToCart/${list.id}">
                         <i class="ti-shopping-cart"></i>
                       </a>
                     </div>
                   </div>
-                  <div class="product-btm">
+                  <div style="height: 30%"; class="product-btm">
                     <a href="#" class="d-block">
                       <h4>${list.name}</h4>
                     </a>

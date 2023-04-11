@@ -51,6 +51,8 @@ body {
 }
 
 .main_title {
+margin: auto;
+    width:78%;
     height:4vh;
 }
 

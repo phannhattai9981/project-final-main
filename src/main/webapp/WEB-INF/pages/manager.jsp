@@ -29,6 +29,7 @@
 </head>
 
     <body>
+<jsp:include page="header.jsp"/>
 
       <section class="banner_area1">
         <div class="container">

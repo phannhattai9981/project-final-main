@@ -1,0 +1,29 @@
+ul.navbar-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+ul.navbar-nav li {
+  margin: 0 10px;
+}
+
+ul.navbar-nav li:last-child {
+  margin-left: auto;
+}
+
+
+
+element.style {
+    height: 20px;
+}
+.bg-dark {
+  background: linear-gradient(to right, #FF4B2B, #FF416C);
+}
+
+.img-fluid {
+  border-radius: 50%;
+}
+
+

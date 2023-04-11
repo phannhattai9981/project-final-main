@@ -5,15 +5,15 @@ import com.mycompany.spring_mvc_project_final.entities.*;
 import com.mycompany.spring_mvc_project_final.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -46,6 +46,10 @@ public class CartController {
     PaymentService paymentService;
     @Autowired
     MailSender mailSender;
+    @Autowired
+    private JavaMailSender javaMailSender;
+
+
 
 
 
@@ -94,6 +98,7 @@ public class CartController {
                     cartItem1.setProduct(product);
                     cartItem1.setCart(cart);
                     cartItemService.save(cartItem1);
+
                 }
             }
             return "redirect:/cart";
@@ -117,7 +122,7 @@ public class CartController {
     }
 
     @PostMapping(value = "/checkout",produces = "text/plain;charset=UTF-8")
-    public String checkOut(Model model, HttpSession session , Order order, @RequestParam(name = "payment_method") String payment_method) {
+    public String checkOut(Model model, HttpSession session , Order order, @RequestParam(name = "payment_method") String payment_method) throws MessagingException {
         AccountEntity account = (AccountEntity) session.getAttribute("account");
         List<AccountBanking> accountBankingList = (List<AccountBanking>) accountBankingService.getAccountBankingByAccountId(account.getId());
         Payment payment = new Payment();
@@ -208,9 +213,17 @@ public class CartController {
         for (CartItem cart : cartItems) {
             cartItemService.deleteById(cart.getId());
         }
-        AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
-        String email = accountEntity.getEmail();
-        sendEmail(email, "TP TECHNOLOGY", "CÁM ƠN ĐÃ MUA HÀNG");
+//        AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
+//        String email = accountEntity.getEmail();
+//        sendEmail(email, "TP TECHNOLOGY", "Cám ơn bạn đã tin dùng sản phẩm của chúng tôi, để biết thêm chi tiết đơn hàng hãy bấm vào link sau: http:// project-final-main/user/orderdetaile");
+
+
+
+        String body = "<h1>Verify your email address</h1>\n" +
+                "<p>To continue setting up your Azure account, please verify that this is your email address.</p>\n" +
+                "<a href=http://localhost:8080/Azure-Hotel/activate?token= class=\"btn btn-primary\" type=\"button\">Verify email address</a>\n" +
+                "<p>Best regards,<br>The Azure Hotel team</p>";
+        sendEmail("nhattaibmt12a2@gmail.com", "subject", body);
 
 
         List<OrderDetail> orderDetails = orderDetailService.findByOrderDetailByOrderId(order.getId());
@@ -225,18 +238,45 @@ public class CartController {
         return "success";
     }
 
-
-
-    public void sendEmail(String to, String subject, String content) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom("phannhattai14071996@gmail.com");
-        mailMessage.setTo(to);
-        mailMessage.setSubject(subject);
-        mailMessage.setText(content);
-        System.out.println(mailSender);
-        mailSender.send(mailMessage);
-        System.out.println(mailMessage);
+    public void sendEmail(String to, String subject, String body) {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setFrom("phannhattai14071996@gmail.com");
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        javaMailSender.send(message);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public double calculateTotal(List<OrderDetail> orderDetails) {
         double total = 0;
         for (OrderDetail orderDetail : orderDetails) {
@@ -244,5 +284,6 @@ public class CartController {
         }
         return total;
     }
+
 
 }

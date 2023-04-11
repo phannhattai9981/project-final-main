@@ -28,4 +28,8 @@ public class OrderService {
     public Order findById(int id) {
         return orderRepository.findById(id);
     }
+
+    public List<Order> findBySuccessful() {
+        return (List<Order>) orderRepository.findBySuccessful();
+    }
 }

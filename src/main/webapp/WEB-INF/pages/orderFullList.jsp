@@ -44,6 +44,7 @@
 									<table class="table">
 										<thead class="thead-primary">
 											<tr>
+											    <th>Mã đơn hàng</th>
 												<th>Người Đặt</th>
 												<th>Địa Chỉ Nhận Hàng</th>
 												<th>Ngày Đặt</th>
@@ -58,6 +59,8 @@
 										<tbody>
 											<c:forEach var="order" items="${orderFullList}">
 												<tr class="alert" role="alert">
+												    <th scope="row" style="padding-top:15px;">${order.id}
+                                                													</th>
 
 													<th scope="row" style="padding-top:15px;">${order.customerName}
 													</th>
@@ -68,13 +71,17 @@
 													<th scope="row" style="padding-top:15px;">${order.status}
                                                     <th
                                                      <th>
-                                                      <c:if test="${order.status ne 'DELIVERY' && order.status ne 'CANCEL'}">
+                                                       <c:if test="${order.status ne 'PROCESSING'&& order.status ne 'CANCEL' && order.status ne 'SUCCESSFULL' }">
+                                                             <button class="btn btn-warning"
+                                                                 onclick="location.href='successful${order.id}'">Thành công </button>
+                                                       </c:if>
+                                                      <c:if test="${order.status ne 'DELIVERY' && order.status ne 'CANCEL' && order.status ne 'SUCCESSFULL'}">
                                                             <button class="btn btn-sm btn-primary"
-                                                                onclick="location.href='deteleListFullOrder${order.id}'">ĐÃ CHUẨN BỊ XONG</button>
+                                                                onclick="location.href='deteleListFullOrder${order.id}'">Đã chuẩn bị xong</button>
                                                       </c:if>
-                                                            <button class="btn btn-sm btn-primary"
-                                                                 onclick="location.href='orderListDetaile${order.id}'">CHI TIET</button>
-                                                        <c:if test="${order.status ne 'DELIVERY' && order.status ne 'CANCEL'}">
+                                                            <button class="btn btn-success"
+                                                                 onclick="location.href='orderListDetaile${order.id}'">Chi tiết</button>
+                                                        <c:if test="${order.status ne 'DELIVERY' && order.status ne 'CANCEL' && order.status ne 'SUCCESSFULL'}">
                                                             <a class="btn btn-sm btn-danger" href="#modalDelete${order.id}"
                                                                 class="trigger-btn" data-toggle="modal" data-id="${order.id}?">Hủy Đơn</a>
                                                         </c:if>

@@ -18,6 +18,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -81,8 +83,8 @@ public class JPAConfig {
         //Using gmail
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-        mailSender.setUsername("datquangnam2023@gmail.com");
-        mailSender.setPassword("dmcxktzfrbwlplde");
+        mailSender.setUsername("phannhattai14071996@gmail.com");
+        mailSender.setPassword("yzswzqekolnmpytd");
 
         Properties javaMailProperties = new Properties();
         javaMailProperties.put("mail.smtp.starttls.enable", "true");
@@ -95,6 +97,9 @@ public class JPAConfig {
         return mailSender;
 
     }
+
+
+
 
 
 }
