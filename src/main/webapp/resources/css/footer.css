@@ -1,0 +1,31 @@
+footer {
+  width: 100%;
+  padding: 10px 0;
+  margin-top: 10px;
+  background-color: #34d8eb;
+  border-top: 1px solid #e2e2e2;
+
+
+
+}
+.footer-main {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+
+}
+.footer-main ul li {
+  margin-bottom: 20px;
+  color: black;
+}
+.footer-main ul li a {
+  text-decoration: none;
+
+}
+.footer-main-left ul li a {
+  color: black;
+}
+.footer-main-mid ul li a {
+  color: black;
+}

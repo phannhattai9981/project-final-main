@@ -29,8 +29,8 @@ public class CartItemService {
         return cartItemRepository.findAll();
     }
 
-    public double getAmount () {
-        List<CartItem> cartList = cartItemRepository.getAllCartItem();
+    public double getAmount (int id) {
+        List<CartItem> cartList = cartItemRepository.findByCartId(id);
         double amount = 0;
         for (CartItem cartItem: cartList) {
             amount += (cartItem.getProduct().getPrice()*cartItem.getQuantity());

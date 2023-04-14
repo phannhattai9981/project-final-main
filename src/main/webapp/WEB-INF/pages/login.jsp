@@ -13,6 +13,7 @@
 </head>
 
 <body>
+
     <h2>TP TECHNOLOGY </h2>
     <div class="container" id="container">
         <div class="form-container sign-up-container">

@@ -1,0 +1,110 @@
+li {
+  list-style: none;
+}
+.slider {
+  width:100%
+  padding: 20px 0;
+  height: 380px;
+}
+.slider-content {
+    padding:5px;
+    background: linear-gradient(
+     to right,
+     #8c9cbf,
+     #f0880b,
+     #ced6de
+    );
+    border-radius:10px;
+
+    display: flex;
+    justify-content: space-between;
+}
+.slider-content-left {
+  width: 65%;
+}
+.slider-content-left-top {
+  width: 100%;
+  height: 345px;
+  position: relative;
+
+}
+/* .slider-content-left-top:hover i {
+  opacity: 1;
+} */
+.slider-content-left-top a img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+.slider-content-left-bottom {
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid #addd;
+  border-top: none;
+  height: 50px;
+}
+
+.slider-content-right {
+  width: 35%;
+  padding: 0 5px;
+  justify-content: space-around;
+}
+.slider-content-right li {
+  width: 50%;
+  height: 50%;
+  text-align: center;
+  margin-bottom: 1px;
+}
+.slider-content-right li img {
+  height: 170px;
+  width: 500px;
+  border-radius: 10px;
+}
+.slider-content-left-top-btn {
+  position: absolute;
+  top:50%;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.slider-content-left-top-btn i {
+  color: #928686;
+  font-size: 20px;
+  width: 5%;
+  background-color: #e7e4e4;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+/* ----------------slide js 1------ */
+.slider-content-left-top img{
+    position: absolute;
+}
+.slider-content-left-top a:nth-child(2) img {
+    transform: translateX(100%);
+}
+.slider-content-left-top a:nth-child(3) img {
+  transform: translateX(200%);
+}
+.slider-content-left-top a:nth-child(4) img {
+  transform: translateX(300%);
+}
+.slider-content-left-top a:nth-child(5) img {
+  transform: translateX(400%);
+}
+.slider-content-left-top-container {
+  position: relative;
+  overflow: hidden;
+
+}
+.slider-content-left-top-container:hover i {
+  opacity: 1;
+
+}
+.slider-content-left-top {
+  transition: all 0.3s ease;
+}

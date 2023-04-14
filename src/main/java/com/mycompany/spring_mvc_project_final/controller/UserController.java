@@ -4,10 +4,7 @@ package com.mycompany.spring_mvc_project_final.controller;
 import com.mycompany.spring_mvc_project_final.entities.*;
 import com.mycompany.spring_mvc_project_final.repository.OrderDetailRepository;
 import com.mycompany.spring_mvc_project_final.repository.OrderRepository;
-import com.mycompany.spring_mvc_project_final.service.AccountBankingService;
-import com.mycompany.spring_mvc_project_final.service.AccountService;
-import com.mycompany.spring_mvc_project_final.service.CartItemService;
-import com.mycompany.spring_mvc_project_final.service.CartService;
+import com.mycompany.spring_mvc_project_final.service.*;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -40,23 +37,32 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class UserController {
     @Autowired
     AccountService accountService;
+
+    @Autowired
+    ProductService productService;
     @Autowired
     AccountBankingService accountBankingService;
     @Autowired
-     OrderRepository orderRepository;
-    @Autowired
-     OrderDetailRepository orderDetailRepository;
+    OrderService orderService;
     @Autowired
     CartItemService cartItemService;
     @Autowired
     CartService cartService;
 
+    @Autowired
+    PaymentService paymentService;
+
+    @Autowired
+    OrderDetailService orderDetailService;
+
 
     @GetMapping("/account_InfoView")
-    public String viewInfoView(Model model, HttpSession session){
+    public String viewInfoView(Model model, HttpSession session,RedirectAttributes redirectAttributes){
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
-        model.addAttribute("account", accountEntity);
-        model.addAttribute("type", "user");
+//        model.addAttribute("account", accountEntity);
+//        model.addAttribute("type", "user");
+        redirectAttributes.addFlashAttribute("account", accountEntity);
+        redirectAttributes.addFlashAttribute("type", "user");
         return "user";
     }
 
@@ -79,7 +85,7 @@ public class UserController {
                               @RequestParam("fullName") String fullName,
                               @RequestParam("cardNumber") int cardNumber,
                               @RequestParam("balance") double balance,
-                              @RequestParam("cvc") int cvc, Model model, HttpSession session) {
+                              @RequestParam("cvc") int cvc, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         accountBanking.setFullName(fullName);
         accountBanking.setCardNumber(cardNumber);
         accountBanking.setCvc(cvc);
@@ -87,9 +93,13 @@ public class UserController {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
         accountBanking.setAccount(accountEntity);
         accountBankingService.save(accountBanking);
-        model.addAttribute("account", accountEntity);
-        model.addAttribute("type", "user");
-        return "user";
+//        model.addAttribute("account", accountEntity);
+//        model.addAttribute("type", "user");
+        redirectAttributes.addFlashAttribute("account", accountEntity);
+        redirectAttributes.addFlashAttribute("type", "user");
+
+        return "redirect:/user/account_InfoView";
+
     }
     @GetMapping("/showAccountBanking")
     public String showAccountsBanking(Model model,HttpSession session) {
@@ -106,7 +116,7 @@ public class UserController {
     @GetMapping("/removeBanking{id}")
   public String deteleBanking(@PathVariable int id,Model model,HttpSession session){
         accountBankingService.deleteById(id);
-        return "user";
+        return "redirect:/user/showAccountBanking";
 
 
 
@@ -114,14 +124,15 @@ public class UserController {
     @GetMapping("/orderList")
     public String viewOrderList(Model model, HttpSession session){
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
-        List<Order> ordersList = orderRepository.findByAccountId(accountEntity.getId());
+        List<Order> ordersList = orderService.findByAccountId(accountEntity.getId());
+
         model.addAttribute("ordersList",ordersList);
         return "orderlist";
     }
     @GetMapping("/orderdetaile/{id}")
     public String viewCartOfCustomer(@PathVariable int id, Model model,HttpSession session) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
-        List<OrderDetail> orderDetails = orderDetailRepository.findByOrderDetailByOrderId(id);
+        List<OrderDetail> orderDetails = orderDetailService.findByOrderDetailByOrderId(id);
         double total = calculateTotal(orderDetails);
         model.addAttribute("total", total);
         model.addAttribute("orderDetails", orderDetails);
@@ -129,13 +140,39 @@ public class UserController {
     }
     @GetMapping("/removeOrder{id}")
     public String deteleOrder(@PathVariable int id, Model model, HttpSession session) {
-        Order order = orderRepository.findById(id);
-        if (!(order == null)) {
-            order.setStatus(CANCEL);
-            orderRepository.save(order);
-        }
+        // Lay account tu session
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
-        List<Order> ordersList = orderRepository.findByAccountId(accountEntity.getId());
+        // lay id order
+        Order order = orderService.findById(id);
+        order.setStatus(CANCEL);
+        orderService.save(order);
+        // payment tim id order
+        Payment payment = paymentService.findByOrderId(id);
+
+        // check payment where banking_id nếu có
+        // thanh toán = card
+        if(payment.getAccountBanking() != null) {
+            AccountBanking accountBanking = accountBankingService.getAccountBankingByAccount_Id(accountEntity.getId());
+            accountBanking.setBalance(accountBanking.getBalance() + order.getTotal());
+            accountBankingService.save(accountBanking);
+
+            // lay list orderDetail by orderId
+            List<OrderDetail> orderDetail = orderDetailService.findByOrderDetailByOrderId(id);
+            for (OrderDetail orderDetailEntity : orderDetail) {
+                Product product = productService.findById(orderDetailEntity.getProduct().getId());
+                product.setQuantity(product.getQuantity() + orderDetailEntity.getQuantity());
+                productService.save(product);
+            }
+        }else {
+            List<OrderDetail> orderDetail = orderDetailService.findByOrderDetailByOrderId(id);
+            for (OrderDetail orderDetailEntity : orderDetail) {
+                Product product = productService.findById(orderDetailEntity.getProduct().getId());
+                product.setQuantity(product.getQuantity() + orderDetailEntity.getQuantity());
+                productService.save(product);
+            }
+        }
+
+        List<Order> ordersList = orderService.findByAccountId(accountEntity.getId());
         model.addAttribute("ordersList",ordersList);
         return "orderlist";
     }
@@ -186,4 +223,5 @@ public class UserController {
         }
         return total;
     }
+
 }

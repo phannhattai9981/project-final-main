@@ -32,4 +32,7 @@ public class OrderService {
     public List<Order> findBySuccessful() {
         return (List<Order>) orderRepository.findBySuccessful();
     }
+    public List<Order> findByAccountId(int id) {
+        return orderRepository.findByAccountId(id);
+    }
 }

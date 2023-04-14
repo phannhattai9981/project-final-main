@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -50,7 +51,6 @@ public class HomeController {
         AccountEntity account = accountService.findByEmail(username);
         session.setAttribute("account",account);
 
-        model.addAttribute("ListTop1",(List)productService.showTop1());
         model.addAttribute("ListTop4",(List)productService.showTop4());
         model.addAttribute("productListTopPhone", (List)productService.showTopPhone());
         model.addAttribute("productListTopTablet", (List)productService.showTopTapLet());
@@ -61,12 +61,19 @@ public class HomeController {
         return "home";
     }
     @RequestMapping(value = "/bh", method = RequestMethod.GET)
-    public String showBh () {
+    public String showBh (Model model) {
+        model.addAttribute("categoryList", (List)categoryService.findAll());
         return "pagebh";
     }
 
+    @RequestMapping(value = "/blog", method = RequestMethod.GET)
+    public String showBlog (Model model) {
+        model.addAttribute("categoryList", (List)categoryService.findAll());
+        return "blog";
+    }
+
     @RequestMapping(value = "/search1", method = RequestMethod.GET)
-    public String search(@RequestParam("searchInput") String searchInput, Model model) {
+    public String search(@RequestParam("searchInput") String searchInput, Model model, RedirectAttributes redirectAttributes) {
         List<Product> searchList;
         if (searchInput.isEmpty()) {
             return "redirect:/";
@@ -74,6 +81,7 @@ public class HomeController {
             searchList = productService.findByNameContaining(searchInput);
         }
         model.addAttribute("List",searchList);
+        model.addAttribute("categoryList", (List)categoryService.findAll());
         return "product-list";
     }
 

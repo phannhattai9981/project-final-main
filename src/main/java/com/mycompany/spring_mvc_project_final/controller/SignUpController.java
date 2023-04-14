@@ -75,6 +75,8 @@ public class SignUpController {
         role.setRole(ROLE_USER);
         role.setId(2);
 
+
+
         Set<RoleEntity> roles = new HashSet<>();
         roles.add(role);
         accountEntity.setUserRoles(roles);
@@ -85,12 +87,16 @@ public class SignUpController {
         Cart cart1 = new Cart();
         cart1.setAccount(accountEntity);
         cartService.save(cart1);
+
+
+
         int id = accountEntity.getId();
 
+
         String email = accountEntity.getEmail();
-        String body = "<h1>CHÀO MỪNG BẠN ĐẾN VỚI TP TECHNOLOGY</h1>\n" +
-                "<p>Để kích hoạt tài khoản bạn vui lòng click vào link bên dưới </p>\n" +
-               "http://localhost:8020/project-final-main/activate?id="+id;
+        String body = "<h1>WELCOME TO TP TECHNOLOGY</h1>\n" +
+                "<p>To activate your account, please click on the link below </p>\n" +
+                "http://localhost:8008/project-final-main/activate?id="+id;
         String subject = "Mail kích hoạt";
         sendEmail(email, subject, body);
       model.addAttribute("accountEntity", accountEntity);

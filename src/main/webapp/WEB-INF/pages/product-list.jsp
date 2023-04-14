@@ -29,7 +29,7 @@
 
 </head>
 <body>
-<jsp:include page="header.jsp"/>
+<jsp:include page="header1.jsp"/>
 
   <section class="inspired_product_area section_gap_bottom_custom">
     <div class="container">
@@ -45,12 +45,12 @@
               <div  class="col-lg-3 col-md-6">
                 <div class="single-product">
                   <div class="product-img">
-                    <img style="height: 280px" class="img-fluid w-100" src="./getProductPhoto/<c:out value='${list.id}'/>"/>
+                    <img style="object-fit: cover; width: 100%;height: 60%;" class="img-fluid" src="./getProductPhoto/<c:out value='${list.id}'/>"/>
                     <div class="p_icon">
-                      <a href="../product/${list.id}">
+                      <a href="./product/${list.id}">
                         <i class="ti-eye"></i>
                       </a>
-                      <a href="../addToCart/${list.id}">
+                      <a href="./addToCart/${list.id}">
                         <i class="ti-shopping-cart"></i>
                       </a>
                     </div>
@@ -70,17 +70,32 @@
     </div>
 
   </section>
-    <footer style="width: 100%; display: flex; justify-content: center;">
-          <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="categoryid=${category.id}page${previous}">Previous</a></li>
-                <c:forEach var='item' begin='1' end='${countPage}'>
-                  <li class="page-item"><a class="page-link" href="categoryid=${category.id}page${item}"><c:out value='${item}'/></a></li>
-                  </c:forEach>
-                 <li class="page-item"><a class="page-link" href="categoryid=${category.id}page${next}">Next</a></li>
-                </ul>
-          </nav>
-    </footer>
+ <footer style="width: 100%; margin-bottom: 50px">
+    <div class="blog-pagination justify-content-center d-flex">
+          <ul class="pagination">
+              <li class="page-item">
+                  <a href="categoryid=${category.id}page${previous}" class="page-link" aria-label="Previous">
+                      <span aria-hidden="true">
+                          <span style="line-height:45px" class="ti-arrow-left"></span>
+                      </span>
+                  </a>
+              </li>
+              <c:forEach var='item' begin='1' end='${countPage}'>
+                  <li class="page-item">
+                       <a href="categoryid=${category.id}page${item}" class="page-link"><c:out value='${item}'/></a>
+                  </li>
+              </c:forEach>
+              <li class="page-item">
+                  <a href="categoryid=${category.id}page${next}" class="page-link" aria-label="Next">
+                      <span aria-hidden="true">
+                          <span style="line-height:45px" class="ti-arrow-right"></span>
+                      </span>
+                  </a>
+              </li>
+          </ul>
+    </div>
+ </footer>
+
 
 </body>
 

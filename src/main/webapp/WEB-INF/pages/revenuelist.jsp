@@ -12,9 +12,9 @@
 				<title>Document</title>
 				  <link rel="stylesheet" href="<c:url value="/resources/css/orderlist.css"/>">
 			</head>
+<jsp:include page="header.jsp"/>
+			<body style="background-image: url(https://thumbs.dreamstime.com/b/abstract-dna-molecules-structure-science-technology-background-illustration-vector-119136443.jpg);">>
 
-			<body>
-			<jsp:include page="header.jsp"/>
 				<section class="ftco-section">
 					<div class="container">
 						<div class="row justify-content-center">
@@ -50,10 +50,11 @@
 											</c:forEach>
 										</tbody>
 									</table>
-                            <div class="total" style="display: flex; flex-direction: row; padding-left: 56%;">
-                                <div class="total_head" style="font-weight: bold;">Total:</div>
-                                <div class="total_value" style="margin-left: 102px; font-weight: bold;"><fmt:formatNumber value="${total}" pattern="#,##0" /></div>
-                            </div>
+                        <div class="total" style="display: flex; flex-direction: row; padding-left: 56%;color:black; ">
+                        		<div class="total_head" style="font-weight: bold;">Doanh thu:</div>
+                        		<div class="total_value" style="margin-left: 102px; font-weight: bold;"><fmt:formatNumber value="${total}" pattern="#,##0" /></div>
+                        	</div>
+
 								</div>
 							</div>
 						</div>

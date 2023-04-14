@@ -28,9 +28,9 @@
 				  <link rel="stylesheet" href="<c:url value="/resources/css/orderlist.css"/>">
 				  <link rel="stylesheet" href="<c:url value="/resources/css/css/detele1.css"/>">
 			</head>
+<jsp:include page="header.jsp"/>
+		<body style="background-image: url(https://hanoispiritofplace.com/wp-content/uploads/2017/11/hinh-nen-powerpoint-cong-nghe-1.jpeg);">>
 
-			<body>
-			<jsp:include page="header.jsp"/>
 
 				<section class="ftco-section">
 					<div class="container">
@@ -42,7 +42,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<h3 class="h5 mb-4 text-center">Thẻ Của Bạn</h3>
-                                    <a <button href="addBanking" type="button" class="btn btn-success">Thêm thẻ</button></a>
+
 
 
 								<div class="table-wrap">

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 
@@ -37,7 +38,7 @@ public class UpdateProductController {
 
     @RequestMapping(value = "/update/{id}", method = GET)
     public String showEditProduct(Model model, @PathVariable int id) {
-        model.addAttribute("product",  productService.findById(id));
+        model.addAttribute("product", productService.findById(id));
         model.addAttribute("msg", "Chỉnh sửa sản phẩm");
         model.addAttribute("action", "updateProduct");
         model.addAttribute("type", "update");
@@ -48,42 +49,38 @@ public class UpdateProductController {
 
     @RequestMapping(value = "/update/updateProduct", method = POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-            produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, "application/x-www-form-urlencoded;charset-UTF-8"} )
+            produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, "application/x-www-form-urlencoded;charset-UTF-8"})
 
-    public ModelAndView save (@RequestParam("id") int id,
-                              @RequestParam("name") String name,
-                              @RequestPart("photo") MultipartFile photo,
-                              @RequestPart("photo1") MultipartFile photo1,
-                              @RequestPart("photo2") MultipartFile photo2,
-                              @RequestPart("photo3") MultipartFile photo3,
-                              @RequestPart("photo4") MultipartFile photo4,
-                              @RequestParam("description") String description,
-                              @RequestParam("price") double price,
-                              @RequestParam("quantity") int quantity,
+    public ModelAndView save(@RequestParam("id") int id,
+                             @RequestParam("name") String name,
+                             @RequestPart("photo") MultipartFile photo,
+                             @RequestPart("photo1") MultipartFile photo1,
+                             @RequestPart("photo2") MultipartFile photo2,
+                             @RequestParam("description") String description,
+                             @RequestParam("price") double price,
+                             @RequestParam("quantity") int quantity,
 
-                              @RequestParam("information") String information,
-                              @RequestParam("product_batteries") String product_batteries,
-                              @RequestParam("product_chip") String product_chip,
-                              @RequestParam("product_frontCamera") String product_frontCamera,
-                              @RequestParam("product_ram") String product_ram,
-                              @RequestParam("product_rearCamera") String product_rearCamera,
-                              @RequestParam("product_screen") String product_screen,
-                              @RequestParam("product_system") String product_system) {
+                             @RequestParam("information") String information,
+                             @RequestParam("product_batteries") String product_batteries,
+                             @RequestParam("product_chip") String product_chip,
+                             @RequestParam("product_frontCamera") String product_frontCamera,
+                             @RequestParam("product_ram") String product_ram,
+                             @RequestParam("product_rearCamera") String product_rearCamera,
+                             @RequestParam("product_screen") String product_screen,
+                             @RequestParam("product_system") String product_system, RedirectAttributes redirectAttributes) {
         try {
             Product product1 = productService.findById(id);
             product1.setName(name);
 
-            if(photo.getOriginalFilename() == "") {
+            if (photo.getOriginalFilename() == "") {
                 byte[] ph = product1.getImage();
                 product1.setImage(ph);
-            }else {
+            } else {
                 product1.setImage(photo.getBytes());
             }
 
             product1.setImage1(photo1.getBytes());
             product1.setImage2(photo2.getBytes());
-            product1.setImage3(photo3.getBytes());
-            product1.setBanner(photo4.getBytes());
             product1.setDescription(description);
             product1.setPrice(price);
             product1.setQuantity(quantity);
@@ -101,11 +98,14 @@ public class UpdateProductController {
 
             productService.save(product1);
 
-            return new ModelAndView("redirect:/admin/manager");
+            redirectAttributes.addFlashAttribute("message", "Sửa sản phẩm thành công");
+            return new ModelAndView("redirect:/admin/manageproduct1");
             //return new ModelAndView("stu", "msg", "Records succesfully inserted into database.");
         } catch (Exception e) {
-            return new ModelAndView("redirect:/admin/manager", "msg", "Error: " + e.getMessage());
-        }
+            redirectAttributes.addFlashAttribute("message", "Sửa sản phẩm thất bại!");
+            return new ModelAndView("redirect:/admin/manageproduct1");
 
+
+        }
     }
 }

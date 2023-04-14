@@ -26,6 +26,9 @@ public class Order {
     @Column (name = "customerAddress")
     private String customerAddress;
 
+    @Column (name = "total")
+    private double total;
+
     @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name="accountId")
     private AccountEntity account;
@@ -74,6 +77,14 @@ public class Order {
 
     public AccountEntity getAccount() {
         return account;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     public void setAccount(AccountEntity account) {

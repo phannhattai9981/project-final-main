@@ -50,19 +50,18 @@ public class CartController {
     private JavaMailSender javaMailSender;
 
 
-
-
-
-
     @RequestMapping(value = "/cart", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
     public String showCart(Model model,HttpSession session) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
-        double total = cartItemService.getAmount();
+
+        double total = cartItemService.getAmount(accountEntity.getCart().getId());
         Cart cart = cartService.findByAccountID(accountEntity.getId());
         model.addAttribute("total", total);
         model.addAttribute("cartItem", cartItemService.findByCartId(cart.getId()));
         return "cart";
     }
+
+
 
     @RequestMapping(value = "/addToCart/{id}", method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
     public String addToCart(@PathVariable int id,HttpSession session) {
@@ -70,42 +69,44 @@ public class CartController {
         if (accountEntity == null) {
             return "redirect:/login";
         } else {
-            Cart cart = cartService.findById(accountEntity.getId());
+            Cart cart = cartService.findByAccountID(accountEntity.getId());
             Product product = productService.findById(id);
-
-            List<CartItem> cartItemList = cartItemService.findByCartId(cart.getId());
-            if (cartItemList.isEmpty()) {
-                CartItem cartItem = new CartItem();
-                cartItem.setProduct(product);
-
-                cartItem.setCart(cart);
-                cartItem.setQuantity(1);
-                cartItemService.save(cartItem);
+            if (product.getQuantity() < 1) {
+                return "redirect:/";
             } else {
-                boolean cartItemCheck = false;
-                for (CartItem cartItem : cartItemList) {
-                    if (product.getId() == cartItem.getProduct().getId()) {
-                        cartItemCheck = true;
-                        cartItem.setCart(cart);
-                        cartItem.setQuantity(cartItem.getQuantity() + 1);
-                        cartItemService.save(cartItem);
-                        break;
+                List<CartItem> cartItemList = cartItemService.findByCartId(cart.getId());
+                if (cartItemList.isEmpty()) {
+                    CartItem cartItem = new CartItem();
+                    cartItem.setProduct(product);
+
+                    cartItem.setCart(cart);
+                    cartItem.setQuantity(1);
+                    cartItemService.save(cartItem);
+                } else {
+                    boolean cartItemCheck = false;
+                    for (CartItem cartItem : cartItemList) {
+                        if (product.getId() == cartItem.getProduct().getId()) {
+                            cartItemCheck = true;
+                            cartItem.setCart(cart);
+                            cartItem.setQuantity(cartItem.getQuantity() + 1);
+                            cartItemService.save(cartItem);
+                            break;
+                        }
+                    }
+                    if (cartItemCheck == false) {
+                        CartItem cartItem1 = new CartItem();
+                        cartItem1.setQuantity(1);
+                        cartItem1.setProduct(product);
+                        cartItem1.setCart(cart);
+                        cartItemService.save(cartItem1);
                     }
                 }
-                if (cartItemCheck == false) {
-                    CartItem cartItem1 = new CartItem();
-                    cartItem1.setQuantity(1);
-                    cartItem1.setProduct(product);
-                    cartItem1.setCart(cart);
-                    cartItemService.save(cartItem1);
-
-                }
+                return "redirect:/cart";
             }
-            return "redirect:/cart";
+
         }
 
     }
-
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
     public String deleteCart(@PathVariable int id) {
         cartItemService.deleteById(id);
@@ -122,109 +123,139 @@ public class CartController {
     }
 
     @PostMapping(value = "/checkout",produces = "text/plain;charset=UTF-8")
-    public String checkOut(Model model, HttpSession session , Order order, @RequestParam(name = "payment_method") String payment_method) throws MessagingException {
+    public String checkOut(Model model, HttpSession session , Order order, @RequestParam(name = "payment_method") String payment_method) {
+        // Lay account tu session
         AccountEntity account = (AccountEntity) session.getAttribute("account");
+
+        // Lay account Banking By Account Id
         List<AccountBanking> accountBankingList = (List<AccountBanking>) accountBankingService.getAccountBankingByAccountId(account.getId());
-        Payment payment = new Payment();
+
+        double totalPrice = cartItemService.getAmount(account.getCart().getId());
+
+        // Chek phuong thuc thanh toan
+        // Neu la COD
         if (payment_method.equals("COD")) {
+            // Check accountBanking
             if (accountBankingList == null || accountBankingList.isEmpty()) {
                 model.addAttribute("accountBanking", new AccountBanking());
                 return "bankingCart";
-
-
-                //tiền không đủ
-            } else if (accountBankingList.get(0).getBalance() < cartItemService.getAmount()) {
+                // Check so du
+                // Khong du
+            } else if (accountBankingList.get(0).getBalance() < totalPrice) {
                 model.addAttribute("accountBanking",accountBankingList);
                 model.addAttribute("account", account);
-
                 return "fail";
+                // du tien
             } else {
+                // Lay accountbanking
                 AccountBanking accountBanking = accountBankingList.get(0);
+
+                // Lay list cartitem từ database
                 List<CartItem> cartItems = (List<CartItem>) cartItemService.findAllByCartId(account.getCart().getId());
+
+                // Check số lượng
                 for (CartItem cart : cartItems) {
                     Product product = productService.findById(cart.getProduct().getId());
+                    // Không đủ số lượng
                     if (product.getQuantity() < cart.getQuantity()) {
-                        model.addAttribute("cart",cartItems);
+                        model.addAttribute("cart", cartItems);
                         model.addAttribute("mss", "số lượng k đủ");
-                        model.addAttribute("product",product);
+                        model.addAttribute("product", product);
                         return "failorder";
-                    } else {
-                        accountBanking.setBalance(accountBanking.getBalance() - cartItemService.getAmount());
-                        accountBankingService.save(accountBanking);
+                    }else {
+                        // Tạo mới order
                         order.setOrderDate(new Date());
                         order.setStatus(PROCESSING);
                         order.setAccount(account);
+                        order.setTotal(totalPrice);
                         orderService.save(order);
-
+                        // Trừ số lượng product
                         product.setQuantity(product.getQuantity() - cart.getQuantity());
                         productService.save(product);
+                        // Tạo mới OrderDetail
                         OrderDetail orderDetail = new OrderDetail();
                         orderDetail.setQuantity(cart.getQuantity());
                         orderDetail.setPrice(cart.getProduct().getPrice());
                         orderDetail.setProduct(cart.getProduct());
                         orderDetail.setOrder(order);
                         orderDetailService.save(orderDetail);
-
-                        payment.setOrder(order);
-                        payment.setAccountBanking(accountBanking);
-                        payment.setPayment_date(new Date());
-                        payment.setAmount(cartItemService.getAmount());
-                        paymentService.save(payment);
                     }
                 }
+                // Đủ số lượng
+                // trừ tiền
+                accountBanking.setBalance(accountBanking.getBalance() - totalPrice);
+                accountBankingService.save(accountBanking);
+                // Tạo mới payment
+                Payment payment = new Payment();
+                payment.setOrder(order);
+                payment.setAccountBanking(accountBanking);
+                payment.setPayment_date(new Date());
+                payment.setAmount(totalPrice);
+                paymentService.save(payment);
             }
             List<CartItem> cartItems = (List<CartItem>) cartItemService.findAllByCartId(account.getCart().getId());
             for (CartItem cart : cartItems) {
                 cartItemService.deleteById(cart.getId());
             }
+
+            // Thanh toan bang tien mat
         } else if (payment_method.equals("CASH")) {
+            // Lay List cart item
             List<CartItem> cartItems = (List<CartItem>) cartItemService.findAllByCartId(account.getCart().getId());
+            //Check so luong product
             for (CartItem cart : cartItems) {
                 Product product = productService.findById(cart.getProduct().getId());
                 if (product.getQuantity() < cart.getQuantity()) {
-
-                    model.addAttribute("cartItems",cartItems);
+                    model.addAttribute("cartItems", cartItems);
                     model.addAttribute("mss", "số lượng k đủ");
-                    model.addAttribute("product",product);
+                    model.addAttribute("product", product);
                     return "failorder";
-                } else {
-                    order.setOrderDate(new Date());
-                    order.setAccount(account);
-                    order.setStatus(PROCESSING);
-                    orderService.save(order);
-
-                    product.setQuantity(product.getQuantity() - cart.getQuantity());
-                    productService.save(product);
-                    OrderDetail orderDetail = new OrderDetail();
-                    orderDetail.setQuantity(cart.getQuantity());
-                    orderDetail.setPrice(cart.getProduct().getPrice());
-                    orderDetail.setProduct(cart.getProduct());
-                    orderDetail.setOrder(order);
-                    orderDetailService.save(orderDetail);
-
-                    payment.setOrder(order);
-                    payment.setPayment_date(new Date());
-                    payment.setAmount(cartItemService.getAmount());
-                    paymentService.save(payment);
                 }
             }
+            // Tao moi order
+            order.setOrderDate(new Date());
+            order.setAccount(account);
+            order.setStatus(PROCESSING);
+            orderService.save(order);
+//
+//             Tao moi Payment
+            Payment payment = new Payment();
+            payment.setOrder(order);
+            payment.setPayment_date(new Date());
+            payment.setAmount(cartItemService.getAmount(account.getCart().getId()));
+            paymentService.save(payment);
+            for (CartItem cart : cartItems) {
+                // tru so luong product
+                Product product = productService.findById(cart.getProduct().getId());
+                product.setQuantity(product.getQuantity() - cart.getQuantity());
+                productService.save(product);
+
+                //Tao moi orderdetail
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.setQuantity(cart.getQuantity());
+                orderDetail.setPrice(cart.getProduct().getPrice());
+                orderDetail.setProduct(cart.getProduct());
+                orderDetail.setOrder(order);
+                orderDetailService.save(orderDetail);
+
+                //Xoa cart Item
+                cartItemService.deleteById(cart.getId());
+
+            }
+
+
+
+            AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
+            int id = order.getId();
+            String email = accountEntity.getEmail();
+            String body = "<h1>WELCOME TO TP TECHNOLOGY</h1>\n" +
+                    "<p>Thank you for trusting and using our services </p>\n" +
+                    "<p>You can click on the link below to view the order </p>\n"
+                    +
+                    "http://localhost:8008/project-final-main/user/orderList";
+        String subject = "Mail xác nhận ";
+        sendEmail(email, subject, body);
         }
-        List<CartItem> cartItems = (List<CartItem>) cartItemService.findAllByCartId(account.getCart().getId());
-        for (CartItem cart : cartItems) {
-            cartItemService.deleteById(cart.getId());
-        }
-//        AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
-//        String email = accountEntity.getEmail();
-//        sendEmail(email, "TP TECHNOLOGY", "Cám ơn bạn đã tin dùng sản phẩm của chúng tôi, để biết thêm chi tiết đơn hàng hãy bấm vào link sau: http:// project-final-main/user/orderdetaile");
-
-
-
-        String body = "<h1>Verify your email address</h1>\n" +
-                "<p>To continue setting up your Azure account, please verify that this is your email address.</p>\n" +
-                "<a href=http://localhost:8080/Azure-Hotel/activate?token= class=\"btn btn-primary\" type=\"button\">Verify email address</a>\n" +
-                "<p>Best regards,<br>The Azure Hotel team</p>";
-        sendEmail("nhattaibmt12a2@gmail.com", "subject", body);
-
 
         List<OrderDetail> orderDetails = orderDetailService.findByOrderDetailByOrderId(order.getId());
         double total = calculateTotal(orderDetails);
@@ -232,7 +263,14 @@ public class CartController {
         model.addAttribute("account", account);
         model.addAttribute("orderDetails", orderDetails);
         model.addAttribute("order", order);
-        model.addAttribute("payment",payment);
+
+        String payment_method_display = "";
+        if (payment_method.equals("COD")) {
+            payment_method_display = "Đã thanh toán qua thẻ";
+        } else if (payment_method.equals("CASH")) {
+            payment_method_display = "Thanh toán bằng tiền mặt";
+        }
+        model.addAttribute("payment_method_display", payment_method_display);
 
 
         return "success";
@@ -251,6 +289,7 @@ public class CartController {
         }
         javaMailSender.send(message);
     }
+
 
 
 

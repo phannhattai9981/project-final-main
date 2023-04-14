@@ -27,10 +27,8 @@
   <link rel="stylesheet" href="<c:url value="/resources/css/font-free-6.1.2-web/css/solid.css"/>">
   <link rel="stylesheet" href="<c:url value="/resources/css/manager.css"/>">
 </head>
-
     <body>
 <jsp:include page="header.jsp"/>
-
       <section class="banner_area1">
         <div class="container">
           <div class="banner_content d-md-flex justify-content-between align-items-center">
@@ -38,6 +36,9 @@
               <h2>Trang Quản Lý</h2>
             </div>
           </div>
+          <c:if test="${not empty message}">
+              <p style="color: red">${message}</p>
+           </c:if>
           <td>
               <div class="active">
                   <div class="cupon_text">
@@ -101,6 +102,34 @@
           </div>
         </div>
       </section>
+
+          <footer style="width: 100%; margin-bottom: 50px">
+                <div class="blog-pagination justify-content-center d-flex">
+                      <ul class="pagination">
+                          <li class="page-item">
+                              <a href="manageproduct${previous}" class="page-link" aria-label="Previous">
+                                  <span aria-hidden="true">
+                                      <span style="line-height:45px" class="ti-arrow-left"></span>
+                                  </span>
+                              </a>
+                          </li>
+
+                          <c:forEach var='item' begin='1' end='${countPage}'>
+                              <li class="page-item">
+                                        <a href="manageproduct${item}" class="page-link"><c:out value='${item}'/></a>
+                              </li>
+                          </c:forEach>
+
+                          <li class="page-item">
+                              <a href="manageproduct${next}" class="page-link" aria-label="Next">
+                                  <span aria-hidden="true">
+                                      <span style="line-height:45px" class="ti-arrow-right"></span>
+                                  </span>
+                              </a>
+                          </li>
+                      </ul>
+                </div>
+          </footer>
 
     </body>
 </html>

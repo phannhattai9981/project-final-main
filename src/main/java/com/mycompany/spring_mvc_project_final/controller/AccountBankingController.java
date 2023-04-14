@@ -3,21 +3,27 @@ package com.mycompany.spring_mvc_project_final.controller;
 import com.mycompany.spring_mvc_project_final.entities.AccountBanking;
 import com.mycompany.spring_mvc_project_final.entities.AccountEntity;
 import com.mycompany.spring_mvc_project_final.service.AccountBankingService;
+import com.mycompany.spring_mvc_project_final.service.AccountService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 @Controller
 @RequestMapping("/")
 public class AccountBankingController {
 
+
     @Autowired
     AccountBankingService accountBankingService;
+    @Autowired
+    AccountService accountService;
 
     @RequestMapping(value = "/addBankingCart",method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
     public String showNewBanking(Model model){
@@ -39,4 +45,5 @@ public class AccountBankingController {
         accountBankingService.save(accountBanking);
         return "redirect:/cart";
     }
+
 }

@@ -35,9 +35,6 @@ public class Product {
     @Column (name = "image3")
     private byte [] image3;
 
-    @Lob
-    @Column (name = "banner")
-    private byte [] banner;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "MM/dd/yyyy")
@@ -122,13 +119,6 @@ public class Product {
         this.image3 = image3;
     }
 
-    public byte[] getBanner() {
-        return banner;
-    }
-
-    public void setBanner(byte[] banner) {
-        this.banner = banner;
-    }
 
     public Date getProductDate() {
         return productDate;

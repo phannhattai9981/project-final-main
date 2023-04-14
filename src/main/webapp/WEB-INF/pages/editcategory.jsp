@@ -24,42 +24,46 @@
 	      <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 
 </head>
-
-<body style="background-image: url(https://thumbs.dreamstime.com/b/abstract-dna-molecules-structure-science-technology-background-illustration-vector-119136443.jpg);">
 <jsp:include page="header1.jsp"/>
-    <form action="./updateProfile" method="post" encType="multipart/form-data" modelAttribute="editProfile">
+<body style="background-image: url(https://thumbs.dreamstime.com/b/abstract-dna-molecules-structure-science-technology-background-illustration-vector-119136443.jpg);">
+
+      <form:form action="${action}" method="post" encType="multipart/form-data" modelAttribute="category">
+      <c:if test="${type.equals('updateCategory')}">
         <div class="wrapper bg-white mt-sm-5" >
-            <h4 class="pb-4 border-bottom">Cập nhật thông tin cá nhân</h4>
+            <h4 class="pb-4 border-bottom">Cập nhật loại sản phẩm</h4>
 
             <div class="py-2">
                 <div class="row py-2">
                     <div class="col-md-6">
-                        <label for="firstname"> E-Mail</label>
-                        <input name="email" value="${account.email}" type="text" class="bg-light form-control" readonly />
+                        <label for="firstname">Mã loại sản phẩm</label>
+                    <c:if test="${type.equals('updateCategory')}">
+                        <label for="name" class="cols-sm-2 control-label">ID (*)</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                             <input name="id" value="${category.id}" class="form-control" readonly/>
+
+                            </div>
+                            <div class="message" id="message_name"></div>
+                        </div>
+                    </c:if>
                     </div>
+
+                     </c:if>
                     <div class="col-md-6 pt-md-0 pt-3">
-                        <label for="firstname"> ID</label>
-                        <input name="id" value="${account.id}" class="bg-light form-control" type="number" readonly />
+                        <label for="firstname">Tên Danh Mục (*)</label>
+                                                      <form:input path="name" value="${category.name}" type="text" class="form-control" placeholder="Nhập Danh Mục"
+                                                                                                required="true" />
                     </div>
                 </div>
-                <div class="row py-2">
-                    <div class="col-md-6">
-                        <label for="email">Họ Tên</label>
-                        <input name="fullName" value="${account.fullName}" class="bg-light form-control" type="text">
-                    </div>
-                    <div class="col-md-6 pt-md-0 pt-3">
-                        <label for="phone">Số điện thoại</label>
-                        <input type="tel" class="bg-light form-control" name="phone" value="${account.phone}">
-                    </div>
-                </div>
+
                 <div class="py-3 pb-4 border-bottom">
-                     <button type="submit" value="submit" class="btn btn-primary mr-3">Lưu thông tin</button>
-                    <button class="btn border button">Cancel</button>
+                     <button type="submit" value="Xác Nhận" class="btn btn-primary mr-3">Lưu thông tin</button>
+                    <button class="btn border button">Hủy bỏ</button>
                 </div>
 
             </div>
         </div>
-    </form>
+      </form:form>
 </body>
 
 

@@ -22,10 +22,10 @@
       <link rel="stylesheet" href="<c:url value="/resources/css/vendors/animate-css/animate.css"/>">
       <link rel="stylesheet" href="<c:url value="/resources/css/vendors/jquery-ui/jquery-ui.css"/>">
     <link rel="stylesheet" href="<c:url value="/resources/css/banking.css"/>">
+    <link rel="stylesheet" href="<c:url value="/resources/css/header.css"/>">
 <html>
- <jsp:include page="header.jsp"/>
 <body>
-
+<jsp:include page="header1.jsp"/>
   <div>
     <form:form action="addBanking" method="POST" modelAttribute="accountBanking">
         <div class="container bg-light d-md-flex align-items-center">
@@ -62,7 +62,7 @@
                     <div class="col-12">
                         <div class="d-flex flex-column px-md-5 px-4 mb-4"> <span>Số Thẻ</span>
                             <div class="inputWithIcon"> <input name="cardNumber" class="form-control" type="number"
-                                    value="5136 1845 5468 3894"> <span class=""> <img
+                                 > <span class=""> <img
                                         src="https://www.freepnglogos.com/uploads/mastercard-png/mastercard-logo-logok-15.png"
                                         alt=""></span> </div>
                         </div>

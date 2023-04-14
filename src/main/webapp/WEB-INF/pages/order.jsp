@@ -14,7 +14,7 @@
 			</head>
 
 			<body>
-			<jsp:include page="header.jsp"/>
+
 				<section class="ftco-section">
 					<div class="container">
 						<div class="row justify-content-center">

@@ -26,7 +26,7 @@ public class CategoryService {
     }
 
     public void deleteById(int id) {
-        categoryRepository.findById(id);
+        categoryRepository.deleteById(id);
     }
 
 

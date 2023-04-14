@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
@@ -54,12 +55,10 @@ public class AddProductController {
     @RequestMapping(value = "/addProduct", method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, "application/x-www-form-urlencoded;charset-UTF-8"} )
-    public ModelAndView save(Product product, @RequestParam("name") String name,
+    public ModelAndView save(RedirectAttributes redirectAttributes, Product product, @RequestParam("name") String name,
                              @RequestPart("photo") MultipartFile photo,
                              @RequestPart("photo1") MultipartFile photo1,
                              @RequestPart("photo2") MultipartFile photo2,
-                             @RequestPart("photo3") MultipartFile photo3,
-                             @RequestPart("photo4") MultipartFile photo4,
                              @RequestParam("description") String description,
                              @RequestParam("price") double price,
                              @RequestParam("quantity") int quantity,
@@ -72,37 +71,45 @@ public class AddProductController {
                              @RequestParam("product_rearCamera") String product_rearCamera,
                              @RequestParam("product_screen") String product_screen,
                              @RequestParam("product_system") String product_system) {
-        try {
-            product.setName(name);
-            product.setImage(photo.getBytes());
-            product.setImage1(photo1.getBytes());
-            product.setImage2(photo2.getBytes());
-            product.setImage3(photo3.getBytes());
-            product.setBanner(photo4.getBytes());
-            product.setDescription(description);
-            product.setPrice(price);
-            product.setQuantity(quantity);
-            product.setProductDate(new Date());
-            productService.save(product);
+        if(product.getCategory().getId() == 0){
+            redirectAttributes.addFlashAttribute("messages", "Chọn danh mục");
+            return new ModelAndView("redirect:/add");
+        } else {
+            try {
+                product.setName(name);
+                product.setImage(photo.getBytes());
+                product.setImage1(photo1.getBytes());
+                product.setImage2(photo2.getBytes());
+                product.setDescription(description);
+                product.setPrice(price);
+                product.setQuantity(quantity);
+                product.setProductDate(new Date());
+                productService.save(product);
 
-            ProductDetail productDetail = new ProductDetail();
-            productDetail.setInformation(information);
-            productDetail.setProduct_batteries(product_batteries);
-            productDetail.setProduct_chip(product_chip);
-            productDetail.setProduct_frontCamera(product_frontCamera);
-            productDetail.setProduct_ram(product_ram);
-            productDetail.setProduct_rearCamera(product_rearCamera);
-            productDetail.setProduct_screen(product_screen);
-            productDetail.setProduct_system(product_system);
-            productDetail.setProduct(product);
-            productDetailService.save(productDetail);
+                ProductDetail productDetail = new ProductDetail();
+                productDetail.setInformation(information);
+                productDetail.setProduct_batteries(product_batteries);
+                productDetail.setProduct_chip(product_chip);
+                productDetail.setProduct_frontCamera(product_frontCamera);
+                productDetail.setProduct_ram(product_ram);
+                productDetail.setProduct_rearCamera(product_rearCamera);
+                productDetail.setProduct_screen(product_screen);
+                productDetail.setProduct_system(product_system);
+                productDetail.setProduct(product);
+                productDetailService.save(productDetail);
 
-            return new ModelAndView( "redirect:/admin/manager");
-            //return new ModelAndView("stu", "msg", "Records succesfully inserted into database.");
+                redirectAttributes.addFlashAttribute("message", "Thêm sản phầm thành công");
+                return new ModelAndView( "redirect:/admin/manageproduct1");
 
-        } catch (Exception e) {
-            return new ModelAndView("redirect:/admin/add", "msg", "Error: " + e.getMessage());
+
+                //return new ModelAndView("stu", "msg", "Records succesfully inserted into database.");
+
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("message", "Thêm sản phẩm thất bại!");
+                return new ModelAndView("redirect:/add");
+            }
         }
+
     }
 
     @RequestMapping(value = "/getProductPhoto/{id}")

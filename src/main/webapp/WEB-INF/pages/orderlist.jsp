@@ -49,6 +49,7 @@
 												<th>Ngày Đặt</th>
 												<th>Số Điện Thoại</th>
 												<th>Trang Thái Đơn Hàng</th>
+												<th>Số tiền phải thanh toán</th>
 												<th>Tùy Chọn</th>
 
 
@@ -61,11 +62,36 @@
 
 													<th scope="row" style="padding-top:15px;">${ordersList.customerName}
 													</th>
-													<td style="padding-top:15px;">${ordersList.customerAddress}</td>
-													<th scope="row" style="padding-top:15px;">${ordersList.orderDate}
-													<th scope="row" style="padding-top:15px;">${account.phone}
-													<th scope="row" style="padding-top:15px;">${ordersList.status}
-                                                    <th
+													<td style="padding-top:5px;">${ordersList.customerAddress}</td>
+													<th scope="row" style="padding-top:5px;">${ordersList.orderDate}
+													<th scope="row" style="padding-top:5px;">${account.phone}
+															<th scope="row" style="padding-top:15px;">
+                                                                <c:choose>
+                                                                    <c:when test="${ordersList.status == 'PROCESSING'}">
+                                                                        Đang xử lý
+                                                                    </c:when>
+                                                                    <c:when test="${ordersList.status == 'DELIVERY'}">
+                                                                        Đang vận chuyển
+                                                                    </c:when>
+                                                                    <c:when test="${ordersList.status == 'CANCEL'}">
+                                                                        Bị hủy
+                                                                    </c:when>
+                                                                    <c:when test="${ordersList.status == 'SUCCESSFULL'}">
+                                                                        Thành công
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        ${ordersList.status}
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </th>
+                                                    <th scope="row" style="padding-top:5px;">
+                                                    <c:if test="${not empty ordersList.payment.accountBanking}">
+                                                         Đã thanh toán
+                                                     </c:if>
+                                                     <c:if test="${empty ordersList.payment.accountBanking}">
+                                                         <fmt:formatNumber value="${ordersList.payment.amount}" pattern="#,##0" />
+                                                     </c:if>
+
                                                      <td>
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="location.href='orderdetaile/${ordersList.id}'">Chi Tiết Đơn Hàng</button>

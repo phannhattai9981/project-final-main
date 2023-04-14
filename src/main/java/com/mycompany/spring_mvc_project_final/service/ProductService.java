@@ -12,8 +12,8 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public Object findAll(){
-        return productRepository.findAll();
+    public List<Product> findAll(){
+        return (List<Product>) productRepository.findAll();
     }
     public List<Product> showList() {
         return productRepository.showList();
@@ -29,9 +29,6 @@ public class ProductService {
     }
     public List<Product> showTopTapLet() {
         return productRepository.showTopTaplet();
-    }
-    public List<Product> showTop1() {
-        return productRepository.showTop1Product();
     }
     public List<Product> showTop4() {
         return productRepository.showTop4Product();
@@ -61,6 +58,11 @@ public class ProductService {
 
     public void deleteById(int id) {
         productRepository.deleteById(id);
+    }
+
+
+    public List<Product> getProduct( int pageOut) {
+        return  productRepository.getProduct(pageOut);
     }
 
 }

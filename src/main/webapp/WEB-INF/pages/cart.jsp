@@ -47,7 +47,7 @@
 
 </head>
   <body>
-<jsp:include page="header.jsp"/>
+
     <section class="banner_area1">
       <div class="container">
         <div class="banner_content d-md-flex justify-content-between align-items-center">
@@ -136,11 +136,9 @@
                           <td>
                             <div class="checkout_btn_inner">
                               <div class="continuer">
-                                <a class="gray_btn" href="/project-final-main">Chọn Thêm Sản Phẩm Khác</a>
-
-                                    <a class="btn btn-info" style="color: white;" href="#checkOut" class="trigger-btn"
-                                        data-toggle="modal">Chọn phương thức thanh toán</a>
-
+                                  <a class="gray_btn" href="/project-final-main" style="display: inline-block;">Chọn Thêm Sản Phẩm Khác</a>
+                                  <a class="btn btn-info" style="color: white; display: inline-block;" href="#checkOut" class="trigger-btn" data-toggle="modal">Chọn phương thức thanh toán</a>
+                              </div>
                                     <div class="modal fade" id="checkOut">
                                         <div class="modal-dialog">
                                             <div class="modal-content">

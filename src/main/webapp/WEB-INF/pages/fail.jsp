@@ -10,74 +10,52 @@
 				<meta http-equiv="X-UA-Compatible" content="IE=edge">
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<title>Document</title>
-				    <link href="webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
-                    <link href='<c:url value="/resources/css/main.css" />' rel='stylesheet'>
+            	 <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap.css"/>">
+            	  <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap.css.map"/>">
+            	   <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap.min.css"/>">
+            	    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap.min.css.map"/>">
+            	     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap-grid.css"/>">
+            	     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap-grid.min.css"/>">
+            	     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap-grid.min.css.map"/>">
+            	     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap-reboot.css.map"/>">
+            	     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap-reboot.min.css"/>">
+            	     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap/css/bootstrap-reboot.min.css.map"/>">
+				  <link rel="stylesheet" href="<c:url value="/resources/css/fail.css"/>">
 
-                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-                    <script type="text/javascript" src="webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
-                    <script type="text/javascript" src="webjars/jquery/3.6.0/jquery.js" />
-                    </script>
-                    <script type="text/javascript" src="webjars/popper.js/2.9.3/umd/popper.min.js" />
-                    </script>
-
-                    <title>Order</title>
-                    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-				  <link rel="stylesheet" href="<c:url value="/resources/css/orderlist.css"/>">
-				  <link rel="stylesheet" href="<c:url value="/resources/css/css/detele1.css"/>">
 			</head>
 
-			<body>
-			<jsp:include page="header.jsp"/>
-				<section class="ftco-section">
-					<div class="container">
-						<div class="row justify-content-center">
-							<div class="col-md-6 text-center mb-4">
-								<h2 class="heading-section"> Mua hàng không thành công </h2>
-                                    <h5>Do số dư trong tài khoản của quý khách không đủ  </h5>
-                                     <h5>vui lòng kiểm tra lại ! </h5>
-                                     <div>
-                                         <img style="max-width: 50px" src="https://cdn.pixabay.com/photo/2017/02/12/21/29/false-2061132_1280.png">
-                                     </div>
-							</div>
+			<body style="background-image: url(https://thumbs.dreamstime.com/b/abstract-dna-molecules-structure-science-technology-background-illustration-vector-119136443.jpg);">
+<jsp:include page="header1.jsp"/>
 
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<h3 class="h5 mb-4 text-center">Thông tin khách hàng</h3>
-								<div class="table-wrap">
-									<table class="table">
-										<thead class="thead-primary">
-											<tr>
-												<th>Khách hàng  </th>
-												<th>Số điện thoại</th>
-												<th>Số dư</th>
-												<th>Số thẻ</th>
+            	<div id="price">
 
-											</tr>
-										</thead>
-										<tbody>
-										    <td>${account.fullName}</td>
-										    <td>${account.phone}</td>
-											 <c:forEach var="accountBanking" items="${accountBanking}">
-                                                    <td>${accountBanking.balance}</td>
-                                                     <td><fmt:formatNumber value="${accountBanking.cardNumber}" pattern="#,##0" /></td>
-                                                  <td>
-                                                </c:forEach>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
+                		<!--price tab-->
+                		<div class="plan ultimite" >
+                		  <div class="plan-inner">
+                			<div class="entry-title">
+                			  <h3>Thất bại</h3>
+                			  <div class="price">X<span></span>
+                			  </div>
+                			</div>
+                			<div class="entry-content">
+                			  <ul>
+                				<li>Thanh toán thất bại do số dư không đủ</li>
+                			  </ul>
+                			</div>
+                			<div class="btn">
+                				<p>Số dư hiện tại của bạn</p>
+                				<c:forEach var="accountBanking" items="${accountBanking}">
+                					<td>${accountBanking.balance}</td>
 
-				<script src="/bt/table-06/js/bootstrap.min.js"></script>
-				<script src="/bt/table-06/js/popper.js"></script>
-				<script src="/bt/table-06/js/jquery.min.js"></script>
-				<script src="/bt/table-06/js/main.js"></script>
+                				  <td>
+                				</c:forEach>
+                			</div>
+                		  </div>
+                		</div>
+                		<!-- end of price tab-->
+                	  </div>
 
-			</body>
+                	</div>
+            </body>
 
 			</html>

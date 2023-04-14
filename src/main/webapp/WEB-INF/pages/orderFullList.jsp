@@ -27,9 +27,9 @@
 				  <link rel="stylesheet" href="<c:url value="/resources/css/orderlist.css"/>">
 				  <link rel="stylesheet" href="<c:url value="/resources/css/css/detele1.css"/>">
 			</head>
+<jsp:include page="header.jsp"/>
+			<body style="background-image: url(https://img4.thuthuatphanmem.vn/uploads/2020/07/05/anh-nen-background-cong-nghe_035953114.jpg);">>
 
-			<body>
-			<jsp:include page="header.jsp"/>
 				<section class="ftco-section">
 					<div class="container">
 						<div class="row justify-content-center">
@@ -44,13 +44,14 @@
 									<table class="table">
 										<thead class="thead-primary">
 											<tr>
-											    <th>Mã đơn hàng</th>
-												<th>Người Đặt</th>
-												<th>Địa Chỉ Nhận Hàng</th>
-												<th>Ngày Đặt</th>
-												<th>Số Điện Thoại</th>
-												<th>Trang Thái Đơn Hàng</th>
-												<th>Tùy Chọn</th>
+											    <th>Mã đơn</th>
+												<th>Người nhận</th>
+												<th>Địa chỉ</th>
+												<th>Ngày đặt</th>
+												<th>Số điện thoại</th>
+												<th>Trạng thái</th>
+												<th>Số tiền phải thanh toán</th>
+												<th>Chức năng</th>
 
 
 
@@ -68,25 +69,47 @@
 													<th scope="row" style="padding-top:15px;">${order.orderDate}
 													<th scope="row" style="padding-top:15px;">${order.account.phone}
 
-													<th scope="row" style="padding-top:15px;">${order.status}
-                                                    <th
+													<th scope="row" style="padding-top:15px;">
+                                                        <c:choose>
+                                                            <c:when test="${order.status == 'PROCESSING'}">
+                                                                Đang xử lý
+                                                            </c:when>
+                                                            <c:when test="${order.status == 'DELIVERY'}">
+                                                                Đang vận chuyển
+                                                            </c:when>
+                                                            <c:when test="${order.status == 'CANCEL'}">
+                                                                Bị hủy
+                                                            </c:when>
+                                                            <c:when test="${order.status == 'SUCCESSFULL'}">
+                                                                Thành công
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ${order.status}
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </th>
+                                                       <th scope="row" style="padding-top:5px;">
+                                                        <c:if test="${not empty order.payment.accountBanking}">
+                                                             Đã thanh toán
+                                                         </c:if>
+                                                         <c:if test="${empty order.payment.accountBanking}">
+                                                             <fmt:formatNumber value="${order.payment.amount}" pattern="#,##0" />
+                                                         </c:if>
                                                      <th>
                                                        <c:if test="${order.status ne 'PROCESSING'&& order.status ne 'CANCEL' && order.status ne 'SUCCESSFULL' }">
-                                                             <button class="btn btn-warning"
-                                                                 onclick="location.href='successful${order.id}'">Thành công </button>
+                                                               <button class="btn btn-primary btn-sm"
+                                                                 onclick="location.href='successful${order.id}'">Thành công</button>
                                                        </c:if>
                                                       <c:if test="${order.status ne 'DELIVERY' && order.status ne 'CANCEL' && order.status ne 'SUCCESSFULL'}">
-                                                            <button class="btn btn-sm btn-primary"
+                                                            <button class="btn btn-primary btn-sm"
                                                                 onclick="location.href='deteleListFullOrder${order.id}'">Đã chuẩn bị xong</button>
                                                       </c:if>
-                                                            <button class="btn btn-success"
+                                                          <button     <button class="btn btn-primary btn-sm"
                                                                  onclick="location.href='orderListDetaile${order.id}'">Chi tiết</button>
                                                         <c:if test="${order.status ne 'DELIVERY' && order.status ne 'CANCEL' && order.status ne 'SUCCESSFULL'}">
                                                             <a class="btn btn-sm btn-danger" href="#modalDelete${order.id}"
                                                                 class="trigger-btn" data-toggle="modal" data-id="${order.id}?">Hủy Đơn</a>
                                                         </c:if>
-
-
                                                       </th>
 
                                                         <div id="modalDelete${order.id}" class="modal fade">

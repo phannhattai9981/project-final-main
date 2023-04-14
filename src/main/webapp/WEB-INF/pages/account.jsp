@@ -30,6 +30,7 @@
 
 			<body>
 			<jsp:include page="header.jsp"/>
+			<body style="background-image: url(https://thumbs.dreamstime.com/b/abstract-dna-molecules-structure-science-technology-background-illustration-vector-119136443.jpg);">>
 				<section class="ftco-section">
 					<div class="container">
 						<div class="row justify-content-center">
@@ -54,6 +55,7 @@
 
 											</tr>
 										</thead>
+
 										<tbody>
 
 											<c:forEach var="accountEntityList" items="${accountEntityList}">

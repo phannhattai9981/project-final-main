@@ -31,26 +31,10 @@
   </head>
 
   <body>
-<jsp:include page="header.jsp"/>
-
-    <!--================Home Banner Area =================-->
-    <section class="banner_area">
-      <div class="banner_inner d-flex align-items-center">
-        <div class="container">
-          <div
-            class="banner_content d-md-flex justify-content-between align-items-center"
-          >
-            <div class="mb-3 mb-md-0">
-              <h2>Chi Tiết Sản Phẩm</h2>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
-    <!--================End Home Banner Area =================-->
+  <jsp:include page="header1.jsp"/>
 
     <!--================Single Product Area =================-->
+
     <div class="product_image_area">
       <div class="container">
 
@@ -70,7 +54,7 @@
                           >
                             <img
                               class="d-block w-100 h-100"
-                              src="getProductPhoto/<c:out value='${single.id}'/>"
+                              src="getProductPhoto/<c:out value='${single.id}'/>/1"
                               alt=""
                             />
                           </li>
@@ -80,7 +64,7 @@
                           >
                             <img
                               class="d-block w-100 h-100"
-                              src="getProductPhoto/<c:out value='${single.id}'/>"
+                              src="getProductPhoto/<c:out value='${single.id}'/>/2"
                               alt=""
                             />
                           </li>
@@ -90,7 +74,7 @@
                           >
                           <img
                             class="d-block w-100 h-100"
-                            src="getProductPhoto/<c:out value='${single.id}'/>"
+                            src="getProductPhoto/<c:out value='${single.id}'/>/3"
                             alt=""
                           >
                           </li>
@@ -99,21 +83,21 @@
                           <div class="carousel-item active">
                             <img
                               class="d-block w-100"
-                              src="getProductPhoto/<c:out value='${single.id}'/>"
+                              src="getProductPhoto/<c:out value='${single.id}'/>/1"
                               alt="First slide"
                             />
                           </div>
                           <div class="carousel-item">
                             <img
                               class="d-block w-100"
-                              src="getProductPhoto/<c:out value='${single.id}'/>"
+                              src="getProductPhoto/<c:out value='${single.id}'/>/2"
                               alt="Second slide"
                             />
                           </div>
                           <div class="carousel-item">
                             <img
                               class="d-block w-100"
-                              src="getProductPhoto/<c:out value='${single.id}'/>"
+                              src="getProductPhoto/<c:out value='${single.id}'/>/3"
                               alt="Third slide"
                             />
                           </div>
@@ -128,23 +112,20 @@
 
                   <div class="price-product">
                     <h2><fmt:formatNumber value="${single.price}" pattern="#,##0" /><u>đ</u></h2>
-                  <del>43.990.000 <u>đ</u></del>
                   </div>
                   <p>
                     ${single.description}
                   </p>
                   <div class="product_count">
-                    <label for="qty">Còn lại</label>
+                    <label for="qty">Tồn kho</label>
                       <h3>${single.quantity}</h3>
                   </div>
                   <div class="card_area">
                     <a class="main_btn" href="../addToCart/${single.id}">Thêm Vào Giỏ <i class="fa-solid fa-cart-plus"></i></a>
                   </div>
-
                 </div>
               </div>
             </div>
-
       </div>
     </div>
     <!--================End Single Product Area =================-->
@@ -184,17 +165,7 @@
             role="tabpanel"
             aria-labelledby="home-tab"
           >
-            <p>
-              ĐẶC ĐIỂM NỔI BẬT
-Màn hình Dynamic Island - Sự biến mất của màn hình tai thỏ thay thế bằng thiết kế viên thuốc, OLED 6,7 inch, hỗ trợ always-on display
-Cấu hình iPhone 14 Pro Max mạnh mẽ, hiệu năng cực khủng từ chipset A16 Bionic
-Làm chủ công nghệ nhiếp ảnh - Camera sau 48MP, cảm biến TOF sống động
-Pin liền lithium-ion kết hợp cùng công nghệ sạc nhanh cải tiến
-            </p>
-            <p>
-              iPhone 14 Pro Max có sự cải thiện lớn màn hình so với iPhone 13 Pro Max. Sự khác biệt giữ phiên bản iPhone 14 Pro Max 512GB
-               và bản tiêu chuẩn 128GB chỉ là bộ nhớ trong. Dưới đây là một số cải tiến nổi bật trên iPhone 14 Pro Max mà có thể bạn chưa biết!
-            </p>
+            <p>${single.productDetails.information}</p>
           </div>
           <div
             class="tab-pane fade"
@@ -442,22 +413,9 @@ Pin liền lithium-ion kết hợp cùng công nghệ sạc nhanh cải tiến
         </div>
       </div>
     </section>
+    <jsp:include page="footer.jsp"/>
    <script src="<c:url value="/resources/css/js/jquery-3.2.1.min.js"/>"></script>
-    <script src="<c:url value="/resources/css/js/popper.js"/>"></script>
     <script src="<c:url value="/resources/css/js/bootstrap.min.js"/>"></script>
-    <script src="<c:url value="/resources/css/js/stellar.js"/>"></script>
-    <script src="<c:url value="/resources/css/vendors/lightbox/simpleLightbox.min.js"/>"></script>
-    <script src="<c:url value="/resources/css/vendors/nice-select/js/jquery.nice-select.min.js"/>"></script>
-    <script src="<c:url value="/resources/css/vendors/isotope/imagesloaded.pkgd.min.js"/>"></script>
-    <script src="<c:url value="/resources/css/vendors/isotope/isotope-min.js"/>"></script>
-    <script src="<c:url value="/resources/css/vendors/owl-carousel/owl.carousel.min.js"/>"></script>
-    <script src="<c:url value="/resources/css/js/jquery.ajaxchimp.min.js"/>"></script>
-    <script src="<c:url value="/resources/css/js/mail-script.js"/>"></script>
-    <script src="<c:url value="/resources/css/vendors/jquery-ui/jquery-ui.js"/>"></script>
-    <script src="<c:url value="/resources/css/vendors/counter-up/jquery.waypoints.min.js"/>"></script>
-    <script src="<c:url value="/resources/css/vendors/counter-up/jquery.counterup.js"/>"></script>
-    <script src="<c:url value="/resources/css/js/theme.js"/>"></script>
-
 
   </body>
 </html>
