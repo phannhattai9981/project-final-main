@@ -61,6 +61,8 @@ public class AccountEntity implements Serializable {
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<AccountBanking> accountBankings;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<Payment> payments;
 
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     private Cart cart;
@@ -159,5 +161,13 @@ public class AccountEntity implements Serializable {
 
     public void setCart(Cart cart) {
         this.cart = cart;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
     }
 }

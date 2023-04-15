@@ -18,4 +18,6 @@ public interface CartRepository extends CrudRepository<Cart, Integer> {
     void deleteAllById(int id);
     @Query(value = "select * from carts where accountId = ?1", nativeQuery = true)
     Cart findByAccountID(int id);
+
+
 }

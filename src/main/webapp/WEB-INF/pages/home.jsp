@@ -36,12 +36,9 @@
 <body>
 <jsp:include page="header1.jsp"/>
 
-
-
-    <div class="container">
       <div class="row">
         <div class="col-lg-3 col-md-6">
-          <div class="single-feature" >
+          <div class="single-feature">
             <a href="categoryid=${1}page1">
             <img width="54px" src="<c:url value='/resources/css/img/logoDT.PNG'/>"/>
               <h3>Điện Thoại</h3>
@@ -51,7 +48,7 @@
 
         <div class="col-lg-3 col-md-6">
           <div class="single-feature">
-            <a href="categoryid=${4}page1">
+            <a href="categoryid=${2}page1">
             <img src="<c:url value='/resources/css/img/logotablet3.PNG'/>"/>
               <h3>Tablet</h3>
             </a>
@@ -60,7 +57,7 @@
 
         <div class="col-lg-3 col-md-6">
           <div class="single-feature">
-            <a href="categoryid=${2}page1">
+            <a href="categoryid=${3}page1">
             <img style="width: 82px;" src="<c:url value='/resources/css/img/logoLaptop.PNG'/>"/>
               <h3>LapTop&MAC</h3>
             </a>
@@ -69,7 +66,7 @@
 
         <div class="col-lg-3 col-md-6">
           <div class="single-feature">
-            <a href="categoryid=${3}page1">
+            <a href="categoryid=${4}page1">
             <img style="width: 37px;" src="<c:url value='/resources/css/img/logodongho.PNG'/>"/>
               <h3>Đồng Hồ</h3>
             </a>
@@ -78,7 +75,6 @@
       </div>
     </div>
 
-
     <!--------------slide------------->
   <section class="slider">
       <div class="container">
@@ -86,10 +82,10 @@
               <div class="slider-content-left">
                   <div class="slider-content-left-top-container">
                       <div class="slider-content-left-top">
-                          <a href=""><img src="<c:url value='/resources/img/banner/banner-top1.webp'/>" /></a>
-                          <a href=""><img src="<c:url value='/resources/img/banner/banner-top2.webp'/>" /></a>
-                          <a href=""><img src="<c:url value='/resources/img/banner/banner-top3.webp'/>" /></a>
-                          <a href=""><img src="<c:url value='/resources/img/banner/banner-top4.webp'/>" /></a>
+                          <a href="/project-final-main/product/18"><img src="<c:url value='/resources/img/banner/banner-top1.webp'/>" /></a>
+                          <a href="/project-final-main/product/4"><img src="<c:url value='/resources/img/banner/banner-top2.webp'/>" /></a>
+                          <a href="/project-final-main/product/18"><img src="<c:url value='/resources/img/banner/banner-top3.webp'/>" /></a>
+                          <a href="/project-final-main/product/5"><img src="<c:url value='/resources/img/banner/banner-top4.webp'/>" /></a>
                       </div>
                       <div class="slider-content-left-top-btn">
                           <i class="fas fa-chevron-left"></i>
@@ -98,8 +94,8 @@
                   </div>
               </div>
               <div class="slider-content-right">
-                  <li><a href=""><img src="<c:url value='/resources/img/banner/banner-top3.webp'/>" /></a></li>
-                  <li><a href=""><img src="<c:url value='/resources/img/banner/banner-top4.webp'/>" /></a></li>
+                  <li><a href="/project-final-main/product/18"><img src="<c:url value='/resources/img/banner/banner-top3.webp'/>" /></a></li>
+                  <li><a href="/project-final-main/product/5"><img src="<c:url value='/resources/img/banner/banner-top4.webp'/>" /></a></li>
               </div>
           </div>
       </div>
@@ -154,12 +150,14 @@
         </div>
    </section>
   <section class="inspired_product_area section_gap_bottom_custom">
-      <div style="background-color: #3a1369; border-radius: 10px; padding-top: 20px; height: 960px" ;
+      <div style="background-color: #3a1369; border-radius: 10px; padding-top: 20px; height: 965px" ;
           <div class="container">
               <div class="main_title">
                   <div class="img-logohome1">
                       <div class="img-logo1">
-                          <img src="<c:url value='/resources/img/banner/banner1.webp'/>" />
+                          <a href="/project-final-main/product/3">
+                              <img src="<c:url value='/resources/img/banner/banner1.webp'/>" />
+                          </a>
                       </div>
                   </div>
               </div>
@@ -209,12 +207,14 @@
       </div>
   </section>
   <section class="inspired_product_area section_gap_bottom_custom">
-      <div style="background-color: #fedd38; border-radius: 10px; padding-top: 20px; height: 960px" ;
+      <div style="background-color: #fedd38; border-radius: 10px; padding-top: 20px; height: 965px" ;
           <div class="container">
               <div class="main_title">
                   <div class="img-logohome1">
                       <div class="img-logo1">
-                          <img src="<c:url value='/resources/img/banner/banner-tablet.webp'/>" />
+                          <a href="/project-final-main/product/40">
+                              <img src="<c:url value='/resources/img/banner/banner-tablet.webp'/>" />
+                          </a>
                       </div>
                   </div>
               </div>
@@ -227,9 +227,9 @@
                                   <img style="height: 180px" ; class="img-fluid"
                                       src="getProductPhoto/<c:out value='${product.id}'/>" />
                                   <div class="p_icon">
-                                      <a href="product/${product.id}">
-                                           <i class="ti-eye"></i>
-                                      </a>
+                                          <a href="product/${product.id}">
+                                              <i class="ti-eye"></i>
+                                          </a>
                                       <c:if test="${product.quantity != 0}">
                                          <a href="addToCart/${product.id}">
                                               <i class="ti-shopping-cart"></i>
@@ -264,12 +264,14 @@
       </div>
   </section>
   <section class="inspired_product_area section_gap_bottom_custom">
-      <div style="background-color: #b41011; border-radius: 10px; padding-top: 20px; height: 960px" ;
+      <div style="background-color: #b41011; border-radius: 10px; padding-top: 20px; height: 965px" ;
           <div class="container">
               <div class="main_title">
                   <div class="img-logohome1">
                       <div class="img-logo1">
-                          <img style="height: 110px"; src="<c:url value='/resources/img/banner/banner-lap.png'/>" />
+                          <a href="/project-final-main/product/56">
+                              <img style="height: 110px"; src="<c:url value='/resources/img/banner/banner-lap.png'/>" />
+                          </a>
                       </div>
                   </div>
               </div>
@@ -319,12 +321,14 @@
       </div>
   </section>
   <section class="inspired_product_area section_gap_bottom_custom">
-      <div style="background-color: #99c2bf; border-radius: 10px; padding-top: 20px; height: 960px" ;
+      <div style="background-color: #99c2bf; border-radius: 10px; padding-top: 20px; height: 965px" ;
           <div class="container">
               <div class="main_title">
                   <div class="img-logohome1">
                       <div class="img-logo1">
-                          <img style="height: 110px"; src="<c:url value='/resources/img/banner/banner-dong-ho.jpg'/>" />
+                          <a href="/project-final-main/product/63">
+                              <img style="height: 110px"; src="<c:url value='/resources/img/banner/banner-dong-ho.jpg'/>" />
+                          </a>
                       </div>
                   </div>
               </div>
@@ -373,7 +377,7 @@
           </div>
       </div>
   </section>
-    <jsp:include page="footer.jsp"/>
+<jsp:include page="footer.jsp"/>
     <script src="<c:url value="/resources/css/js/jquery-3.2.1.min.js"/>"></script>
         <script src="<c:url value="/resources/css/js/popper.js"/>"></script>
         <script src="<c:url value="/resources/css/js/bootstrap.min.js"/>"></script>

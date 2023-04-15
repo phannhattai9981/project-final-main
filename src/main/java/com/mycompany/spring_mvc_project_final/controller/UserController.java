@@ -2,13 +2,9 @@ package com.mycompany.spring_mvc_project_final.controller;
 
 
 import com.mycompany.spring_mvc_project_final.entities.*;
-import com.mycompany.spring_mvc_project_final.repository.OrderDetailRepository;
-import com.mycompany.spring_mvc_project_final.repository.OrderRepository;
 import com.mycompany.spring_mvc_project_final.service.*;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +19,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import static com.mycompany.spring_mvc_project_final.enums.OrderStatus.CANCEL;
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -56,6 +49,8 @@ public class UserController {
     OrderDetailService orderDetailService;
 
 
+                                ///////// THÔNG TIN NGƯỜI DÙNG//////////
+
     @GetMapping("/account_InfoView")
     public String viewInfoView(Model model, HttpSession session,RedirectAttributes redirectAttributes){
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
@@ -75,6 +70,60 @@ public class UserController {
         InputStream inputStream = new ByteArrayInputStream(ph);
         IOUtils.copy(inputStream, response.getOutputStream());
     }
+    @RequestMapping(value = "/update/avatar", method = POST)
+    public @ResponseBody String updateAvatar(HttpSession session,
+                                             @RequestParam("image")MultipartFile file) throws IOException {
+        AccountEntity editProfile = (AccountEntity) session.getAttribute("account");
+        editProfile.setAvatar(file.getBytes());
+        accountService.save(editProfile);
+        return "success";
+    }
+
+    @RequestMapping(value = "update/profile{id}",method = GET)
+    public String showEditProfile(@PathVariable int id, Model model, HttpSession session){
+        AccountEntity editProfile = (AccountEntity) session.getAttribute("account");
+        model.addAttribute("editProfile",editProfile);
+
+        return "profile";
+    }
+
+    @RequestMapping(value = "update/updateProfile", method = POST,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, "text/plain;charset=UTF-8"} )
+    public String save (@RequestParam("id") int id, Model model,
+                        @RequestParam("fullName") String name,
+//                        @RequestPart("photo") MultipartFile photo,
+                        @RequestParam("phone") String phone,
+                        @RequestParam("email") String email, HttpSession session,
+                        RedirectAttributes redirectAttributes) throws IOException {
+        AccountEntity account = accountService.findById(id);
+        account.setFullName(name);
+        account.setPhone(phone);
+        session.setAttribute("account", account);
+        accountService.save(account);
+//        model.addAttribute("editProfile", account);
+//        model.addAttribute("type", "update");
+        redirectAttributes.addFlashAttribute("account", account);
+        redirectAttributes.addFlashAttribute("type", "update");
+
+        return "redirect:/user/account_InfoView";
+    }
+    @RequestMapping(value = "/update/getPhotoAccount/{id}")
+    public void getStudentPhotos(HttpServletResponse response, @PathVariable("id") int id) throws Exception {
+        response.setContentType("image/jpeg");
+
+        AccountEntity p = accountService.findById(id);
+        byte[] ph = p.getAvatar();
+        InputStream inputStream = new ByteArrayInputStream(ph);
+        IOUtils.copy(inputStream, response.getOutputStream());
+    }
+
+
+
+
+
+
+                                     //////// BANKING////////
     @RequestMapping(value = "/addBanking",method = GET,produces = "text/plain;charset=UTF-8")
     public String showNewBanking(Model model){
         model.addAttribute("accountBanking", new AccountBanking());
@@ -113,14 +162,26 @@ public class UserController {
         model.addAttribute("showAccountBanking",showAccountBanking);
         return "showBanking";
     }
+
     @GetMapping("/removeBanking{id}")
-  public String deteleBanking(@PathVariable int id,Model model,HttpSession session){
-        accountBankingService.deleteById(id);
-        return "redirect:/user/showAccountBanking";
+  public ModelAndView deteleBanking(@PathVariable int id, Model model, HttpSession session, RedirectAttributes redirectAttributes){
+
+        try{
+            accountBankingService.deleteById(id);
+            redirectAttributes.addFlashAttribute("message", " Xóa thành công");
+            return new ModelAndView("redirect:/user/showAccountBanking");
+        }
+       catch (Exception e){
+           redirectAttributes.addFlashAttribute("message", "Xoá thất bại do thẻ đang được sử dụng để mua hàng");
+           return new ModelAndView("redirect:/user/showAccountBanking");
+       }
 
 
 
     }
+
+
+                                 /////// ĐƠN HÀNG //////////
     @GetMapping("/orderList")
     public String viewOrderList(Model model, HttpSession session){
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
@@ -147,12 +208,11 @@ public class UserController {
         order.setStatus(CANCEL);
         orderService.save(order);
         // payment tim id order
-        Payment payment = paymentService.findByOrderId(id);
+        AccountBanking accountBanking = accountBankingService.getAccountBankingByAccount_Id(accountEntity.getId());
 
         // check payment where banking_id nếu có
         // thanh toán = card
-        if(payment.getAccountBanking() != null) {
-            AccountBanking accountBanking = accountBankingService.getAccountBankingByAccount_Id(accountEntity.getId());
+        if(accountBanking != null) {
             accountBanking.setBalance(accountBanking.getBalance() + order.getTotal());
             accountBankingService.save(accountBanking);
 
@@ -177,44 +237,10 @@ public class UserController {
         return "orderlist";
     }
 
-    @RequestMapping(value = "/update/avatar", method = POST)
-    public @ResponseBody String updateAvatar(HttpSession session,
-                               @RequestParam("image")MultipartFile file) throws IOException {
-        AccountEntity editProfile = (AccountEntity) session.getAttribute("account");
-        editProfile.setAvatar(file.getBytes());
-        accountService.save(editProfile);
-        return "success";
-    }
 
-    @RequestMapping(value = "update/profile{id}",method = GET)
-    public String showEditProfile(@PathVariable int id, Model model, HttpSession session){
-        AccountEntity editProfile = (AccountEntity) session.getAttribute("account");
-        model.addAttribute("editProfile",editProfile);
 
-        return "profile";
-    }
 
-    @RequestMapping(value = "update/updateProfile", method = POST,
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-            produces = {MediaType.APPLICATION_JSON_UTF8_VALUE, "text/plain;charset=UTF-8"} )
-    public String save (@RequestParam("id") int id, Model model,
-                        @RequestParam("fullName") String name,
-//                        @RequestPart("photo") MultipartFile photo,
-                        @RequestParam("phone") String phone,
-                        @RequestParam("email") String email, HttpSession session,
-                        RedirectAttributes redirectAttributes) throws IOException {
-        AccountEntity account = accountService.findById(id);
-        account.setFullName(name);
-        account.setPhone(phone);
-        session.setAttribute("account", account);
-        accountService.save(account);
-//        model.addAttribute("editProfile", account);
-//        model.addAttribute("type", "update");
-        redirectAttributes.addFlashAttribute("account", account);
-        redirectAttributes.addFlashAttribute("type", "update");
 
-        return "redirect:/user/account_InfoView";
-    }
 
     public double calculateTotal(List<OrderDetail> orderDetails) {
         double total = 0;

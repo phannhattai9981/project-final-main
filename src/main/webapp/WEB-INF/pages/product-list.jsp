@@ -45,7 +45,7 @@
               <div  class="col-lg-3 col-md-6">
                 <div class="single-product">
                   <div class="product-img">
-                    <img style="object-fit: cover; width: 100%;height: 60%;" class="img-fluid" src="./getProductPhoto/<c:out value='${list.id}'/>"/>
+                    <img style="object-fit: cover; width: 100%;height: 70%;" class="img-fluid" src="./getProductPhoto/<c:out value='${list.id}'/>"/>
                     <div class="p_icon">
                       <a href="./product/${list.id}">
                         <i class="ti-eye"></i>

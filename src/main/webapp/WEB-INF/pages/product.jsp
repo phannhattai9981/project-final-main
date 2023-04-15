@@ -116,13 +116,21 @@
                   <p>
                     ${single.description}
                   </p>
+                  <c:if test="${single.quantity != 0}">
                   <div class="product_count">
                     <label for="qty">Tồn kho</label>
                       <h3>${single.quantity}</h3>
+                  </c:if>
+                   <c:if test="${single.quantity == 0}">
+                     <div class="product_count">
+                        <h3>Hết hàng</h3>
+                    </c:if>
                   </div>
-                  <div class="card_area">
-                    <a class="main_btn" href="../addToCart/${single.id}">Thêm Vào Giỏ <i class="fa-solid fa-cart-plus"></i></a>
-                  </div>
+                   <c:if test="${single.quantity != 0}">
+                        <div class="card_area">
+                            <a class="main_btn" href="../addToCart/${single.id}">Thêm Vào Giỏ <i class="fa-solid fa-cart-plus"></i></a>
+                        </div>
+                    </c:if>
                 </div>
               </div>
             </div>

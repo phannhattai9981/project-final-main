@@ -33,9 +33,6 @@ public class AccountBanking {
     @JoinColumn(name = "accountId")
     private AccountEntity account;
 
-    @OneToMany(mappedBy = "accountBanking", cascade = CascadeType.ALL)
-    private List<Payment> payments;
-
     public AccountBanking() {
     }
 
@@ -93,14 +90,6 @@ public class AccountBanking {
 
     public void setAccount(AccountEntity account) {
         this.account = account;
-    }
-
-    public List<Payment> getPayments() {
-        return payments;
-    }
-
-    public void setPayments(List<Payment> payments) {
-        this.payments = payments;
     }
 
 

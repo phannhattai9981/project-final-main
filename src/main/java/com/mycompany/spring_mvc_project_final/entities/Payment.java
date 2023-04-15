@@ -20,8 +20,8 @@ public class Payment {
     private Date payment_date;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "accountBankingId")
-    private AccountBanking accountBanking;
+    @JoinColumn(name = "accountId")
+    private AccountEntity account;
 
     @OneToOne
     private Order order;
@@ -53,12 +53,12 @@ public class Payment {
         this.payment_date = payment_date;
     }
 
-    public AccountBanking getAccountBanking() {
-        return accountBanking;
+    public AccountEntity getAccount() {
+        return account;
     }
 
-    public void setAccountBanking(AccountBanking accountBanking) {
-        this.accountBanking = accountBanking;
+    public void setAccount(AccountEntity account) {
+        this.account = account;
     }
 
     public Order getOrder() {

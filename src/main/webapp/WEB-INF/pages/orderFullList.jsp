@@ -89,10 +89,10 @@
                                                         </c:choose>
                                                     </th>
                                                        <th scope="row" style="padding-top:5px;">
-                                                        <c:if test="${not empty order.payment.accountBanking}">
+                                                        <c:if test="${not empty order.payment.account}">
                                                              Đã thanh toán
                                                          </c:if>
-                                                         <c:if test="${empty order.payment.accountBanking}">
+                                                         <c:if test="${empty order.payment.account}">
                                                              <fmt:formatNumber value="${order.payment.amount}" pattern="#,##0" />
                                                          </c:if>
                                                      <th>
@@ -110,6 +110,7 @@
                                                             <a class="btn btn-sm btn-danger" href="#modalDelete${order.id}"
                                                                 class="trigger-btn" data-toggle="modal" data-id="${order.id}?">Hủy Đơn</a>
                                                         </c:if>
+
                                                       </th>
 
                                                         <div id="modalDelete${order.id}" class="modal fade">
@@ -124,14 +125,13 @@
                                                                             aria-hidden="true">&times;</button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <p>Bạn Muốn Hủy Đơn à
-                                                                            "${order.customerName}" Chắc Chưa ?</p>
+                                                                        <p>Bạn Muốn Hủy Đơn à?</p>
                                                                     </div>
                                                                     <div class="modal-footer justify-content-center">
                                                                         <button type="button" class="btn btn-secondary"
-                                                                            data-dismiss="modal">Giỡn Đó</button>
+                                                                            data-dismiss="modal">Không</button>
                                                                         <button type="button" class="btn btn-danger"
-                                                                            onclick="location.href='detele1ListFullOrder${order.id}'">Chắc Rồi</button>
+                                                                            onclick="location.href='detele1ListFullOrder${order.id}'">Đúng</button>
                                                                     </div>
                                                                 </div>
                                                             </div>

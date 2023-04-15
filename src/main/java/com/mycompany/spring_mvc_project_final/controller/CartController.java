@@ -188,7 +188,7 @@ public class CartController {
                 // Tạo mới payment
                 Payment payment = new Payment();
                 payment.setOrder(order);
-                payment.setAccountBanking(accountBanking);
+                payment.setAccount(account);
                 payment.setPayment_date(new Date());
                 payment.setAmount(totalPrice);
                 paymentService.save(payment);
@@ -274,6 +274,13 @@ public class CartController {
 
 
         return "success";
+    }
+
+
+    @RequestMapping(value = "/updateCartItem/{id}", method = RequestMethod.POST)
+    public String updateCartItem(@PathVariable Integer id, @RequestParam int quantity) {
+        cartItemService.updateCartItem(id, quantity);
+        return "redirect:/cart";
     }
 
     public void sendEmail(String to, String subject, String body) {

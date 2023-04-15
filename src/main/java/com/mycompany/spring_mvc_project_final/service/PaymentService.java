@@ -22,7 +22,7 @@ public class PaymentService {
         return paymentRepository.findByOrderId(id);
     }
 
-//    public List<Payment> findByAccountId(int id) {
-//        return paymentRepository.findByAccountId(id);
-//    }
+    public void deleteById(int id) {
+        paymentRepository.deleteById(id);
+    }
 }

@@ -26,7 +26,7 @@
                 <div class="social-container">
 
                 </div>
-                <span>vui lòng sửa dụng e-mail để đăng kí</span>
+                <span>vui lòng sử dụng e-mail để đăng ký</span>
                 <input type="fullName" placeholder="Tên" name="fullName" />
                 <input type="email" placeholder="E-mail" name="email" />
                 <input type="text" placeholder="Số điện thoại" name="phone" />

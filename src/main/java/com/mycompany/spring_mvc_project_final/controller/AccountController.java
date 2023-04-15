@@ -47,6 +47,8 @@ public class AccountController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+   PaymentService paymentService;
 
 
     // trang quản lý thông tin cá nhân của admin//
@@ -185,16 +187,31 @@ public class AccountController {
 
     // SHIPER GIAO THÀNH CÔNG
     @GetMapping("/successful{id}")
-    public String shiper(@PathVariable int id, Model model) {
+    public String shipper(@PathVariable int id, Model model) {
         Order order = orderService.findById(id);
-        if (!(order == null)) {
+        if (order != null) {
             order.setStatus(SUCCESSFULL);
             orderService.save(order);
-        }
+            int ids = paymentService.findByOrderId(order.getId()).getId();
+            paymentService.deleteById(ids);
+            }
         List<Order> orderFullList = (List<Order>) orderService.findAll();
         model.addAttribute("orderFullList", orderFullList);
+
         return "orderFullList";
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     //CHI TIẾT ĐƠN HÀNG
     @GetMapping("/orderListDetaile{id}")

@@ -36,7 +36,11 @@
 					<div class="container">
 						<div class="row justify-content-center">
 							<div class="col-md-6 text-center mb-4">
+
 								<h2 class="heading-section">  TP TECHNOLOGY  </h2>
+								<c:if test="${not empty message}">
+                                    <p style="color: red">${message}</p>
+                                 </c:if>
 							</div>
 						</div>
 						<div class="row">
@@ -79,19 +83,19 @@
                                                                         <div class="icon-box">
                                                                             <i class="fal fa-times">&#128557;</i>
                                                                         </div>
-                                                                            <h4 class="modal-title w-100">Hủy Đơn ?</h4>
+                                                                            <h4 class="modal-title w-100">Xóa thẻ ?</h4>
                                                                         <button type="button" class="close" data-dismiss="modal"
                                                                             aria-hidden="true">&times;</button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <p>Bạn Muốn Hủy Đơn à
-                                                                            "${showAccountBanking.id}" Chắc Chưa ?</p>
+                                                                        <p>Bạn Muốn xóa thẻ
+                                                                            "${showAccountBanking.fullName}" ?</p>
                                                                     </div>
                                                                     <div class="modal-footer justify-content-center">
                                                                         <button type="button" class="btn btn-secondary"
-                                                                            data-dismiss="modal">Giỡn Đó</button>
+                                                                            data-dismiss="modal">Không</button>
                                                                         <button type="button" class="btn btn-danger"
-                                                                            onclick="location.href='removeBanking${showAccountBanking.id}'">Chắc Rồi</button>
+                                                                            onclick="location.href='removeBanking${showAccountBanking.id}'">Đúng</button>
                                                                     </div>
                                                                 </div>
                                                             </div>

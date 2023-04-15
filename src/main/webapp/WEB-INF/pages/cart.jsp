@@ -47,7 +47,7 @@
 
 </head>
   <body>
-
+<jsp:include page="header.jsp"/>
     <section class="banner_area1">
       <div class="container">
         <div class="banner_content d-md-flex justify-content-between align-items-center">
@@ -76,48 +76,45 @@
               </thead>
                   <tbody>
                       <c:forEach var="cartItem" items="${cartItem}" varStatus="index">
-                        <tr>
-                          <td>
-                            <div class="media">
-                              <div class="d-col col-lg-3">
-                                <img  class="img-fluid" src="./getProductPhoto/<c:out value='${cartItem.product.id}'/>"/>
-                              </div>
-                              <div class="media-body">
-                               <a href="product/${cartItem.product.id}">
-                                <p>${cartItem.product.name}</p>
-                               </a>
-                              </div>
-                            </div>
+                         <form action="updateCartItem/${cartItem.id}" method="post">
+                            <tr>
+                              <td>
+                                <div class="media">
+                                  <div class="d-col col-lg-3">
+                                    <img  class="img-fluid" src="./getProductPhoto/<c:out value='${cartItem.product.id}'/>"/>
+                                  </div>
+                                  <div class="media-body">
+                                   <a href="product/${cartItem.product.id}" style="color: black">
+                                    <p>${cartItem.product.name}</p>
+                                   </a>
+                                  </div>
+                                </div>
 
-                          </td>
-                          <td>
-                            <h5><fmt:formatNumber value="${cartItem.product.price}" pattern="#,##0" /></h5>
-                          </td>
-                          <td>
-                            <div class="product_count">
-                              <input
-                                type="text"
-                                name="qty"
-                                id="sst"
-                                maxlength="4"
-                                value="${cartItem.quantity}"
-                                title="Quantity:"
-                                class="input-text qty"
-                                readonly
-                              />
+                              </td>
+                              <td>
+                                <h5><fmt:formatNumber value="${cartItem.product.price}" pattern="#,##0" /></h5>
+                              </td>
 
-                              </button>
-                            </div>
-                          </td>
-                          <td>
-                            <h5><fmt:formatNumber value="${cartItem.product.price*cartItem.quantity}" pattern="#,##0" /></h2></h5>
-                          </td>
-                          <td>
-                            <div class="cupon_text">
-                                <a class="main_btn" href="delete/${cartItem.id}">Loại bỏ</a>
-                            </div>
-                          </td>
-                        </tr>
+                              <td>
+                                <div class="product_count">
+                                  <input
+                                    type="number"
+                                    name="quantity"
+                                    min="1"
+                                    value="${cartItem.quantity}"
+                                    onchange="this.form.submit()"/>
+                                </div>
+                              </td>
+                              <td>
+                                <h5><fmt:formatNumber value="${cartItem.product.price*cartItem.quantity}" pattern="#,##0" /></h2></h5>
+                              </td>
+                              <td>
+                                <div class="cupon_text">
+                                    <a class="main_btn" href="delete/${cartItem.id}">Loại bỏ</a>
+                                </div>
+                              </td>
+                            </tr>
+                         </form>
                       </c:forEach>
                         <tr>
                           <td></td>
@@ -136,9 +133,11 @@
                           <td>
                             <div class="checkout_btn_inner">
                               <div class="continuer">
-                                  <a class="gray_btn" href="/project-final-main" style="display: inline-block;">Chọn Thêm Sản Phẩm Khác</a>
-                                  <a class="btn btn-info" style="color: white; display: inline-block;" href="#checkOut" class="trigger-btn" data-toggle="modal">Chọn phương thức thanh toán</a>
-                              </div>
+                                <a class="gray_btn" href="/project-final-main">Chọn Thêm Sản Phẩm Khác</a>
+
+                                    <a class="btn btn-info" style="color: white;" href="#checkOut" class="trigger-btn"
+                                        data-toggle="modal">Chọn phương thức thanh toán</a>
+
                                     <div class="modal fade" id="checkOut">
                                         <div class="modal-dialog">
                                             <div class="modal-content">

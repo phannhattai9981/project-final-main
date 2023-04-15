@@ -51,5 +51,11 @@ public class CartItemService {
     public List<CartItem> findAllByCartId(int id) { return cartItemRepository.findByCartId(id);
     }
 
+    public CartItem updateCartItem(int id, int quantity) {
+        CartItem item = cartItemRepository.findById(id);
+        item.setQuantity(quantity);
+        cartItemRepository.save(item);
+        return item;
+    }
 }
 

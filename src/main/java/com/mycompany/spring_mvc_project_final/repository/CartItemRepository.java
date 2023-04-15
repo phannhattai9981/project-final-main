@@ -21,5 +21,5 @@ public interface CartItemRepository extends CrudRepository<CartItem, Integer> {
     List<CartItem> getAllCartItem();
 
 
-
+    CartItem findById(int id);
 }

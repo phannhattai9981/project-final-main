@@ -85,13 +85,12 @@
                                                                 </c:choose>
                                                             </th>
                                                     <th scope="row" style="padding-top:5px;">
-                                                    <c:if test="${not empty ordersList.payment.accountBanking}">
-                                                         Đã thanh toán
+                                                     <c:if test="${ empty ordersList.payment.account}">
+                                                      <fmt:formatNumber value="${ordersList.payment.amount}" pattern="#,##0" />
                                                      </c:if>
-                                                     <c:if test="${empty ordersList.payment.accountBanking}">
-                                                         <fmt:formatNumber value="${ordersList.payment.amount}" pattern="#,##0" />
-                                                     </c:if>
-
+                                                 <c:if test="${not empty ordersList.payment.account}">
+                                                   Đã thanh toán
+                                                 </c:if>
                                                      <td>
                                                             <button class="btn btn-sm btn-primary"
                                                                 onclick="location.href='orderdetaile/${ordersList.id}'">Chi Tiết Đơn Hàng</button>

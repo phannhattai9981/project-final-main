@@ -1,6 +1,7 @@
 package com.mycompany.spring_mvc_project_final.repository;
 
 import com.mycompany.spring_mvc_project_final.entities.OrderDetail;
+import com.mycompany.spring_mvc_project_final.entities.Payment;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,6 @@ public interface OrderDetailRepository extends CrudRepository<OrderDetail, Integ
 
     @Query(value ="SELECT od.* FROM orderdetails od JOIN orders o ON od.orderid = o.id WHERE o.status = 'SUCCESSFULL'",nativeQuery = true)
     List<OrderDetail> findSuccessfulOrderDetails();
-
 
 
 }

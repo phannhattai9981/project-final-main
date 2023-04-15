@@ -25,4 +25,9 @@ public class OrderDetailService {
     public List<OrderDetail> findSuccessfulOrderDetails() {
         return (List<OrderDetail>) orderDetailRepository.findSuccessfulOrderDetails();
     }
+
+    public void deletebyId(int id) {
+        orderDetailRepository.deleteById(id);
+    }
+
 }
