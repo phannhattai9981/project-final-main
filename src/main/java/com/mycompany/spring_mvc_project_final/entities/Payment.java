@@ -1,5 +1,7 @@
 package com.mycompany.spring_mvc_project_final.entities;
 
+import com.mycompany.spring_mvc_project_final.enums.PaymentMethod;
+import com.mycompany.spring_mvc_project_final.enums.UserStatus;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,6 +18,9 @@ public class Payment {
     @Column(name = "amount")
     private double amount;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
     @Column(name = "payment_date")
     private Date payment_date;
 
@@ -55,6 +60,14 @@ public class Payment {
 
     public AccountEntity getAccount() {
         return account;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
     public void setAccount(AccountEntity account) {

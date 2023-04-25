@@ -2,6 +2,7 @@ package com.mycompany.spring_mvc_project_final.controller;
 
 
 import com.mycompany.spring_mvc_project_final.entities.*;
+import com.mycompany.spring_mvc_project_final.enums.PaymentMethod;
 import com.mycompany.spring_mvc_project_final.service.*;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class UserController {
     OrderDetailService orderDetailService;
 
 
-                                ///////// THÔNG TIN NGƯỜI DÙNG//////////
+    ///////// THÔNG TIN NGƯỜI DÙNG//////////
 
     @GetMapping("/account_InfoView")
     public String viewInfoView(Model model, HttpSession session,RedirectAttributes redirectAttributes){
@@ -83,7 +84,6 @@ public class UserController {
     public String showEditProfile(@PathVariable int id, Model model, HttpSession session){
         AccountEntity editProfile = (AccountEntity) session.getAttribute("account");
         model.addAttribute("editProfile",editProfile);
-
         return "profile";
     }
 
@@ -123,7 +123,7 @@ public class UserController {
 
 
 
-                                     //////// BANKING////////
+    //////// BANKING////////
     @RequestMapping(value = "/addBanking",method = GET,produces = "text/plain;charset=UTF-8")
     public String showNewBanking(Model model){
         model.addAttribute("accountBanking", new AccountBanking());
@@ -132,7 +132,7 @@ public class UserController {
     @RequestMapping(value = "/addBanking",method = RequestMethod.POST,produces = "text/plain;charset=UTF-8")
     public String saveBanking(@ModelAttribute("accountBanking") AccountBanking accountBanking,
                               @RequestParam("fullName") String fullName,
-                              @RequestParam("cardNumber") int cardNumber,
+                              @RequestParam("cardNumber") String cardNumber,
                               @RequestParam("balance") double balance,
                               @RequestParam("cvc") int cvc, Model model, HttpSession session,RedirectAttributes redirectAttributes) {
         accountBanking.setFullName(fullName);
@@ -149,7 +149,15 @@ public class UserController {
 
         return "redirect:/user/account_InfoView";
 
+
     }
+
+
+
+
+
+
+
     @GetMapping("/showAccountBanking")
     public String showAccountsBanking(Model model,HttpSession session) {
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
@@ -164,29 +172,28 @@ public class UserController {
     }
 
     @GetMapping("/removeBanking{id}")
-  public ModelAndView deteleBanking(@PathVariable int id, Model model, HttpSession session, RedirectAttributes redirectAttributes){
+    public ModelAndView deteleBanking(@PathVariable int id, Model model, HttpSession session, RedirectAttributes redirectAttributes){
 
         try{
             accountBankingService.deleteById(id);
             redirectAttributes.addFlashAttribute("message", " Xóa thành công");
             return new ModelAndView("redirect:/user/showAccountBanking");
         }
-       catch (Exception e){
-           redirectAttributes.addFlashAttribute("message", "Xoá thất bại do thẻ đang được sử dụng để mua hàng");
-           return new ModelAndView("redirect:/user/showAccountBanking");
-       }
+        catch (Exception e){
+            redirectAttributes.addFlashAttribute("message", "Xoá thất bại do thẻ đang được sử dụng để mua hàng");
+            return new ModelAndView("redirect:/user/showAccountBanking");
+        }
 
 
 
     }
 
 
-                                 /////// ĐƠN HÀNG //////////
+    /////// ĐƠN HÀNG //////////
     @GetMapping("/orderList")
     public String viewOrderList(Model model, HttpSession session){
         AccountEntity accountEntity = (AccountEntity) session.getAttribute("account");
         List<Order> ordersList = orderService.findByAccountId(accountEntity.getId());
-
         model.addAttribute("ordersList",ordersList);
         return "orderlist";
     }
@@ -208,11 +215,10 @@ public class UserController {
         order.setStatus(CANCEL);
         orderService.save(order);
         // payment tim id order
-        AccountBanking accountBanking = accountBankingService.getAccountBankingByAccount_Id(accountEntity.getId());
 
-        // check payment where banking_id nếu có
         // thanh toán = card
-        if(accountBanking != null) {
+        if(order.getPayment().getPaymentMethod() == PaymentMethod.COD) {
+            AccountBanking accountBanking = accountBankingService.getAccountBankingByAccount_Id(accountEntity.getId());
             accountBanking.setBalance(accountBanking.getBalance() + order.getTotal());
             accountBankingService.save(accountBanking);
 

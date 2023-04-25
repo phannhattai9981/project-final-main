@@ -43,6 +43,7 @@ public class Product {
     @Column (name = "quantity")
     private int quantity;
 
+
     @Column (name = "description",length = 5000)
     private String description;
 
@@ -62,6 +63,17 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<OrderDetail> orderDetails;
+
+    @Column(name = "love")
+    private int love;
+
+    public int getLove() {
+        return love;
+    }
+
+    public void setLove(int love) {
+        this.love = love;
+    }
 
     public int getId() {
         return id;

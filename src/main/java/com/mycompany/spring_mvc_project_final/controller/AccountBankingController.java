@@ -25,15 +25,16 @@ public class AccountBankingController {
     @Autowired
     AccountService accountService;
 
-    @RequestMapping(value = "/addBankingCart",method = RequestMethod.GET,produces = "text/plain;charset=UTF-8")
-    public String showNewBanking(Model model){
+    @RequestMapping(value = "/addBankingCart", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
+    public String showNewBanking(Model model) {
         model.addAttribute("accountBanking", new AccountBanking());
         return "bankingCart";
     }
+
     @RequestMapping(value = "/addBankingCart",method = RequestMethod.POST,produces = "text/plain;charset=UTF-8")
     public String saveBanking(@ModelAttribute("accountBanking") AccountBanking accountBanking,
                               @RequestParam("fullName") String fullName,
-                              @RequestParam("cardNumber") int cardNumber,
+                              @RequestParam("cardNumber") String cardNumber,
                               @RequestParam("balance") double balance,
                               @RequestParam("cvc") int cvc, Model model, HttpSession session) {
         accountBanking.setFullName(fullName);
@@ -45,5 +46,4 @@ public class AccountBankingController {
         accountBankingService.save(accountBanking);
         return "redirect:/cart";
     }
-
 }

@@ -35,7 +35,8 @@
 
 <body>
 <jsp:include page="header1.jsp"/>
-
+  <section class="feature-area section_gap_bottom_custom">
+    <div class="container">
       <div class="row">
         <div class="col-lg-3 col-md-6">
           <div class="single-feature">
@@ -74,8 +75,7 @@
         </div>
       </div>
     </div>
-
-    <!--------------slide------------->
+  </section>
   <section class="slider">
       <div class="container">
           <div class="slider-content">
@@ -123,6 +123,9 @@
                                                 <i class="ti-shopping-cart"></i>
                                            </a>
                                        </c:if>
+                                        <a href="addLike/${product.id}">
+                                           <i class="ti-shopping-cart"></i>
+                                      </a>
                                     </div>
                                 </div>
                                 <div style="height: 130px;object-fit: cover" ; class="product-btm">
@@ -178,6 +181,9 @@
                                               <i class="ti-shopping-cart"></i>
                                          </a>
                                       </c:if>
+                                       <a href="addLike/${product.id}">
+                                          <i class="ti-shopping-cart"></i>
+                                     </a>
                                   </div>
                               </div>
                               <div style="height: 130px;object-fit: cover" ; class="product-btm">
@@ -235,6 +241,9 @@
                                               <i class="ti-shopping-cart"></i>
                                          </a>
                                       </c:if>
+                                       <a href="addLike/${product.id}">
+                                            <i class="ti-shopping-cart"></i>
+                                       </a>
                                   </div>
                               </div>
                               <div style="height: 130px;object-fit: cover" ; class="product-btm">
@@ -394,6 +403,5 @@
         <script src="<c:url value="/resources/css/vendors/counter-up/jquery.counterup.js"/>"></script>
         <script src="<c:url value="/resources/css/js/theme.js"/>"></script>
         <script src="<c:url value="/resources/css/js/slidehome.js"/>"></script>
-
 </body>
 </html>

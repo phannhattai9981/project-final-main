@@ -45,7 +45,7 @@
                 			<div class="btn">
                 				<p>Số dư hiện tại của bạn</p>
                 				<c:forEach var="accountBanking" items="${accountBanking}">
-                					<td>${accountBanking.balance}</td>
+                					<td><fmt:formatNumber value="${accountBanking.balance}" pattern="#,##0" /></td>
 
                 				  <td>
                 				</c:forEach>

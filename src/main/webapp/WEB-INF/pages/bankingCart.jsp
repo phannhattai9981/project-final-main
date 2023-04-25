@@ -31,6 +31,9 @@
             <div class="card box1 shadow-sm p-md-5 p-md-5 p-4">
                 <div class="fw-bolder mb-4"><span class="fas fa-dollar-sign"></span><span class="ps-1">
                         <h3>TP TECHNOLOGY</h3>
+                         <c:if test="${message != null && message != ''}">
+                                        <p style="color: red">${message}</p>
+                                    </c:if>
                     </span></div>
                 <div class="d-flex flex-column">
                     <div class="d-flex align-items-center justify-content-between text"> <span class=""></span>
@@ -61,8 +64,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="d-flex flex-column px-md-5 px-4 mb-4"> <span>Số Thẻ</span>
-                            <div class="inputWithIcon"> <input name="cardNumber" class="form-control" type="number"
-                                    value="5136 1845 5468 3894"> <span class=""> <img
+                            <div class="inputWithIcon"> <input name="cardNumber" class="form-control" type="text" maxlength=“10”
+                                    required> <span class=""> <img
                                         src="https://www.freepnglogos.com/uploads/mastercard-png/mastercard-logo-logok-15.png"
                                         alt=""></span> </div>
                         </div>
@@ -78,16 +81,16 @@
                     </div>
                     <div class="col-md-6" style="max-width: 40%">
                         <div class="d-flex flex-column pe-md-5 px-md-0 px-4 mb-4"> <span>Code CVV</span>
-                            <div class="inputWithIcon"> <input name="cvc" type="password" class="form-control"> </div>
+                            <div class="inputWithIcon"> <input name="cvc" type="password" class="form-control" required> </div>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="d-flex flex-column px-md-5 px-4 mb-4"> <span>Tên </span>
-                            <div class="inputWithIcon"> <input name="fullName" class="form-control text-uppercase" type="text">  </div>
+                            <div class="inputWithIcon"> <input name="fullName" class="form-control text-uppercase" type="text" required>  </div>
                         </div>
                     </div>
                     <div class="col-12 px-md-5 px-4 mt-3" style="margin-left: 15px"> <span>Số dư</span>
-                       <div class="inputWithIcon"> <input name="balance" class="form-control" style="max-width: 96%"
+                       <div class="inputWithIcon"> <input name="balance" class="form-control" style="max-width: 96%" required
                                type="text">
                            <span style="margin-right: 30px"><h5>$</h5></span>
 

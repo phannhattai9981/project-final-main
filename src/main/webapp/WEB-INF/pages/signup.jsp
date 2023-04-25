@@ -27,11 +27,11 @@
 
                 </div>
                 <span>vui lòng sử dụng e-mail để đăng ký</span>
-                <input type="fullName" placeholder="Tên" name="fullName" />
-                <input type="email" placeholder="E-mail" name="email" />
-                <input type="text" placeholder="Số điện thoại" name="phone" />
-                <input type="password" placeholder="Mật khẩu" name="password" />
-                <input type="password" placeholder="Nhập lại mật khẩu" name="password_two" />
+                <input type="fullName" placeholder="Tên" name="fullName" required />
+                <input type="email" placeholder="E-mail" name="email" required />
+                <input type="text" placeholder="Số điện thoại" name="phone"  required/>
+                <input type="password" placeholder="Mật khẩu" name="password" required />
+                <input type="password" placeholder="Nhập lại mật khẩu" name="password_two" required />
                 <button>Đăng Ký</button>
             </form>
         </div>
@@ -44,8 +44,8 @@
             <div class="social-container">
 
             </div>
-            <input type="email" placeholder="E- mail" name="username"/>
-            <input type="password" placeholder="Mật khẩu" name="password" />
+            <input type="email" placeholder="E- mail" name="username" required/>
+            <input type="password" placeholder="Mật khẩu" name="password" required  />
 
             <button  type="submit" value="Sign in" > Đăng Nhập</button>
             </form>

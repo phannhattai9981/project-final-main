@@ -67,6 +67,7 @@ public class AccountEntity implements Serializable {
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     private Cart cart;
 
+
     public int getId() {
         return id;
     }

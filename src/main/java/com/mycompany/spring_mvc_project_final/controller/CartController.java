@@ -2,6 +2,7 @@ package com.mycompany.spring_mvc_project_final.controller;
 
 
 import com.mycompany.spring_mvc_project_final.entities.*;
+import com.mycompany.spring_mvc_project_final.enums.PaymentMethod;
 import com.mycompany.spring_mvc_project_final.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
@@ -78,7 +79,6 @@ public class CartController {
                 if (cartItemList.isEmpty()) {
                     CartItem cartItem = new CartItem();
                     cartItem.setProduct(product);
-
                     cartItem.setCart(cart);
                     cartItem.setQuantity(1);
                     cartItemService.save(cartItem);
@@ -189,6 +189,7 @@ public class CartController {
                 Payment payment = new Payment();
                 payment.setOrder(order);
                 payment.setAccount(account);
+                payment.setPaymentMethod(PaymentMethod.COD);
                 payment.setPayment_date(new Date());
                 payment.setAmount(totalPrice);
                 paymentService.save(payment);
@@ -221,6 +222,7 @@ public class CartController {
 //             Tao moi Payment
             Payment payment = new Payment();
             payment.setOrder(order);
+            payment.setPaymentMethod(PaymentMethod.CASH);
             payment.setPayment_date(new Date());
             payment.setAmount(cartItemService.getAmount(account.getCart().getId()));
             paymentService.save(payment);
@@ -253,8 +255,8 @@ public class CartController {
                     "<p>You can click on the link below to view the order </p>\n"
                     +
                     "http://localhost:8008/project-final-main/user/orderList";
-        String subject = "Mail xác nhận ";
-        sendEmail(email, subject, body);
+            String subject = "Mail xác nhận ";
+            sendEmail(email, subject, body);
         }
 
         List<OrderDetail> orderDetails = orderDetailService.findByOrderDetailByOrderId(order.getId());
@@ -296,30 +298,6 @@ public class CartController {
         }
         javaMailSender.send(message);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

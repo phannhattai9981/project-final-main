@@ -17,7 +17,7 @@ public class AccountBanking {
     private String fullName;
 
     @Column (name = "cardNumber")
-    private int cardNumber;
+    private String cardNumber;
 
     @Column (name = "balance")
     private double balance;
@@ -52,11 +52,11 @@ public class AccountBanking {
         this.fullName = fullName;
     }
 
-    public int getCardNumber() {
+    public String getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(int cardNumber) {
+    public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
     }
 

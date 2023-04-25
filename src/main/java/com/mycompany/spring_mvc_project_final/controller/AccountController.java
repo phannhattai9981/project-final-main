@@ -103,6 +103,15 @@ public class AccountController {
         InputStream inputStream = new ByteArrayInputStream(ph);
         IOUtils.copy(inputStream, response.getOutputStream());
     }
+    @RequestMapping(value = "update/admin/getPhotoAccount/{id}")
+    public void getStudentPhotoss(HttpServletResponse response, @PathVariable("id") int id) throws Exception {
+        response.setContentType("image/jpeg");
+
+        AccountEntity p = accountService.findById(id);
+        byte[] ph = p.getAvatar();
+        InputStream inputStream = new ByteArrayInputStream(ph);
+        IOUtils.copy(inputStream, response.getOutputStream());
+    }
 
 
     /// KẾT THÚC TRANG QUẢN LÝ THÔNG TIN CÁ NHÂN ////

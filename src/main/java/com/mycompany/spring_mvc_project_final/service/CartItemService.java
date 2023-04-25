@@ -1,17 +1,16 @@
 package com.mycompany.spring_mvc_project_final.service;
 
 
-import com.mycompany.spring_mvc_project_final.entities.Cart;
 import com.mycompany.spring_mvc_project_final.entities.CartItem;
-import com.mycompany.spring_mvc_project_final.entities.Order;
+
+
 import com.mycompany.spring_mvc_project_final.repository.CartItemRepository;
-//import com.mycompany.spring_mvc_project_final.repository.CartRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CartItemService {
@@ -57,5 +56,6 @@ public class CartItemService {
         cartItemRepository.save(item);
         return item;
     }
+
 }
 
